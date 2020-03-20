@@ -1,0 +1,130 @@
+*{
+    font-family: 'Courier New', Courier, monospace;
+}
+
+body{
+    background-image: url('https://wallpapercave.com/wp/xLZrFev.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    align-items: center; 
+}
+
+li{
+    float: left;
+}
+li a {
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+
+table{
+
+    background-color: whitesmoke;
+    border-radius: 10px;
+    align-self: center;
+    margin: 10% 25% 10% 25%;   
+    overflow:visible;		
+}
+
+tr{
+    
+    border-radius: 10px;
+    background-color: yellowgreen ;
+    text-align: center;
+}
+td, th, input{
+    width:auto;
+    border-radius: 5px;
+}
+
+label{
+    font-weight: bolder;
+    display: block;
+}
+
+
+button{
+
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    background-color: red;
+    margin: 0;
+    border-radius: 10px;
+    top: 0;
+    width: 100%;
+
+}
+.home-list{
+    list-style-type: none;
+    margin-top: 2vw;
+    padding: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color:whitesmoke;
+    position: fixed;
+    top: 0;
+    width: 98vw;
+}
+
+.back-button {
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    background-color: red;
+    margin: auto;
+    border-radius: 10px;
+    top: 0;
+    width: 25vw;
+  }
+
+  .back-button:hover {
+    background-color: black;
+    color: red;
+  }
+  
+  .back-button:active {
+    background-color: black;
+    color: whitesmoke;
+  }
+  
+  li a:hover {
+    background-color: red;
+  }
+  
+  li a:active {
+    background-color: black;
+    color: whitesmoke;
+  }
+
+  h1,h2 {
+
+    margin: 15vw 15vw 15vw 15vw;
+    text-align: center;
+    
+  }
+
+  h3,h4,h5,h6 {
+
+    margin-top: 5vw;
+    text-align: center;
+  }
+
+
+footer{
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;		
+    width: 100%;
+	border-radius: 8px;
+	overflow: hidden;
+}
