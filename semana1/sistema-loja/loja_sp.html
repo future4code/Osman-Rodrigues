@@ -3,34 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>shop-pokeloja</title>
+    <link rel='stylesheet' type='text/css' href='style-pokeloja.css'>
 </head>
 <body>
-    <h4 style="text-align:center;"> Incluir Produto</h4>
+    <h4> Incluir Produto</h4>
 
     <form action="file:///home/manrodrigues/Osman-Rodrigues/semana1/sistema-loja/loja_sk.html"></form>
     <br>
-    <label for="nome_label">Nome</label>
-    <br>
-    <input type="text" name="nome_id_input" id="nome_label">
-    <br><br>
-    <label for="info_label">Descrição</label>
-    <br>
-    <input type="text" name="info_id_input" id="info_label">
-    <br><br>
-    <label for="price_label">Preço(em Pk$)</label>
-    <br>
-    <input type="text" name="price_id_input" id="price_label">
-    <br><br>
-    <label for="qtde_label">Quantidade</label>
-    <br>
-    <input type="text" name="qtde_id_input" id="qtde_label">
-    <br><br>
-    <button type="submit">Enviar</button>
+    <table>
+        <tr>
+            <th><label for="nome_label">Nome</label></th>
+            <th><label for="info_label">Descrição</label></th>
+            <th><label for="price_label">Preço(em Pk$)</label></th>
+            <th><label for="qtde_label">Quantidade</label></th>
+        </tr>
+        <tr>
+            <td><input type="text" name="nome_id_input" id="nome_label"></td>
+            <td><input type="text" name="info_id_input" id="info_label"></td>
+            <td><input type="text" name="price_id_input" id="price_label"></td>
+            <td><input type="text" name="qtde_id_input" id="qtde_label"></td>
+        </tr>
+        <tr>
+            <td><button type="submit">Enviar</button></td>
+        </tr>
+        
 
+    </table>
     <footer>
-        <h4 style="text-align:center;">
-        <a href="file:///home/manrodrigues/Osman-Rodrigues/semana1/sistema-loja/loja_home.html"> < Voltar </a>
+        <h4>
+        <a class='back-button' href="http://127.0.0.1:5500/loja_home.html"> < Voltar </a>
         </h4>
     </footer>
 </body>
