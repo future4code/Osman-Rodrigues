@@ -1,0 +1,49 @@
+* {
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+margin: 0;
+}
+
+ul {
+    
+    position: sticky;
+    top: 0;
+}
+
+li {
+    float: left;
+  }
+  
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    border-radius: 10px;
+
+
+}
+
+li a:hover {
+    background-color: #111;
+}
+
+.active {
+    background-color: #4CAF50;
+}
+
+div {
+    background-color: blueviolet;
+    padding: 5vw;
+}
+
+div div{
+    background-color:whitesmoke;
+    padding: 10%;
+    border-radius: 10px;
+}
+
+footer{
+    background-color: wheat;
+    padding: 15vw;
+}
