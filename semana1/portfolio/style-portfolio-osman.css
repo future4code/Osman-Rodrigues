@@ -1,49 +1,187 @@
 * {
-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+font-family: Roboto sans-serif;
 margin: 0;
-}
-
-ul {
-    
-    position: sticky;
-    top: 0;
+background-color: #201645;
+color: whitesmoke;
 }
 
 li {
-    float: left;
+    float: center;
+    list-style-type: none;
+    background: none;   
+}
+
+ul{
+    list-style-type: none;
+    background: none;
+    padding: 0;
+}
+
+div#banner li, a{
+    background-color: #565697;
+}
+
+li #menu:hover {
+    background-color: #201645;
+}
+
+.active {
+    background-color: #1dc49b;
+    
+}
+
+div {
+    
+    padding: 5vw;
+    border: whitesmoke;
+
+}
+
+span, p{
+    text-align: center;
+    background-color:#565697;
+}
+
+h4, h5, h6{
+    text-align: center;
+    background-color:#565697;
+
+}
+
+footer{
+    background-color: #565697;
+    padding: 5vw 0vw 0vw 0vw ;
+    border-radius: 10px;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    background: none;
+}
+
+textarea{
+
+    color: white;
+    background-color: #565680;
+    width: 50vw;
+    height:25vw;
+    border-radius: 10px;
+}
+
+input{
+
+    font-size: 2vw;
+    color: white;
+    background-color: #565680;
+    width: 50%;
+    height: 3vw;
+    border-radius: 10px;
+}
+
+button{
+
+    background-color: #565680;
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    padding: 14px 16px;
+}
+
+button:hover{
+    background-color:#201645;
+}
+
+::placeholder{
+    color: whitesmoke;
+    font-size: 15px;
+}
+
+.row {
+    display: flex;
+    padding: 0;
+    background: none;
   }
   
-li a {
+.column {
+    flex: 33.33%;
+    padding: 0;
+    
+}
+
+#backdrop{
+    background-color:#565697;
+    border-radius: 10px;
+    width: 90%;
+    height: auto;
+}
+
+#banner{
+    max-width: 20vw;
+    height: auto; 
+    margin: auto; 
+}
+
+#icon{
+    max-width: 100%;
+    height: auto;
+    padding: 0;  
+}
+
+#menu{
     display: block;
     color: white;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
     border-radius: 10px;
+}
 
+#header{
+
+    height: 11vw;
+    top: 0;
+    padding-top: 0;
 
 }
 
-li a:hover {
-    background-color: #111;
+#footer{
+
+    display: block;
+    height: 2vw;
+    width: 100%;
+    bottom: 0;
+    padding: 0;
+    background-color: #565697;
 }
 
-.active {
-    background-color: #4CAF50;
+#rimg{
+
+    width: 25vw;
+    height: auto;
+    border-radius: 8px;
 }
 
-div {
-    background-color: blueviolet;
-    padding: 5vw;
+#cimg{
+
+    width: 15vw;
+    height: auto;
+    border-radius: 8px;
 }
 
-div div{
-    background-color:whitesmoke;
-    padding: 10%;
-    border-radius: 10px;
+#pimg{
+
+    width: 50vw;
+    height: auto;
+    border-radius: 8px;
 }
 
-footer{
-    background-color: wheat;
-    padding: 15vw;
+#dg{
+
+    width: 50vw;
+
+}
+
+#lttl{
+    text-align: left;
 }
