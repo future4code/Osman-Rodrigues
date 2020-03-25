@@ -1,0 +1,131 @@
+#water {
+    grid-column-start: 3;
+}
+
+#poison {
+    grid-column-start: 5;
+}
+
+#water {
+    grid-column-start: 1;
+    grid-column-end: 4;
+}
+
+#water {
+    grid-column-start: 5;
+    grid-column-end: 2;
+}
+#water {
+    grid-column-start: 1;
+    grid-column-end: 5
+}
+
+#poison {
+    grid-column-start: 4;
+}
+
+#water {
+    grid-column-start: 2;
+    grid-column-end: span 2;
+}
+
+#water {
+    grid-column-start: 1;
+    grid-column-end: span 5;
+}
+
+#water {
+    grid-column: 4 / 6;
+}
+
+#water {
+    grid-column: 2 / 5;
+}
+
+#water {
+    grid-row-start: 3;
+}
+
+#water {
+    grid-row: 3 / 6;
+}
+
+#poison {
+    grid-row: 5;
+    grid-column: 2;
+}
+
+#water {
+    grid-column: 2 /6;
+    grid-row: 1 / 6;
+}
+
+#water {
+    grid-area: 1 / 2 / 4 / 6;
+}
+
+#water-2 {
+    grid-area: 2 / 3 / 5 / 6;
+}
+
+#poison {
+    order: 1;
+}
+
+.poison {
+    order: -1;
+}
+
+#garden {
+    display: grid;
+    grid-template-columns: 50% 20% 20% 10%;
+    grid-template-rows: 20% 20% 20% 20% 20%;
+}
+
+#garden {
+    display: grid;
+    grid-template-columns: repeat(8, 12.5%);
+    grid-template-rows: 20% 20% 20% 20% 20%;
+}
+
+#garden {
+    display: grid;
+    grid-template-columns: 100px 3em 40%;
+    grid-template-rows: 20% 20% 20% 20% 20%;
+}
+
+#garden {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    grid-template-rows: 20% 20% 20% 20% 20%;
+}
+
+#garden {
+    display: grid;
+    grid-template-columns: 50px repeat(3, 1fr) 50px;
+    grid-template-rows: 20% 20% 20% 20% 20%;
+}
+
+#garden {
+    display: grid;
+    grid-template-columns: 75px 3fr 2fr;
+    grid-template-rows: 100%;
+}
+
+#garden {
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+    grid-template-rows: 12.5px 12.5px 12.5px 12.5px;
+}
+
+  #garden {
+    display: grid;
+    grid-template: 60% / 200px;
+}
+
+#garden {
+    display: grid;
+    grid-template: 1fr 50px / 20% 80%;
+}
+
+  
