@@ -1,0 +1,78 @@
+*{
+    font-family: 'Times New Roman', Times, serif;
+    margin: 0; 
+}
+
+html{
+    width: 100vw;
+    height: 100vh;
+    
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+}
+
+/* Home page */
+
+header{
+    background-color: rgb(255, 102, 0);
+    width: 100vw;
+    height: 10vh;
+    top: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+
+#logo{
+    font-size: large;
+    
+}
+
+#searchbox{
+    font-size: small;
+    height: auto;
+    
+}
+
+main{
+    
+    
+    width: 80%;
+    height: 80%;
+    display: grid;
+    grid-template: repeat(2, 1fr) / repeat(4, 1fr);
+    column-gap: 1%;
+    row-gap: 1%;
+
+
+}
+
+article{
+
+   
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+video{
+    
+    width: 100%;
+    height: 90%;
+
+}
+
+
