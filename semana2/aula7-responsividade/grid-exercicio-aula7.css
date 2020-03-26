@@ -1,12 +1,14 @@
 *{
     
     margin: 0;
-    text-align: center;
+    
 }
 
 body{
+    
     display: grid;
     grid-template: 1fr / 1fr 6fr;
+
 }
 
 .header{
@@ -18,14 +20,18 @@ body{
 
 }
 
+.container{
+    width: auto;
+}
+
 .container1{
+    
     display: grid;
     max-width: 100%;
     height: 25vh;
     grid-template: repeat(2, 1fr) / repeat(3, 1fr);
     gap: 10% 3%;
     margin: 1% 1%;
-
 }
 
 .container2{
@@ -42,55 +48,196 @@ body{
     display: grid;
     max-width: 100%;
     height: 17vh;
-    margin: 0;
     grid-template: repeat(1, 1fr) / repeat(3, 1fr);
     gap: 5% 1%;
     margin: 1% 1%;
 }
 #item1{
+    order: 1;
     background-color: blue;
     max-width: 50vw;
 
 }
 #item2{
+    order: 2;
     background-color: yellow;
     max-width: 50vw;
 }
 #item3{
+    order: 3;
     background-color: green;
     max-width: 100vw;
 }
 #item4{
+    order: 4;
     background-color: blue;
     max-width: 50vw;
 }
 #item5{
+    order: 5;
     background-color: yellow;
     max-width: 50vw;
 }
 #item6{
+    order: 6;
     background-color: green;
     max-width: 100vw;
 }
 #item7{
+    order: 7;
     color:whitesmoke;
     background-color: black;
 }
 #item8{
+    order: 8;
     color: whitesmoke;
-    background-color: black;
-    
+    background-color: black; 
 }
 #item9{
-    
+    order: 9;
 }
 #item10{
-    
+    order: 10;
 }
 #item11{
-    
+    order: 11;
 }
 
 div div div{
     border: 1px solid black;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    
+}
+
+@media screen and (max-width : 420px) {
+    /* celulares */
+    *{
+        margin-top: auto;
+    }
+    body{
+        display: grid;
+        grid-template: 1fr / 1fr;
+        
+    }
+
+    div.container{
+        display: none;
+        
+    }
+
+    div.container0{
+        display: grid;
+        grid-template: 4fr/1fr;
+        align-items: center;
+        height: auto;
+        
+    }
+    .container1{
+        grid-template: 6fr/1fr;
+
+
+    }
+    .container2{
+        grid-template: 2fr/1fr;
+        margin-top: 8%;
+        gap: 1%;
+
+    }
+    .container3{
+        grid-template: 3fr/1fr;
+
+    }
+
+    .container1, .container2, .container3{
+        
+        align-items: center;
+        height: auto;
+        row-gap: 1%;
+    }
+
+    #item1, #item2, #item3, #item4, #item5, #item6,
+    #item7, #item8, #item9, #item10, #item11{
+
+        height: 10vh;
+        max-width: 100%;
+    }
+}
+@media screen and (min-width : 421px) and (max-width : 800px) {
+    /* tablets */
+    body{
+
+        grid-template: 1fr / 1fr 3fr;
+    }
+    .container1{
+
+        height: 50vh;
+        row-gap: 5%;
+        grid-template: repeat(4, 1fr) / repeat(2, 1fr);   
+    }
+    #item1{
+        
+        grid-row-start: 1 ;
+        grid-row-end: 1;
+        grid-column-start:1 ;
+        grid-column-end: 2;
+    }
+    #item2{
+        
+        grid-row-start: 1 ;
+        grid-row-end: 1;
+        grid-column-start:2 ;
+        grid-column-end: span2;
+    }
+    #item3{
+
+        grid-row-start: 2 ;
+        grid-row-end: 2 ;
+        grid-column-start:1 ;
+        grid-column-end: span2 ;
+    }
+    
+    #item4{
+
+        grid-row-start: 3 ;
+        grid-row-end: 3;
+        grid-column-start:2 ;
+        grid-column-end: span2 ;
+    }
+    #item5{
+
+        grid-row-start: 3;
+        grid-row-end: 3;
+        grid-column-start:1 ;
+        grid-column-end: 1;
+    }
+    #item6{
+
+        grid-row-start: 4 ;
+        grid-row-end: 4 ;
+        grid-column-start:1 ;
+        grid-column-end: span2 ;
+    }
+
+    .container3{
+        
+        height: 25vh;
+        grid-template: repeat(2, 1fr) / repeat(2, 1fr);
+       
+    }
+    #item10{
+
+        grid-row-start: 1;
+        grid-row-end: 1;
+        grid-column-start:2 ;
+        grid-column-end: span2;
+    }
+    #item11{
+
+        grid-row-start: 2;
+        grid-row-end: 2;
+        grid-column-start:1 ;
+        grid-column-end: span2 ;
+    }
 }
