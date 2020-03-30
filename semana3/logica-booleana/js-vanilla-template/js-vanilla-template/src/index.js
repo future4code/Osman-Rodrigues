@@ -121,3 +121,34 @@ let desconto = 0
 desconto = prompt('Caso haja, insira o valor de desconto em percentual(%):')
 const gasto = (consumo * 0.05) - ((desconto/100)*(consumo*0.05))
 console.log('Seu consumo representa R$ '+gasto+' em gasto com Energia Elétrica, com desconto aplicado de '+desconto+'% no gasto total.')
+
+/* 
+Desafio
+
+ */
+
+ //1.
+ //a. 
+ const lib = prompt('Insira a quantidade em Libras(lb): ')
+ const convlib = lib*0.45
+ console.log(lib+'lb equivalem a '+convlib+ 'kg.')
+ //b. 
+ const oz = prompt('Insira a quantidade em Onça(oz): ')
+ const convoz = oz*0.28
+ console.log(oz+'oz equivalem a '+convoz+'kg.')
+ //c. 
+ const mi = prompt('Insira a quantidade em Milhas(mi): ')
+ const convmi = mi*1609
+ console.log(mi+'mi equivalem a '+convmi+'m.')
+ //d. 
+ const ft = prompt('Insira a quantidade em Pés(ft): ')
+ const convft = ft*5280
+ console.log(ft+'ft equivalem a '+convft+'m.')
+ //e. 
+ const gal = prompt('Insira a quantidade em Galão(gal): ')
+ const convgal = gal*3.7
+ console.log(gal+'gal equivalem a '+convgal+' l.')
+ //f. 
+ const xic = prompt('Insira a quantidade de Xicaras: ')
+ const convxic = xic*0.25
+ console.log(xic+'xic equivalem a '+convxic+' l.')
