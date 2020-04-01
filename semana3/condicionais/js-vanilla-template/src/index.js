@@ -76,3 +76,43 @@ if(in1>in2 && in1>in3 && in2>in3){
 }else{
     console.log('Você inseriu números iguais ou outros caracteres! Insira apenas números diferentes.')
 }
+//5.
+//a. https://docs.google.com/presentation/d/1DiXPeu_vfPns0wbd80qJuvYjM2GeC3iCuxfTg91Xhm8/edit?usp=sharing
+//b. 
+const q1 = prompt('Classificação de animais! Responda sempre com s (sim) ou n (não).'+('\n')+'O animal possui ossos formando um esqueleto?[s/n]')
+let q2 = null
+let q3 = null
+let q4 = null
+let q5 = null
+let q6 = null
+
+if(q1 === 's'){
+    q2 = prompt('Possui pêlos?[s/n]')
+    if(q2 ==='s'){
+         q3 = prompt('É racional?[s/n]')
+         if(q3==='s'){
+             console.log('É um ser humano')
+         }else{
+            console.log('É um animal não-humano')
+         }
+    }else if(q2!='s'){
+        q4 = prompt('Possui penas?[s/n]')
+        if (q4=== 's'){
+            console.log('É uma ave')
+        }else if (q4!= 's'){
+            q5 = prompt('É terrestre?[s/n]')
+            if (q5 != 's'){
+                console.log('É um peixe')
+            }else if(q5 === 's'){
+                q6 = prompt('Este animal passa por fase aquática em seu desenvolvimento?[s/n]')
+                if (q6 === 's'){
+                    console.log('É um anfibio')
+                }else{
+                    console.log('É um reptil')
+                }
+            }
+        }
+    }
+}else{
+    console.log('É um invertebrado')
+}
