@@ -11,38 +11,35 @@
  * 
  */
 
-
-
-/* Em construção
-   function catchValue(){
+console.log('Bem vindo ao jogo de Blackjack d@s Parcêr@!'+('\n')
++'Para começar, clique em "Iniciar Rodada".');
+function startGame(){
    const startU = confirm('Iniciar uma nova rodada?')
-   const confU = {valor:startU}
-   return confU
-} */
+   let cUser = '';
+   let cBot = '';
+   let sbut = startU;
 
-console.log('Bem vindo ao jogo de Blackjack d@s Parcêr@!')
-let sbut = confirm('Iniciar uma nova rodada?');
-let cUser = '' ;
-let cBot = '' ;
+   while(sbut){
+      buser = comprarCarta()
+      cUser = buser.texto
+      pUser = buser.valor
+      bbot = comprarCarta()
+      cBot = bbot.texto
+      pBot = bbot.valor
+      const muser = 'Sua carta: '+cUser+' - pontuação '+pUser;
+      const mbot = 'Carta do Computador: '+cBot+' - pontuação '+pBot;
+      console.log(muser)
+      console.log(mbot)
 
-while(sbut){
-   buser = comprarCarta()
-   cUser = buser.texto
-   pUser = buser.valor
-   bbot = comprarCarta()
-   cBot = bbot.texto
-   pBot = bbot.valor
-   const muser = 'Sua carta: '+cUser+' - pontuação '+pUser;
-   const mbot = 'Carta do Computador: '+cBot+' - pontuação '+pBot;
-   console.log(muser)
-   console.log(mbot)
+      if(pUser>pBot){
+         console.log('Você ganhou, parcêr@!!!')
+      }else if(pUser===pBot){
+         console.log('Empate, parcêr@!')
+      }else{
+         console.log('Tu perdeu, parcêr@...')
+      } sbut = confirm('Gostaria de tentar novamente?');
+   }console.log('Aaaah...Que pena! Valeu e até a próxima!')
+}
 
-   if(pUser>pBot){
-      console.log('Você ganhou, parcêr@!!!')
-   }else if(pUser===pBot){
-      console.log('Empate, parcêr@!')
-   }else{
-      console.log('Tu perdeu, parcêr@...')
-   } sbut = confirm('Iniciar uma nova rodada?');
-}console.log('Aaaah...Que pena! Até a próxima!')
+
 
