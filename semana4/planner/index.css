@@ -1,0 +1,49 @@
+/*General styles*/
+*{
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+html {
+    width: 100vw;
+    height: 100vh;
+}
+body{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+/*Header styles*/
+header{
+    border: 1px solid black;
+    width: 100%;
+    height: 5%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+header input{
+    margin: 0 1%;
+    width: 25%;
+    height: 80%;
+}
+#daySelector, #taskButton{
+    margin: 0 1%;
+    width: 8%;
+    height: 80%;
+}
+/*Main styles*/
+main{
+    width: 100%;
+    height: 90%;
+    display: grid;
+    grid-template: 1fr / repeat(7, 1fr);
+}
+
+main div{
+    border: 1px solid black;
+    height:100%;
+}

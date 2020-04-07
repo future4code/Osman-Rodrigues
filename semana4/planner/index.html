@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="index.js" defer></script>
+    <link href="index.css" type="text/css" rel="stylesheet">
+    <title>Exercicio Planner</title>
+</head>
+<body>
+    <header>
+        <input id="taskCatcher" placeholder="Type a task here">
+        <select id="daySelector">
+        <option value="Monday">Monday</option>
+        <option value="Tuesday">Tuesday</option>
+        <option value="Wednesday">Wednesday</option>
+        <option value="Thursday">Thursday</option>
+        <option value="Friday">Friday</option>
+        <option value="Saturday">Saturday</option>
+        <option value="Sunday">Sunday</option>
+        </select>
+        <button onclick="creatTask()" id="taskButton" >Creat task!</button>
+    </header>
+
+    <main class="container">
+        <div class="dayBox" id="mondayBox"><h4>Monday</h4></div>
+        <div class="dayBox" id="tuesdayBox"><h4>Tuesday</h4></div>
+        <div class="dayBox" id="wednesdayBox"><h4>Wednesday</h4></div>
+        <div class="dayBox" id="thursdayBox"><h4>Thursday</h4></div>
+        <div class="dayBox" id="fridayBox"><h4>Friday</h4></div>
+        <div class="dayBox" id="saturdayBox"><h4>Saturday</h4></div>
+        <div class="dayBox" id="sundayBox"><h4>Sunday</h4></div>
+    </main>
+    
+</body>
+</html>
