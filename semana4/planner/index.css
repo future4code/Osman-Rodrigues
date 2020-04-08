@@ -1,0 +1,83 @@
+/*General styles*/
+*{
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+html {
+    width: 100vw;
+    height: 100vh;
+}
+body{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template: 0.3fr 5fr/ 1fr;
+}
+/*Header styles*/
+header{
+    border: 1px solid black;
+    width: 100%;
+    height: auto;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+header input{
+    margin: 0 1%;
+    width: 25%;
+    height: 80%;
+}
+#daySelector, #taskButton{
+    margin: 0 1%;
+    width: 8%;
+    height: 80%;
+}
+#hourCatcher{
+    width: 5%;
+}
+/*Planner header*/
+
+/*Main styles*/
+#plannerHeader{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+main{
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template: 0.2fr 4.8fr / 1fr;
+}
+#plannerHeader h4{
+    display: inline;
+}
+#plannerColumns{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template: 1fr / repeat(7, 1fr);
+
+}
+.dayBox{
+    border: 1px solid black;
+    max-width: 100%;
+    height: 100%;
+}
+/*Event styles*/
+.task{
+    font-size: small;
+    border: 1px solid black;
+}
+.task:hover{
+    padding: 1%;
+}
+#linethrough{
+    text-decoration: line-through;
+}
+#cleartask{
+    text-decoration: none;
+}

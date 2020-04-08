@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="index.js" defer></script>
+    <link href="index.css" type="text/css" rel="stylesheet">
+    <title>Exercicio Planner</title>
+</head>
+<body>
+    <header>
+        <input id="taskCatcher" placeholder="Type a task here">
+        <input type="time" id="hourCatcher" labe="tfmodel">
+
+        <select id="daySelector">
+        <option value="Monday">Monday</option>
+        <option value="Tuesday">Tuesday</option>
+        <option value="Wednesday">Wednesday</option>
+        <option value="Thursday">Thursday</option>
+        <option value="Friday">Friday</option>
+        <option value="Saturday">Saturday</option>
+        <option value="Sunday">Sunday</option>
+        </select>
+        <button onclick="creatTask()" id="taskButton" >Creat task!</button>
+    </header>
+    
+    <main class="container">
+        <div id="plannerHeader">
+            <h4>Monday</h4><button onclick="clearTasks('mondayBox')">Clear tasks</button>
+            <h4>Tuesday</h4><button onclick="clearTasks('tuesdayBox')">Clear tasks</button>
+            <h4>Wednesday</h4><button onclick="clearTasks('wednesdayBox')">Clear tasks</button>
+            <h4>Thursday</h4><button onclick="clearTasks('thursdayBox')">Clear tasks</button>
+            <h4>Friday</h4><button onclick="clearTasks('fridayBox')">Clear tasks</button>
+            <h4>Saturday</h4><button onclick="clearTasks('saturdayBox')">Clear tasks</button>
+            <h4>Sunday</h4><button onclick="clearTasks('sundayBox')">Clear tasks</button>
+        </div>
+        <div id="plannerColumns">
+            <div class="dayBox" id="mondayBox"></div>
+            <div class="dayBox" id="tuesdayBox"></div>
+            <div class="dayBox" id="wednesdayBox"></div>
+            <div class="dayBox" id="thursdayBox"></div>
+            <div class="dayBox" id="fridayBox"></div>
+            <div class="dayBox" id="saturdayBox"></div>
+            <div class="dayBox" id="sundayBox"></div>
+        </div>
+    </main>
+    
+</body>
+</html>
