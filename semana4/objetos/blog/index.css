@@ -7,8 +7,9 @@
 body{
     width: 100vw;
     height: 100vh;
-    display: grid;
-    grid-template: 0.2fr 3fr 0.2fr / 1fr;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 header, main, footer{
@@ -18,18 +19,23 @@ header, main, footer{
 /*Main styles*/
 main{
     height:100%;
-    display: grid;
-    grid-template: 1fr/ 1fr 4fr;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 section{
     border: 1px solid black;
+    height: 100%;
+    width: 100%;
 }
-#userName, #postTitle{
+#userName, #postTitle, #postImage{
     width: 90%;
 }
 #postContent{
     width: 90%;
     height: 25vh;
 }
-
+#sendPost{
+    display: block;
+}
 
