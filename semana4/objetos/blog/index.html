@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="index.js" defer></script>
+    <link href="index.css" type="text/css" rel="stylesheet">
+    <title>Blog</title>
+</head>
+<body>
+    <header>
+        <h2>Header</h2>
+    </header>
+
+    <main class="container">
+
+        <section id="postsGen">
+            <!-- <form action="blog-time-line.html">  -->     
+                <label for="userName">Seu nome</label>
+                <br>
+                <input type="text" id="userName" placeholder="Digite seu nome...">
+                <br>
+                <label for="postTitle">Título do Post</label>
+                <br>
+                <input type="text" id="postTitle" placeholder="Dê um título ao seu post...">
+                <br>
+                <label for="postContent">Escreva seu post:</label>
+                <br>
+                <textarea type="textarea" id="postContent" placeholder="Escreva algo..."></textarea>
+                <br>
+                <label for="postImage">Adicionar imagem:</label>
+                <br>
+                <input type="url" id="postImage" placeholder="Insira o URL da imagem...">
+                <br><br>
+                <button id="sendPost" onclick="generatePost()" type="submit">Enviar Post</button>
+            <!-- </form> -->       
+        </section>
+
+        <!-- <section id="timeLine">
+
+        </section> -->
+    </main>
+
+    <footer>
+        <h2>Footer</h2>
+    </footer> 
+</body>
+</html>
