@@ -10,22 +10,22 @@
 <body>
 
     <section class="container" id="expReg">
-        <label for="expValue">Valor</label>
-        <br>
-        <input type="number" name="" id="expValue" placeholder="Insira o valor em R$">
-        <br>
+       
         <label for="expType">Tipo de Despesa</label>
         <br>
         <select type="text" name="" id="expType">
-            <option>Selecione um tipo</option>
-            <option>Alimentação (variável)</option>
-            <option>Luz, água, telefone (variável)</option>
-            <option>Diversos (variável)</option>
-            <option>Aluguel (fixa)</option>
-            <option>Plano de Saúde (fixa)</option>
-            <option>TV Assinatura, Plano Internet (fixa)</option>
-            <option>Diversos (fixa)</option>
+            <option>Selecione um tipo -</option>
+            <option>Alimentação</option>
+            <option>Luz, água, telefone</option>
+            <option>Aluguel</option>
+            <option>Plano de Saúde</option>
+            <option>TV Assinatura, Plano Internet</option>
+            <option>Diversos</option>
         </select>
+        <br>
+        <label for="expValue">Valor</label>
+        <br>
+        <input type="number" name="" id="expValue" placeholder="Insira o valor em R$">
         <br>
         <label for="expDesc">Descrição</label>
         <br>
@@ -36,10 +36,39 @@
     </section>
 
     <section class="container" id="expBox">
+        <h2>Despesas</h2>
+        <ol id="expList">
+        
+        </ol>
+        <nav id="expFilter">
+            <label for="filterType">Filtrar Despesas</label>
+            <br>
+            <select type="text" name="" id="filterType">
+                <option>Tipo -</option>
+                <option>Alimentação</option>
+                <option>Luz, água, telefone</option>
+                <option>Aluguel</option>
+                <option>Plano de Saúde</option>
+                <option>TV Assinatura, Plano Internet</option>
+                <option>Diversos</option>
+            </select>
+            <br>
+            <label for="filterMax">Valor Máximo</label>
+            <br>
+            <input type="number" name="" id="filterMax" placeholder="Insira um valor máximo">
+            <br>
+            <label for="filterMin">Valor Mínimo</label>
+            <br>
+            <input type="number" name="" id="filterMin" placeholder="Insira um valor mínimo">
+            <button onclick="apFilter()" type="submit">Filtrar</button>
+            <button onclick="clFilter()" type="submit">Limpar Filtro</button>
+        </nav>
 
     </section>
 
     <section class="container" id="expTot">
+        <h2>Valor total das despesas:</h2>
+        <article id="expTotValue"></article>
 
     </section>
     
