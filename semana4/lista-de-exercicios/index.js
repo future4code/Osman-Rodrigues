@@ -47,3 +47,66 @@ Valor que será impresso no console:
 1590
 1590 . */
 //
+/* Exercícios de lógica de programação
+
+1 
+a. false 
+b. false 
+c. true
+d. true
+e. true
+*/
+//2 
+//O código não funciona, pois entrará em loop infinito uma vez que o valor de quantidadeDeNumerosPares não foi declarado.
+//Correção da Implementação:
+const sequenciaDePares = (quantidade) =>{
+    let quantidadeDeNumerosPares = quantidade;
+    let i = 0;
+    while(i <= quantidadeDeNumerosPares) {
+        console.log(i*2)
+        i++
+    }
+}
+//
+//3.
+const nomearTriangulo = (tamanhoLadoA,tamanhoLadoB, tamanhoLadoC) =>{
+    if(
+        typeof(tamanhoLadoA) !== 'number'||
+        typeof(tamanhoLadoB) !== 'number'||
+        typeof(tamanhoLadoC) !== 'number'
+    ){alert('Insira apenas números!')}
+    else if(tamanhoLadoA === tamanhoLadoB && tamanhoLadoA === tamanhoLadoC){
+        console.log('Triangulo Equilátero')
+    }else if(tamanhoLadoA !== tamanhoLadoB && tamanhoLadoA !== tamanhoLadoC){
+        console.log('Triangulo Escaleno')
+    }else{
+        console.log('Triangulo Isósceles')
+    }
+}
+//
+//4.
+const compararEstesNumeros = (numero1, numero2) =>{
+    const infos = ['O maior é: ','Os números são iguais',' é divisível por ',
+    ' não é divisível por ','A diferença entre eles é ',]
+
+    if(
+        typeof(numero1) !== 'number'||
+        typeof(numero2) !== 'number'
+    ){alert('Insira apenas números!')}
+    else{
+        if(numero1 > numero2){console.log(infos[0]+numero1)}
+        else if(numero1 < numero2){console.log(infos[0]+numero2)}
+        else if(numero1 === numero2){console.log(infos[1])};
+
+        if(numero1%numero2===0){console.log(numero1+infos[2]+numero2)}
+        else if(numero1%numero2!==0){console.log(numero1+infos[3]+numero2)};
+
+        if(numero2%numero1===0&&numero2 === numero1){}
+        else if(numero2%numero1===0){console.log(numero2+infos[2]+numero1)}
+        else if(numero2%numero1!==0){console.log(numero2+infos[3]+numero1)};
+
+        if(numero1-numero2>0){console.log(infos[4]+(numero1-numero2))}
+        else if(numero1-numero2<0){console.log(infos[4]+(numero2-numero1))}
+        else if(numero1 - numero2 === 0){console.log(infos[4]+0)}
+    }   
+}
