@@ -110,3 +110,79 @@ const compararEstesNumeros = (numero1, numero2) =>{
         else if(numero1 - numero2 === 0){console.log(infos[4]+0)}
     }   
 }
+//
+//2ª Parte do Projeto, da semana 4
+//
+// Exercícios de Função 
+//1.
+const mostrarOsVices = (array) =>{
+    const viceMaior = array.sort(function(a,b){return b-a})[1];
+    const viceMenor = array.sort(function(a,b){return a-b})[1];
+    console.log(`O segundo maior número do array é ${viceMaior}`)
+    console.log(`O segundo menor número do array é ${viceMenor}`)
+}
+
+//2.
+const saudaçãoLabenu = () =>{
+    alert('Hello Labenu_')
+}
+
+//Exercícios de Objeto
+//1.
+/* Array -
+Explicação: é um conjunto de dados que podem ser de diversos tipos e natureza, dispostos de forma sequencial;
+Quando podemos utilizar: para guardar dados de diversos tipos e natureza;
+Quando devemos utilizar: na organização e estruturação de dados e/ou informações do mesmo tipo.
+
+Objetos -
+Explicação: é um tipo de dado primário que armazena outros dados, dispostos de forma estruturada e que se 
+relacionam de forma a informar sobre o dado principal. Estes são de acesso criptografado, necessitando de
+uma chave para acessar seu valor;
+Quando podemos utilizar: para guardar dados e/ou informações;
+Quando devemos utilizar: para guardar dados e/ou informações que se relacionem para informar sobre um dado 
+principal. */
+
+//2.
+const criaRetangulo = (largura, altura) =>{
+    const meuRetangulo = {
+        largura: largura,
+        altura: altura,
+        perimetro: 2*(largura+altura),
+        area: largura*altura
+    }
+    return meuRetangulo
+}
+
+//3.
+const chamadaDoMeuFilmeFavorito = () =>{
+
+    const meuFilmeFavorito = {
+        titulo: 'O Último Samurai',
+        ano: '2003',
+        diretor:'Edward Zwick',
+        elenco: ['Tom Cruise', 'Ken Watanabe', 'Koyuki', 'Hiroyuki Sanada', 'Timothy Spall']
+    };
+    console.log(`Venha assistir ao filme ${meuFilmeFavorito.titulo}, de ${meuFilmeFavorito.ano}, `+
+    `dirigido por ${meuFilmeFavorito.diretor} e estrelado por ${meuFilmeFavorito.elenco}.`);
+
+    return meuFilmeFavorito
+}
+
+//4.
+const anonimizarPessoa = () =>{
+
+    const infosPessoaQualquer = {
+        nome: 'Ash Ketchum',
+        idade: 10,
+        email: 'ketchum.ash@gmail.com',
+        endereco: 'Pallet, Kanto - JPN'
+    };
+
+    infosPessoaQualquer.nome = 'ANÔNIMO';
+    infosPessoaQualquer.email = '*****'+'@'+infosPessoaQualquer.email.split('@')[1];
+    if(infosPessoaQualquer.idade<18){
+        infosPessoaQualquer.idade = '**'
+    }
+
+    return infosPessoaQualquer
+}
