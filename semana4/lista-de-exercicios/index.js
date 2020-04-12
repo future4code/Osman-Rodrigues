@@ -186,3 +186,135 @@ const anonimizarPessoa = () =>{
 
     return infosPessoaQualquer
 }
+//
+//3ª Parte do Projeto, da semana 4
+//
+//Exercícios de Funções de Array
+//1.
+const iterarComWhile = (array) =>{
+    i = 0
+    while(i < array.length){
+        console.log(array[i]);
+        i++
+    }
+}
+const iterarComFor = (array) =>{
+    for(let i = 0; i< array.length; i++){
+        console.log(array[i]);
+    }
+}
+const iterarComForOf = (array) =>{
+    for(let item of array){
+        console.log(item)
+    }
+}
+
+//2.
+const arrayQuestao2 = [
+	{ nome: "Pedro", idade: 20 },
+	{ nome: "João", idade: 10 },
+	{ nome: "Paula", idade: 12 },
+	{ nome: "Artur", idade: 89 } 
+]
+//a.
+const filtrarAdultos = arrayQuestao2.filter((pessoa) =>{
+    return pessoa.idade >= 20
+})
+
+//b.
+const filtrarNaoAdultos = arrayQuestao2.filter((pessoa) =>{
+    return pessoa.idade < 20
+})
+
+//3.
+const arrayQuestao3 = [1, 2, 3, 4, 5, 6]
+
+//a.
+const retornarODobro = arrayQuestao3.map((numero) =>{
+    return numero*2
+})
+
+//b.
+const retornarOTriploEmStr = arrayQuestao3.map((numero) =>{
+    return `${numero*3}`
+})
+
+//c.
+const retornarParOuImpar = arrayQuestao3.map((numero) =>{
+    if(numero%2===0){
+        return `${numero} é par`
+    }
+    else if(numero%2!==0){
+        return `${numero} é impar`
+    }
+})
+
+//4.
+const arrayQuestao4 = [
+	{ nome: "Paula", idade: 12, altura: 1.8},
+	{ nome: "João", idade: 20, altura: 1.3},
+	{ nome: "Pedro", idade: 15, altura: 1.9},
+	{ nome: "Luciano", idade: 22, altura: 1.8},
+	{ nome: "Artur", idade: 10, altura: 1.2},
+	{ nome: "Soter", idade: 70, altura: 1.9}
+]
+//a.
+const concederPermissao = arrayQuestao4.filter((pessoa)=>{
+    return pessoa.altura >= 1.5 && pessoa.idade > 14 && pessoa.idade < 60
+})
+
+//b.
+const negarPermissao = arrayQuestao4.filter((pessoa)=>{
+    return pessoa.altura < 1.5 || pessoa.idade < 14 || pessoa.idade > 60
+})
+
+//5.
+const arrayQuestao5 = [
+	{ nome: "João", genero: "masculino", cancelada: true, dataDaConsulta: "01/10/2019" },
+	{ nome: "Pedro", genero: "masculino", cancelada: false, dataDaConsulta: "02/10/2019" },
+	{ nome: "Paula", genero: "feminino", cancelada: true, dataDaConsulta: "03/11/2019" },
+	{ nome: "Márcia", genero: "feminino", cancelada: false, dataDaConsulta: "04/11/2019" }
+]
+
+const emitirEmailSobreConsulta = arrayQuestao5.map((consulta)=>{
+    let pronomeDeTratamento = '';
+    let lembrete = '';
+    
+    if(consulta.genero === 'masculino'){
+        pronomeDeTratamento = 'Sr.';
+        lembrete = 'lembrá-lo';
+    } else if(consulta.genero === 'feminino'){
+        pronomeDeTratamento = 'Sra.';
+        lembrete = 'lembrá-la';
+    }
+
+    if(consulta.cancelada){
+        return `Olá, ${pronomeDeTratamento} ${consulta.nome}. Estamos enviando esta mensagem para ${lembrete}`+ 
+        ` da sua consulta no dia ${consulta.dataDaConsulta}. Por favor, acuse o recebimento deste e-mail.`
+    }else{
+        return `Olá, ${pronomeDeTratamento} ${consulta.nome}. Infelizmente, sua consulta marcada para o dia`+ 
+        ` ${consulta.dataDaConsulta} foi cancelada. Se quiser, pode entrar em contato conosco para remarcá-la.`
+    }
+})
+
+//6.
+const arrayQuestao6 = [
+	{ cliente: "João", saldoTotal: 1000, compras: [100, 200, 300] },
+	{ cliente: "Paula", saldoTotal: 7500, compras: [200, 1040] },
+	{ cliente: "Pedro", saldoTotal: 10000, compras: [5140, 6100, 100, 2000] },
+	{ cliente: "Luciano", saldoTotal: 100, compras: [100, 200, 1700] },
+	{ cliente: "Artur", saldoTotal: 1800, compras: [200, 300] },
+	{ cliente: "Soter", saldoTotal: 1200, compras: [] }
+]
+
+const atualizarSaldo =()=>{arrayQuestao6.forEach(conta => {
+    totalCompras = 0;
+    conta.compras.forEach(valor =>{
+        totalCompras += valor
+    })
+
+    conta.saldoTotal -= totalCompras
+})}
+  //---//
+ //Fim//
+//---//
