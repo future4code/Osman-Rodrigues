@@ -4,4 +4,12 @@
 
 .icon-container img {
     margin-right: 5px;
+    width:24px;
+    height: auto;
+}
+.icon-container img:hover{
+    padding: 5px 0;
+}
+.icon-container img:active{
+    opacity:0.5;
 }
