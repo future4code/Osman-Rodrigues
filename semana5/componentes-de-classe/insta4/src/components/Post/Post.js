@@ -2,7 +2,9 @@ import React from 'react'
 import './Post.css'
 
 import {IconeComContador} from '../IconeComContador/IconeComContador'
-
+import {IconeSemContador} from '../IconeSemContador/IconeSemContador'
+import iconeMarcadoBranco from '../../img/bookmark_border-24px.svg'
+import iconeMarcadorPreto from '../../img/bookmark-24px.svg'
 import iconeCoracaoBranco from '../../img/favorite-white.svg'
 import iconeCoracaoPreto from '../../img/favorite.svg'
 import iconeComentario from '../../img/comment_icon.svg'
@@ -13,7 +15,8 @@ class Post extends React.Component {
     curtido: false,
     numeroCurtidas: 0,
     comentado: false,
-    numeroComentarios: 0
+    numeroComentarios: 0,
+    marcado: false
   }
 
   onClickCurtida = () => {
@@ -33,6 +36,12 @@ class Post extends React.Component {
   onClickComentario = () => {
     this.setState({
       comentado: !this.state.comentado
+    })
+  }
+
+  onClickMarcador = () =>{
+    this.setState({
+      marcado: !this.state.marcado
     })
   }
 
@@ -58,6 +67,14 @@ class Post extends React.Component {
       componenteComentario = <SecaoComentario aoEnviar={this.aoEnviarComentario}/>
     }
 
+    let iconeMarcador
+    if(this.state.marcado) {
+      iconeMarcador = iconeMarcadorPreto
+    } else {
+      iconeMarcador = iconeMarcadoBranco
+    }
+
+
     return <div className={'post-container'}>
       <div className={'post-header'}>
         <img className={'user-photo'} src={this.props.fotoUsuario} alt={'Imagem do usuario'}/>
@@ -77,6 +94,10 @@ class Post extends React.Component {
           icone={iconeComentario}
           onClickIcone={this.onClickComentario}
           valorContador={this.state.numeroComentarios}
+        />
+        <IconeSemContador
+          icone={iconeMarcador}
+          onClickIcone={this.onClickMarcador}
         />
       </div>
       {componenteComentario}
