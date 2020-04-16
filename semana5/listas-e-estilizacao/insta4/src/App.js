@@ -5,14 +5,17 @@ import styled from 'styled-components'
 const AppContainer = styled.div`
   display: flex;
   flex-direction: row-reverse;
-  justify-items: flex-start;
   justify-content: space-around
 `;
 const TimelineMain = styled.main`
 
 `;
 const FormsSection = styled.section`
-
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-items: flex-start;
+  align-items: flex-end
 `;
 const InputForms = styled.input`
 
@@ -24,24 +27,45 @@ const SendFormsButton = styled.button`
 //state class components
 class App extends React.Component {
   state = {
-    infosPosts: [
+    postsInfos: [
       { nomeUsuario: 'paulinha', fotoUsuario: 'https://picsum.photos/50/50?a=1', fotoPost: 'https://picsum.photos/200/150?a=2'}, 
       { nomeUsuario: 'darvas', fotoUsuario: 'https://picsum.photos/50/50?a=3', fotoPost: 'https://picsum.photos/200/150?a=4'}, 
       { nomeUsuario: 'severo', fotoUsuario: 'https://picsum.photos/50/50?a=5', fotoPost: 'https://picsum.photos/200/150?a=6'}
-    ]
+    ],
+    userNameValue:'',
+    userProfilePhotoUrl:'',
+    userPostPhotoUrl:''
   };
-  getUserName = () =>{
+  
+  onChangeUserName = (event) =>{
+    this.setState({ userNameValue: event.target.value })
+  };
 
+  onChangeUserProfilePhoto = (event) =>{
+    this.setState({ userProfilePhotoUrl: event.target.value })
   };
-  getUserProfilePhoto = () =>{
-    
+
+  onChangePostPhoto = (event) =>{
+    this.setState({ userPostPhotoUrl: event.target.value })
   };
-  getPostPhoto = () =>{
-    
+
+  onClickSendPostForms = () =>{
+    const newPost = { nomeUsuario: this.state.userNameValue, fotoUsuario: this.state.userProfilePhotoUrl, 
+      fotoPost: this.state.userPostPhotoUrl };
+      
+    this.state.postsInfos.push(newPost)
+
+    this.setState({ 
+      userNameValue: '',
+      userProfilePhotoUrl: '',
+      userPostPhotoUrl: ''
+    })
+
+    console.log(newPost, this.state.postsInfos)
   };
 
   render() {
-    const timelinePosts = this.state.infosPosts.map(postUsuario =>{
+    const timelinePosts = this.state.postsInfos.map(postUsuario =>{
       return(
       <Post
         nomeUsuario={postUsuario.nomeUsuario}
@@ -53,14 +77,21 @@ class App extends React.Component {
     return (
       <AppContainer>
         <FormsSection>
-          <InputForms onChange={this.getUserName} value={''} type={'text'} placeholder={'Seu Nome'}/>
-          <InputForms onChange={this.getUserProfilePhoto} value={''} type={'url'} placeholder={'Foto do perfil'}/>
-          <InputForms onChange={this.getPostPhoto} value={''} type={'url'} placeholder={'Foto do post'}/>
-          <SendFormsButton>Postar</SendFormsButton>
+
+          <InputForms onChange={this.onChangeUserName} value={this.state.userNameValue} type={'text'} placeholder={'Seu Nome'}/>
+
+          <InputForms onChange={this.onChangeUserProfilePhoto} value={this.state.userProfilePhotoUrl} type={'url'} placeholder={'Foto do perfil'}/>
+
+          <InputForms onChange={this.onChangePostPhoto} value={this.state.userPostPhotoUrl} type={'url'} placeholder={'Foto do post'}/>
+
+          <SendFormsButton onClick={this.onClickSendPostForms}>Postar</SendFormsButton>
+
         </FormsSection>
 
         <TimelineMain>
+
           {timelinePosts}
+
         </TimelineMain> 
       </AppContainer>
     );
