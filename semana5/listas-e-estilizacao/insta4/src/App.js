@@ -2,25 +2,25 @@ import React from 'react';
 import Post from './components/Post/Post';
 import styled from 'styled-components'
 //styled components
-const AppContainer = styled.div`
+let AppContainer = styled.div`
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-around
 `;
-const TimelineMain = styled.main`
+let TimelineMain = styled.main`
 
 `;
-const FormsSection = styled.section`
+let FormsSection = styled.section`
   align-self: flex-start;
   display: flex;
   flex-direction: column;
   justify-items: flex-start;
   align-items: flex-end
 `;
-const InputForms = styled.input`
+let InputForms = styled.input`
 
 `;
-const SendFormsButton = styled.button`
+let SendFormsButton = styled.button`
 
 `;
 
@@ -36,7 +36,7 @@ class App extends React.Component {
     userProfilePhotoUrl:'',
     userPostPhotoUrl:''
   };
-  
+
   onChangeUserName = (event) =>{
     this.setState({ userNameValue: event.target.value })
   };
@@ -60,8 +60,6 @@ class App extends React.Component {
       userProfilePhotoUrl: '',
       userPostPhotoUrl: ''
     })
-
-    console.log(newPost, this.state.postsInfos)
   };
 
   render() {
