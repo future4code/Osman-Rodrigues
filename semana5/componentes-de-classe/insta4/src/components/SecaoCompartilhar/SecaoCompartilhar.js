@@ -23,7 +23,6 @@ export class SecaoCompartilhar extends Component {
 	aoCompartilhar = () =>{
 		console.log(`Post ${this.state.msgCompartilhar} com a mensagem "${this.state.valorCompartilhar}"`)
 	}
-
 	render() {
 
 		return (
