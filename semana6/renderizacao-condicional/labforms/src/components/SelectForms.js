@@ -4,7 +4,7 @@ import styled from 'styled-components'
 const SelectContainer = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: baseline;
 `
 const SelectLabel = styled.label` 
 
@@ -25,11 +25,11 @@ export class SelectForms extends React.Component{
         return(
             <SelectContainer>
                 <SelectLabel>{this.props.Quest}</SelectLabel>
-                <SelectArea>
-                    <SelectOption>{this.props.Option1}</SelectOption>
-                    <SelectOption>{this.props.Option2}</SelectOption>
-                    <SelectOption>{this.props.Option3}</SelectOption>
-                    <SelectOption>{this.props.Option4}</SelectOption>
+                <SelectArea onChange ={this.props.SelectOnChange} value ={this.props.SelectValue}>
+                    <SelectOption value={this.props.ValueOption1}>{this.props.Option1}</SelectOption>
+                    <SelectOption value ={this.props.ValueOption2}>{this.props.Option2}</SelectOption>
+                    <SelectOption value={this.props.ValueOption3}>{this.props.Option3}</SelectOption>
+                    <SelectOption value={this.props.ValueOption4}>{this.props.Option4}</SelectOption>
                 </SelectArea>
             </SelectContainer> 
         )
