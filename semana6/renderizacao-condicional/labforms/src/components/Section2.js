@@ -5,8 +5,8 @@ import InputForms from './InputForms'
 const S2Container = styled.section`
     border: 1px solid black;
     border-radius: 8px;
-    width: 80%;
-    min-height: 80%;
+    min-width: 80%;
+    min-height: 80vh;
     display: flex;
     flex-direction: column;
     align-items: baseline;
@@ -15,7 +15,7 @@ const S2Title = styled.h3`
 
 `
 
-export class Season2 extends React.Component{
+export class Section2 extends React.Component{
     state = {
 
     }
@@ -41,4 +41,4 @@ export class Season2 extends React.Component{
 
 }
 
-export default Season2
+export default Section2

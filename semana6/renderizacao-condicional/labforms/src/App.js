@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components'
-import Season1 from './components/Season1'
-import Season2 from './components/Season2'
-import Season3 from './components/Season3'
+import Section1 from './components/Section1'
+import Section2 from './components/Section2'
+import Section3 from './components/Section3'
 import SendForms from './components/SendForms'
 
 const AppView = styled.main `
-  max-width: 100vw;
+  min-width: 600px;
   max-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -37,7 +37,7 @@ class App extends React.Component {
         case 'SEC2':
           return(
             <AppView>
-              <Season2/>
+              <Section2/>
               <SendForms
                 ButtonName = 'Próxima Etapa'
                 OnSubmit = {this.toSection3} 
@@ -47,7 +47,7 @@ class App extends React.Component {
         case 'SEC3':
           return(
             <AppView>
-              <Season3/>
+              <Section3/>
               <SendForms
                 ButtonName = 'Finalizar Formulário'
                 OnSubmit = {this.toSection4} 
@@ -64,7 +64,7 @@ class App extends React.Component {
         default:
           return(
             <AppView>
-              <Season1/>
+              <Section1/>
               <SendForms
                 ButtonName = 'Próxima Etapa'
                 OnSubmit = {this.toSection2} 

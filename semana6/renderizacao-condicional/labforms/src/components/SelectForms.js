@@ -25,7 +25,8 @@ export class SelectForms extends React.Component{
         return(
             <SelectContainer>
                 <SelectLabel>{this.props.Quest}</SelectLabel>
-                <SelectArea onChange ={this.props.SelectOnChange} value ={this.props.SelectValue}>
+                <SelectArea value={this.props.SelectValue} onChange ={this.props.OnChangeSelect}>
+                    <SelectOption value={this.props.HeadOption}>{this.props.HeadOption}</SelectOption>
                     <SelectOption value={this.props.ValueOption1}>{this.props.Option1}</SelectOption>
                     <SelectOption value ={this.props.ValueOption2}>{this.props.Option2}</SelectOption>
                     <SelectOption value={this.props.ValueOption3}>{this.props.Option3}</SelectOption>
