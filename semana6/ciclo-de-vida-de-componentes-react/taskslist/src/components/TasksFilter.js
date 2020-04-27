@@ -17,39 +17,59 @@ const FilterOption = styled.option`
 
 class TasksFilter extends React.Component{
     state = {
-
+        //generatedTasks: [],
         filteredArray: [],
-        filterValue: ''
-    }
-    
-    filterSet = (event) =>{
-        this.setState({filterValue: event.target.value})
+        filterValue: 'Nenhum',
+        filterChanged: false
         
     }
-    render(){
-        console.log(this.state.filterValue)
 
-        let FilteredList = ()=>{
-            if(this.state.filterValue === 'Pendentes'){
+    filterSet = (event) =>{
+        this.setState({filterValue: event.target.value})
+        this.state.filterValue === 'Nenhum' ? 
+        this.setState({filterChanged: false}) : this.setState({filterChanged: true}) 
+    }
+
+    componentDidMount(){
+    
+        //console.log('filtro montado')
+    }
+    componentDidUpdate(){
+        
+        switch(this.state.filterValue){
+            
+            case 'Pendentes':
+                //console.log(this.state.filteredArray)
+                //console.log('Case1')
                 
-            }
+                break;
+            case 'Completas':
+                
+                //console.log('Case2')
+                
+                break;
+            default:
+                //console.log('Case nenhum')
+                
         }
+
+        //console.log('filtro atualizado')
+
+    }
+       
+    render(){
+        //console.log(this.state.filterValue)
+        //console.log(this.state.filterChanged)
 
         return(
             <FilterContainer>
-                <FilterTitle></FilterTitle>
+                <FilterTitle>Filtra Tarefas</FilterTitle>
 
                 <FilterSelect onChange={this.filterSet} value={this.state.filterValue}>
                     <FilterOption value={'Nenhum'}>Nenhum</FilterOption>
                     <FilterOption value={'Pendentes'}>Pendentes</FilterOption>
                     <FilterOption value={'Completas'}>Completas</FilterOption>
                 </FilterSelect>
-
-                <TasksView
-
-                    
-
-                />
 
             </FilterContainer>
         )
