@@ -8,11 +8,8 @@ const LoginSection = styled.section`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    
-    
    
 `
-
 const LoginTitle = styled.h2`
 
 `
@@ -27,24 +24,33 @@ class Login extends React.Component{
 
     state={
         userName: '',
-        userKey: '',
-        hiddenKey:''
+        userEmail: '',
+    }
 
+    componentWillUnmount(){
+
+        const dataToSend = {name: this.state.userName, email: this.state.userEmail}
+        
+        axios.post('https://us-central1-labenu-apis.cloudfunctions.net/labenusers/users', dataToSend,{
+            headers: {
+            'Authorization':'osman-rodrigues-julian'
+            }
+        }).then((response) =>{
+            window.alert(`Usuário ${dataToSend.name} registado`)
+        }).catch((error)=>{
+            window.alert(`Erro no envio dos dados!\n${error}`) 
+        })
     }
 
     onChangeLoginInputUserName = (e) =>{
         this.setState({userName: e.target.value})
     }
     onChangeLoginInputKey = (e) =>{
-           
-
-        this.setState({userKey: e.target.value})
-        
+        this.setState({userEmail: e.target.value}) 
     }
 
     render(){
-        console.log(this.state.hiddenKey)
-
+    
         return(
             <LoginSection>
                 <LoginTitle>Login</LoginTitle>  
@@ -55,11 +61,14 @@ class Login extends React.Component{
                 placeholder={'Nome de Usuário'}
                 />
                 <LoginInput onChange={this.onChangeLoginInputKey}
-                value={this.state.userKey}
-                placeholder={'Senha'}
+                value={this.state.userEmail}
+                placeholder={'Email'}
                 />
 
-                <LoginButton onClick={this.props.onClickLogin}>Registrar e Fazer Login</LoginButton>
+                <LoginButton 
+                onClick={this.props.onClickLogin}
+                >Registrar e Fazer Login
+                </LoginButton>
             </LoginSection>
         );
     }
