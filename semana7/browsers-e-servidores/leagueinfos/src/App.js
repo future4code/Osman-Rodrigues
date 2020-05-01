@@ -1,26 +1,61 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import axios from 'axios';
+//import championsList from 'http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion.json'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+  
+
+class App extends React.Component{
+  state={
+    championsList:[],
+    championsNames:[],
+    searchedName:''
+  }
+
+  componentDidMount(){
+    axios.get('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion.json').then(response=>{
+    
+
+    this.setState({championsList: response.data.data})
+    console.log(this.state.championsList)
+
+    for(let champion in this.state.championsList ){
+      this.state.championsNames.push(champion)
+    }
+    console.log(this.state.championsNames)
+
+    }).catch(error=>{
+      console.log(error)
+    })
+  }
+
+  componentDidUpdate(){
+    //console.log(this.state.championsNames)
+  }
+
+  onChangeChampionSearch=(e)=>{
+    this.setState({ searchedName: e.target.value})
+  }
+  render(){
+
+    const ChampionsList = this.state.championsNames.filter(championName=>{
+      return championName.includes(this.state.searchedName)
+    })
+
+    console.log(ChampionsList)
+    
+    return (
+
+      <div className="App">
+
+        <input onChange={this.onChangeChampionSearch}></input>
+
+        <div>{ChampionsList}</div>
+        
+      </div>
+    );
+  }
+  
 }
 
 export default App;
