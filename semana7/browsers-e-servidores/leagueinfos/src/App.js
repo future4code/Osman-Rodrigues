@@ -1,58 +1,131 @@
 import React from 'react';
 import axios from 'axios';
-//import championsList from 'http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion.json'
+import styled from 'styled-components';
+import ChampionsSection from './components/ChampionsSection';
+import SummonersSection from './components/SummonersSection';
 
-
+const AppContainer = styled.main`
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+  overflow-y: auto;
   
+`
+const AppTitle= styled.h1`
 
+`
+const SearchBar = styled.input`
+  border: 1px solid black;
+  width: 300px;
+  
+`
+const SearchButton = styled.button`
+
+`
+
+const SectionSelect = styled.select`
+
+`
+
+const OptionSelect = styled.option`
+
+`
+  
 class App extends React.Component{
   state={
-    championsList:[],
-    championsNames:[],
-    searchedName:''
+    searchInput:'',
+    searchedName:'',
+    currentlySection: 'summoner'
   }
 
   componentDidMount(){
-    axios.get('http://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/champion.json').then(response=>{
     
-
-    this.setState({championsList: response.data.data})
-    console.log(this.state.championsList)
-
-    for(let champion in this.state.championsList ){
-      this.state.championsNames.push(champion)
-    }
-    console.log(this.state.championsNames)
-
-    }).catch(error=>{
-      console.log(error)
-    })
   }
 
   componentDidUpdate(){
-    //console.log(this.state.championsNames)
+    console.log(this.state.currentlySection)
+    if(this.state.currentlySection === 'champion'){
+      return(
+        <ChampionsSection 
+          SearchedInDad = {this.state.searchedName}
+        />
+      )
+    }else{
+      return(
+        <SummonersSection
+          currentlySection = {this.state.currentlySection}
+          SearchFromDad = {this.state.searchedName}
+        />
+      )
+    }
   }
 
   onChangeChampionSearch=(e)=>{
-    this.setState({ searchedName: e.target.value})
+    this.setState({ searchInput: e.target.value})
   }
+
+  onKeyDownEnter = (e) => {
+    if (e.key === 'Enter'){
+      this.setState({ searchedName: e.target.value })
+    }
+  }
+
+  onClikSearchButton = ()=>{
+    this.setState({ searchedName: this.state.searchInput })
+  }
+
+  onChangeSectionSelect=(e)=>{
+    this.setState({ currentlySection: e.target.value })
+  }
+
   render(){
 
-    const ChampionsList = this.state.championsNames.filter(championName=>{
-      return championName.includes(this.state.searchedName)
-    })
-
-    console.log(ChampionsList)
+    let SectionPrinted = ()=>{
+      if(this.state.currentlySection === 'champion'){
+        return(
+          <ChampionsSection 
+          SearchFromDad = {this.state.searchedName}
+          />
+        )
+      }else if(this.state.currentlySection === 'summoner'){
+        return(
+          <SummonersSection
+          currentlySection = {this.state.currentlySection}
+          SearchFromDad = {this.state.searchedName}
+          />
+        )
+      }
+    }
     
     return (
 
-      <div className="App">
+      <AppContainer>
 
-        <input onChange={this.onChangeChampionSearch}></input>
+        <AppTitle>LeagueInfos</AppTitle>
 
-        <div>{ChampionsList}</div>
+        <SearchBar
+         onChange={this.onChangeChampionSearch}
+         onKeyDown={this.onKeyDownEnter}
+         placeholder={'Search for Champion or Summoner name'}
+        />
         
-      </div>
+        <SearchButton onClick={this.onClikSearchButton}>Search</SearchButton>
+
+        <SectionSelect onChange={this.onChangeSectionSelect}>
+
+          <OptionSelect value='champion'>Champion View</OptionSelect>
+
+          <OptionSelect value='summoner'>Summoner View</OptionSelect>
+
+        </SectionSelect>
+
+        {SectionPrinted()}
+        
+      </AppContainer>
     );
   }
   
