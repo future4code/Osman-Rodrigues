@@ -1,25 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+import styled from 'styled-components';
+import {createMuiTheme, MuiThemeProvider} from '@material-ui/core';
+
+import LoginSection from './components/LoginSection/LoginSection';
+
+const myTheme = createMuiTheme({
+  palette:{
+    primary:{main: '#A30000'},
+    secondary:{main: '#f5f5f5'},
+  },
+})
+
+const AppContainer = styled.main`
+  border: 1px solid red;
+  height: 100%;
+  min-width: 620px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;  
+`
 
 function App() {
+
+  const [currentSection, setCurrentSection] = useState("LOGIN")
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <MuiThemeProvider theme={myTheme}>
+
+      <AppContainer>
+
+        <LoginSection
+        
+        />
+
+      </AppContainer>
+
+    </MuiThemeProvider>
+    
   );
 }
 
