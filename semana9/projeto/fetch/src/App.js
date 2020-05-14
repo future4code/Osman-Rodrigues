@@ -1,42 +1,65 @@
-import React, {useState} from 'react';
-import styled from 'styled-components';
-import {createMuiTheme, MuiThemeProvider} from '@material-ui/core';
+import React, {useState, useEffect} from 'react';
 
-import LoginSection from './components/LoginSection/LoginSection';
-
-const myTheme = createMuiTheme({
-  palette:{
-    primary:{main: '#A30000'},
-    secondary:{main: '#f5f5f5'},
-  },
-})
-
-const AppContainer = styled.main`
-  border: 1px solid red;
-  height: 100%;
-  min-width: 620px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;  
-`
+import {MyTheme, MyThemeCustomized, AppContainer, LoggedBackground} from './AppMainStyles'
+import LoginSection, {sendData} from './components/LoginSection/LoginSection';
+import ExploreSection from './components/ExploreSection/ExploreSection';
+import ChatSection from './components/ChatSection/ChatSection'
 
 function App() {
 
-  const [currentSection, setCurrentSection] = useState("LOGIN")
+  const [loggedOn, setLoggedOn] = useState(false);
+  const [currentSection, setCurrentSection] = useState('');
+  const [userObject, setUserObject] = useState({});
+  
+  const onClickLogin =()=>{
+    setLoggedOn(! loggedOn);
+    setCurrentSection('EXPLORE');
+    setUserObject(sendData())
+  }
+
+  const mountSection = ()=>{
+    if(currentSection !== ''){
+      const sectionMounted =()=>{
+        switch(currentSection){
+          case 'EXPLORE':
+            return( 
+              <ExploreSection
+              UserInfos = {userObject}
+              />
+            );
+          case 'CHAT':
+            return(
+              <ChatSection
+              UserInfos = {userObject}
+              />
+            );
+        }
+      }
+      
+      return(
+        <LoggedBackground>
+          {sectionMounted()}
+        </LoggedBackground>
+      )
+    }else{
+      return(
+        <LoginSection
+        OnClickLogin = {onClickLogin}
+        />
+      );
+    }
+  }
 
   return (
-    <MuiThemeProvider theme={myTheme}>
+    <MyThemeCustomized theme={MyTheme}>
 
       <AppContainer>
 
-        <LoginSection
-        
-        />
+        {mountSection()}
 
       </AppContainer>
 
-    </MuiThemeProvider>
+    </MyThemeCustomized>
     
   );
 }

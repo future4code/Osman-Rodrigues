@@ -1,14 +1,47 @@
-import React from 'react';
-import styled from 'styled-components';
-
+import React, {useState, useEffect} from 'react';
 import {
   LoginContainer, MainTitle,
   UserPasswordInput, UserNameInput,
   LoginButton
-} from './styles'
+} from './styles';
 
-function LoginSection() {
+let userName = '';
+let userPassword = '';
+
+export const sendData=()=>{
+  
+  return(
+    {
+    userName: userName, 
+    userPassword: userPassword,
+    }
+  )
+}
+
+function LoginSection(props) {
+  const [inputNameValue, setInputNameValue] = useState('');
+  const [inputPasswordValue, setInputPasswordValue] = useState('');
+
+  const onChangeInputName=(e)=>{
+    setInputNameValue(e.target.value)
+  
+  };
+  
+  const onChangeInputPassword=(e)=>{
+    setInputPasswordValue(e.target.value)
+  };
+
+  useEffect(()=>{
+
+    userName = inputNameValue;
+    userPassword = inputPasswordValue;
+
+    console.log(userName, userPassword)
+
+  }, [inputNameValue, inputPasswordValue])
+
   return (
+
     <LoginContainer>
       <MainTitle>FETSH</MainTitle>
 
@@ -17,6 +50,8 @@ function LoginSection() {
       variant="outlined"
       label="Nome de Usuário"
       color="secondary"
+      defaultValue={inputNameValue}
+      onChange={onChangeInputName}
       />
 
       <UserPasswordInput
@@ -24,11 +59,14 @@ function LoginSection() {
       label="Senha"
       color="secondary"
       margin="normal"
+      defaultValue={inputPasswordValue}
+      onChange={onChangeInputPassword}
       />
 
       <LoginButton
       variant="contained"
       color="secondary"
+      onClick={props.OnClickLogin}
       >Entrar</LoginButton>
 
     </LoginContainer>
