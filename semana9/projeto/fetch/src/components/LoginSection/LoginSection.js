@@ -6,13 +6,13 @@ import {
 } from './styles';
 
 let userName = '';
-let userPassword = '';
+let userPassword = 0;
 
 export const sendData=()=>{
   
   return(
     {
-    userName: userName, //Mudar para userName
+    userName: 'Osman', //userName,
     userPassword: userPassword,
     }
   )

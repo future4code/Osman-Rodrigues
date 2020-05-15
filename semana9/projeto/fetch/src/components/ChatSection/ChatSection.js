@@ -2,10 +2,8 @@ import React,{useState, useEffect} from 'react';
 import axios from 'axios';
 
 import {
-    ChatCard,ChatCardRow,ChatCardMedia,
-    ChatCardAvatar, ChatCardActions, ChatCardIconButton,
-    ChatCardLikeIcon, ChatCardContent, ChatWaitMedia,
-    ChatCardRejectIcon, ChatCardBioIcon, ChatCardClearMatchesButton
+    ChatCard,ChatCardAvatar, ChatCardIconButton,
+    ChatWaitMedia,ChatCardClearMatchesButton
 } from './styles';
 
 function ChatSection(props){
@@ -16,7 +14,6 @@ function ChatSection(props){
         axios.get(`https://us-central1-missao-newton.cloudfunctions.net/astroMatch/${
             props.UserInfos.userName
         }/matches`).then(response=>{
-            //console.log(response.data.matches)
             setMatchesList(response.data.matches);
         }).catch(err=>{
             
@@ -25,13 +22,11 @@ function ChatSection(props){
 
     useEffect(()=>{
         getMatches()
-        console.log(props.UserInfos.userName)
-    },[props.UserInfos.userName])
+    },[])
 
     const mountCard = ()=>{
 
         const onClickClearMatches=()=>{
-            console.log('matches excluidos')
             
             axios.put(`https://us-central1-missao-newton.cloudfunctions.net/astroMatch/${
                 props.UserInfos.userName
@@ -45,7 +40,7 @@ function ChatSection(props){
         
         const mountList= matchesList.map(person =>{
             const onClickPerson = ()=>{
-                console.log(`Conversando com ${person.name}...`)
+                window.alert(`Iniciando conversa com ${person.name}...`)
             }
             return(
                 <ChatCardIconButton size="small" onClick={onClickPerson}>
