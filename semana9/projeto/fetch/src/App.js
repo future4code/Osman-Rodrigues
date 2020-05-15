@@ -1,6 +1,10 @@
 import React, {useState, useEffect} from 'react';
 
-import {MyTheme, MyThemeCustomized, AppContainer, LoggedBackground} from './AppMainStyles'
+import {
+  MyTheme, MyThemeCustomized, AppContainer, 
+  LoggedBackground, ChangeSectionIconButton, ChatIcon,
+  ExploringIcon
+} from './AppMainStyles'
 import LoginSection, {sendData} from './components/LoginSection/LoginSection';
 import ExploreSection from './components/ExploreSection/ExploreSection';
 import ChatSection from './components/ChatSection/ChatSection'
@@ -12,13 +16,13 @@ function App() {
   const [userObject, setUserObject] = useState({});
   
   const onClickLogin =()=>{
-    setLoggedOn(! loggedOn);
+    setLoggedOn(true);
     setCurrentSection('EXPLORE');
     setUserObject(sendData())
   }
 
   const mountSection = ()=>{
-    if(currentSection !== ''){
+    if(loggedOn === true && currentSection !== ''){
       const sectionMounted =()=>{
         switch(currentSection){
           case 'EXPLORE':
@@ -39,6 +43,24 @@ function App() {
       return(
         <LoggedBackground>
           {sectionMounted()}
+
+          <ChangeSectionIconButton
+            onClick={()=>{
+              setCurrentSection(
+                currentSection === 'EXPLORE' ?
+                'CHAT': 'EXPLORE' 
+              )
+            }} 
+            color='primary'
+          >
+
+            {
+            currentSection === 'EXPLORE'?
+             <ChatIcon/>:<ExploringIcon/>
+            }
+
+          </ChangeSectionIconButton>
+
         </LoggedBackground>
       )
     }else{
@@ -49,6 +71,10 @@ function App() {
       );
     }
   }
+
+  useEffect(()=>{
+    //console.log(loggedOn, currentSection) 
+  }, [loggedOn, currentSection])
 
   return (
     <MyThemeCustomized theme={MyTheme}>

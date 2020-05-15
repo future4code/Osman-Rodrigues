@@ -12,7 +12,7 @@ export const sendData=()=>{
   
   return(
     {
-    userName: userName, 
+    userName: userName, //Mudar para userName
     userPassword: userPassword,
     }
   )

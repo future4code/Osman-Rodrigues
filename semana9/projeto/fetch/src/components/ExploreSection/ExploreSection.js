@@ -28,7 +28,9 @@ function ExploreSection(props){
             suggestAPerson()
         ):
         setSuggestedPerson( suggestedPerson) 
-    }, [suggestedPerson])
+
+        console.log(props.UserInfos.userName)
+    }, [suggestedPerson, props.UserInfos.userName])
 
     const mountCard =()=>{
         if(suggestedPerson !== ''){
@@ -58,9 +60,7 @@ function ExploreSection(props){
                 <ExploreCard>
                     <ExploreCardHeader
                         avatar={
-                            <ExploreCardAvatar>
-                                {suggestedPerson.name[0]}
-                            </ExploreCardAvatar>
+                            <ExploreCardAvatar src={suggestedPerson.photo}/>
                         }
                         title={suggestedPerson.name}
                         subheader={`${suggestedPerson.age} anos`}

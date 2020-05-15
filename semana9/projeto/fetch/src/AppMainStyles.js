@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 import {createMuiTheme, MuiThemeProvider} from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
+import ExploreIcon from '@material-ui/icons/Explore';
 
 export const MyTheme = createMuiTheme({
   palette:{
@@ -26,4 +29,15 @@ export const LoggedBackground = styled.div`
   display: grid;
   grid-template: 0.5fr 0.2fr 3fr / repeat(4,1fr);
   column-gap: 10px;
+`;
+
+export const ChangeSectionIconButton = styled(IconButton)`
+  position: fixed;
+  
+`;
+export const ChatIcon = styled(MailOutlineIcon)`
+
+`;
+export const ExploringIcon = styled(ExploreIcon)`
+
 `;

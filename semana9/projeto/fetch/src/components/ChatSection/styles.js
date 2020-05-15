@@ -10,16 +10,18 @@ import IconButton from '@material-ui/core/IconButton';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import SubjectIcon from '@material-ui/icons/Subject';
+import Button from '@material-ui/core/Button'
 
 export const ChatCard = styled(Card)`
     grid-row: 3 / 4 ;
     grid-column: 1 / 5;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     justify-content: center;      
 `;
-export const ChatCardHeader = styled(CardHeader)`
-
+export const ChatCardRow = styled(CardHeader)`
+     
 `; 
 export const ChatCardMedia = styled(CardMedia)`
     width: 100%;
@@ -27,13 +29,11 @@ export const ChatCardMedia = styled(CardMedia)`
 `;
 export const ChatWaitMedia = styled.img`
     display: flex;
-    
     align-self: center;
      
 `;
 export const ChatCardContent = styled.p`
     font-family: Roboto;
-    
     margin: 0;
     text-align: justify;
     width: 100%;
@@ -46,7 +46,8 @@ export const ChatCardActions = styled(CardActions)`
 `;
 
 export const ChatCardAvatar = styled(Avatar)`
-
+    border: 1px solid black;
+    
 `;
 export const ChatCardIconButton = styled(IconButton)`
 
@@ -59,4 +60,8 @@ export const ChatCardRejectIcon = styled(HighlightOffIcon)`
 `;
 export const ChatCardBioIcon = styled(SubjectIcon)`
 
+`;
+export const ChatCardClearMatchesButton = styled(Button)`
+    align-self: center;
+    position: fixed;   
 `;
