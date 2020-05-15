@@ -13,7 +13,7 @@ import ChatSection from './components/ChatSection/ChatSection'
 function App() {
 
   const [loggedOn, setLoggedOn] = useState(true);
-  const [currentSection, setCurrentSection] = useState('CHAT');
+  const [currentSection, setCurrentSection] = useState('');
   const [userObject, setUserObject] = useState({});
   
   const onClickLogin =()=>{

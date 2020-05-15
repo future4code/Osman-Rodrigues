@@ -12,7 +12,7 @@ export const sendData=()=>{
   
   return(
     {
-    userName: 'Osman', //userName,
+    userName: userName,
     userPassword: userPassword,
     }
   )
@@ -35,8 +35,6 @@ function LoginSection(props) {
 
     userName = inputNameValue;
     userPassword = inputPasswordValue;
-
-    console.log(userName, userPassword)
 
   }, [inputNameValue, inputPasswordValue])
 
