@@ -37,7 +37,7 @@ function HomePage(){
                 </DialogText>
                 <ToSectionButton
                 onClick={onClickToLogin}
-                variant='contained'
+                variant='outlined'
                 >
                     Quero criar viagens!
                 </ToSectionButton>
@@ -47,7 +47,7 @@ function HomePage(){
                 </DialogText>
                 <ToSectionButton
                 onClick={onClickToForms}
-                variant='contained'
+                variant='outlined'
                 >
                    Quero me candidatar!
                 </ToSectionButton>

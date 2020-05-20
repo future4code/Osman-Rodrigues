@@ -1,9 +1,11 @@
-import React from "react"
-import {Switch, Route, BrowserRouter} from "react-router-dom"
+import React from "react";
+import {Switch, Route, BrowserRouter} from "react-router-dom";
 
-import HomePage from "./components/HomePage"
+import HomePage from "./components/HomePage";
+import ApplyFormsPage from "./components/ApplyFormsPage"
 
 import "./AppMainStyles";
+
 
 function App() {
 
@@ -38,7 +40,9 @@ function App() {
         </Route>
 
         <Route exact path="/application-form">
-          <h1>Forms</h1>
+          <ApplyFormsPage
+          
+          />
         </Route>
       </Switch>
     </BrowserRouter>
