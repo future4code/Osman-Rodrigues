@@ -2,14 +2,16 @@ import React from "react";
 import {Switch, Route, BrowserRouter} from "react-router-dom";
 
 import HomePage from "./components/HomePage";
-import ApplyFormsPage from "./components/ApplyFormsPage"
+import ApplyFormsPage from "./components/ApplyFormsPage";
+import LoginPage from "./components/LoginPage"
 
 import "./AppMainStyles";
 
 
 function App() {
 
-  
+  const adminKey = 'osman'
+
   return (
     <BrowserRouter>
       <Switch>
@@ -20,7 +22,9 @@ function App() {
         </Route>
 
         <Route exact path="/login">
-          <h1>Login</h1>
+          <LoginPage
+            AdminKey={adminKey}
+          />
         </Route>
 
         <Route exact path="/admin">
@@ -41,7 +45,7 @@ function App() {
 
         <Route exact path="/application-form">
           <ApplyFormsPage
-          
+            AdminKey={adminKey}
           />
         </Route>
       </Switch>

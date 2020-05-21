@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import axios from 'axios';
 import {useHistory} from 'react-router-dom'
+import axios from 'axios'
 
 import {
     FormsPageContainer, ControledForms, QuestionInput,
@@ -10,9 +10,10 @@ import {
 
 import {DialogText} from '../HomePage/styles';
 
-function ApplyFormsPage(){
+function ApplyFormsPage(props){
+    const adminKey = props.AdminKey
     const history = useHistory();
-
+    
     const [tripsList, setTripsList] = useState([]);
     const [applicantInfos, setApplicantInfos] = useState({
         name:'',
@@ -28,7 +29,7 @@ function ApplyFormsPage(){
             setApplicantInfos({...applicantInfos,[e.target.name]: e.target.value })    
         ):
         window.alert('Não pode haver campos vazios no formulário!')    
-    }
+    };
 
     const onClickCheckBox =(e)=>{
         const tripSelected = e.target.id;
@@ -40,17 +41,45 @@ function ApplyFormsPage(){
         }else{
             applicantInfos.tripsId.push(tripSelected)
         }     
-    }
+    };
+
+    const onClickSubmitInfos = ()=>{
+        if(applicantInfos.tripsId.length !== 0){
+            applicantInfos.tripsId.forEach(tripId=>{
+                const body = {
+                    name: applicantInfos.name,
+                    age: applicantInfos.age,
+                    applicationText: applicantInfos.applicationText,
+                    profession: applicantInfos.profession,
+                    country: applicantInfos.country, 
+                }
+                axios.
+                    post(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/${
+                        adminKey
+                    }/trips/${
+                        tripId
+                    }/apply`, body,).
+                    then(response=>{
+                        window.alert(response.data.message)
+                    }).
+                    catch(err=>{
+                    window.alert(err)
+                    })
+            })
+        }else{
+            window.alert('Candidatura não registrada! Verifque se há algum campo não preenchido corretamente.')
+        } 
+    };
 
     useEffect(()=>{
         axios.
-        get('https://us-central1-labenu-apis.cloudfunctions.net/labeX/osman/trips').
+        get(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/${
+            adminKey
+        }/trips`).
         then(response=>{
-
             setTripsList(response.data.trips)
-        }).
-        catch(err=>{
-            window.alert('Não estamos aceitando candidatos no momento. Obrigado pela preferência!')
+        }).catch(err=>{
+            window.alert('No momento não estamos aceitando candidaturas. Obrigado pela preferência!')
             history.push('/')
         })
     },[])
@@ -156,7 +185,7 @@ function ApplyFormsPage(){
 
             <SendFormsButton
             variant="outlined"
-            onClick={()=>{console.log(applicantInfos)}}
+            onClick={onClickSubmitInfos}
             >
                 Enviar Candidatura
             </SendFormsButton>
