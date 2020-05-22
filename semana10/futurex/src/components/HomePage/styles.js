@@ -15,7 +15,7 @@ export const Logo = styled.img`
     max-width: 500px;
 `;
 export const WelcomeText = styled.h1`
- 
+    text-align: center;
 `;
 export const DialogText = styled.h3`
     text-align: center;
