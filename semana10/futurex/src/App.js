@@ -16,7 +16,7 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/home">
+        <Route path="/home">
           <HomePage
           
           />
