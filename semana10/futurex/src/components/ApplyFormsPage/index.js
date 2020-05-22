@@ -101,7 +101,7 @@ function ApplyFormsPage(props){
                     margin="normal"
                     name='name'
                     onChange={onChangeInputs}
-                    defaultValue={applicantInfos.name}
+                    value={applicantInfos.name}
                 />
                 <QuestionInput
                     required
@@ -114,7 +114,7 @@ function ApplyFormsPage(props){
                     margin="normal"
                     name='age'
                     onChange={onChangeInputs}
-                    defaultValue={applicantInfos.age}
+                    value={applicantInfos.age}
                 />
                 <QuestionInput
                     required
@@ -127,7 +127,7 @@ function ApplyFormsPage(props){
                     margin="normal"
                     name='profession'
                     onChange={onChangeInputs}
-                    defaultValue={applicantInfos.profession}
+                    value={applicantInfos.profession}
                 />
                 <QuestionInput
                     required
@@ -140,7 +140,7 @@ function ApplyFormsPage(props){
                     margin="normal"
                     name='country'
                     onChange={onChangeInputs}
-                    defaultValue={applicantInfos.country}
+                    value={applicantInfos.country}
                 />
                 <QuestionInput
                     required
@@ -155,7 +155,7 @@ function ApplyFormsPage(props){
                     margin="normal"
                     name='applicationText'
                     onChange={onChangeInputs}
-                    defaultValue={applicantInfos.applicationText}
+                    value={applicantInfos.applicationText}
                 />
 
                 <CheckBoxInput margin="normal">

@@ -4,10 +4,10 @@ import {Switch, Route, BrowserRouter} from "react-router-dom";
 import HomePage from "./components/HomePage";
 import ApplyFormsPage from "./components/ApplyFormsPage";
 import LoginPage from "./components/LoginPage";
-import AdminPage from "./components/AdminPage"
+import AdminPage from "./components/AdminPage";
+import CreateTripPage from "./components/CreateTripPage";
 
 import "./AppMainStyles";
-
 
 function App() {
 
@@ -15,10 +15,11 @@ function App() {
 
   return (
     <BrowserRouter>
+      
       <Switch>
-        <Route path="/home">
+        <Route exact path="/">
           <HomePage
-          
+            
           />
         </Route>
 
@@ -39,7 +40,9 @@ function App() {
         </Route>
 
         <Route exact path="/admin/:userId/create-trip">
-          <h1>Create trip</h1>
+          <CreateTripPage
+            AdminKey = {adminKey}
+          />
         </Route>
 
         <Route exact path="/admin/:userId/applicants">
@@ -51,9 +54,9 @@ function App() {
             AdminKey={adminKey}
           />
         </Route>
+
       </Switch>
     </BrowserRouter>
-    
   );
 }
 
