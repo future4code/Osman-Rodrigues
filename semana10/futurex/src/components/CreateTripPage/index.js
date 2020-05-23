@@ -1,17 +1,19 @@
-import React,{useState, useEffect} from 'react';
-import {useHistory} from 'react-router-dom'
+import React,{useState} from 'react';
+import {useHistory, useParams} from 'react-router-dom';
+import axios from 'axios';
+
 import {
     CreateTripPageContainer, ControledCreateTripForms,
     CreateTripInput, CreateTripButton
 } from './styles';
 
-import {DialogText} from '../HomePage/styles'
+import {DialogText} from '../HomePage/styles';
 
 function CreateTripPage(props){
 
     const adminKey = props.AdminKey;
-    const history= useHistory()
-
+    const history = useHistory();
+    const pathParams = useParams();
 
     const [tripInfosInputs, setTripInfosInputs] = useState({
         name:'',
@@ -19,21 +21,75 @@ function CreateTripPage(props){
         date:'',
         description:'',
         durationInDays:''
-    })
+    });
+
+    const [localInfos, setLocalInfos] = useState(JSON.parse(
+        localStorage.getItem('userLoginInfo')
+    ));
+
+    const validInfosObject = (infosObject)=>{
+            let objectLeng = 0;
+            let emptyInfos = 0;
+
+            for(let info in infosObject ){
+                if(infosObject[info].trim() === ''){
+                    emptyInfos += 1 
+                };
+                objectLeng += 1;
+            }
+            return(
+                emptyInfos > 0? 
+                (false, `${emptyInfos} de ${objectLeng} info(s) solicitada(s) vazia(s)!`):  
+                true
+            )
+    };
 
     const onChangeCreateTripInputs=(e)=>{
         setTripInfosInputs({
             ...tripInfosInputs, [e.target.name]: e.target.value
         })
-    }
+    };
 
     const onClickCreateTrip=()=>{
-        console.log(tripInfosInputs)
-    }
+        if(localInfos !== null){
+            if(validInfosObject(tripInfosInputs)=== true){
 
-    useEffect(()=>{
-        //console.log(tripInfosInputs)
-    },[tripInfosInputs])
+                window.alert('Solicitação enviada! Aguarde confirmação.')
+
+                const body = {
+                    name: tripInfosInputs.name,
+                    planet: tripInfosInputs.planet,
+                    date: tripInfosInputs.date,
+                    description: {
+                        text: tripInfosInputs.description,
+                        owner: localInfos.loggedEmail
+                    },
+                    durationInDays: tripInfosInputs.durationInDays
+                }
+    
+                axios.
+                post(`htps://us-central1-labenu-apis.cloudfunctions.net/labeX/${
+                    adminKey
+                }/trips`, body,{
+                    headers:{
+                        'auth': pathParams.userToken
+                    }
+                }).
+                then(response=>{
+                    window.alert(`Viagem "${response.data.trip.name}" criada com sucesso!`)
+                }).
+                catch(err=>{
+                    window.alert('Algo deu errado! Tente novamente mais tarde.')
+                })
+    
+            }else{
+                window.alert(validInfosObject(tripInfosInputs))
+            }
+        }else{
+            window.alert('Sessão expirada! Faça login novamente.')
+            history.replace('/login')
+        }  
+    };
 
     return(
         <CreateTripPageContainer>

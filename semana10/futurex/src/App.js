@@ -6,8 +6,10 @@ import ApplyFormsPage from "./components/ApplyFormsPage";
 import LoginPage from "./components/LoginPage";
 import AdminPage from "./components/AdminPage";
 import CreateTripPage from "./components/CreateTripPage";
+import MyTripsPage from "./components/MyTripsPage";
 
 import "./AppMainStyles";
+import { MyTripsPageContainer } from "./components/MyTripsPage/styles";
 
 function App() {
 
@@ -35,17 +37,19 @@ function App() {
           />
         </Route>
 
-        <Route exact path="/admin/:userId/trips">
-          <h1>Trips</h1>
+        <Route exact path="/admin/:userId/myTrips/:userToken">
+          <MyTripsPage
+            AdminKey={adminKey}
+          />
         </Route>
 
-        <Route exact path="/admin/:userId/create-trip">
+        <Route exact path="/admin/:userId/createTrip/:userToken">
           <CreateTripPage
             AdminKey = {adminKey}
           />
         </Route>
 
-        <Route exact path="/admin/:userId/applicants">
+        <Route exact path="/admin/:userId/applicants/:userToken">
           <h1>Applicants</h1>
         </Route>
 

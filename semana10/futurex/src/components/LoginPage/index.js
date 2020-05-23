@@ -9,7 +9,7 @@ import {
 
 import {Logo, WelcomeText} from '../HomePage/styles';
 
-let userLoggedInfos;
+export let userLoggedInfos;
 
 function LoginPage(props){
 
@@ -89,9 +89,9 @@ function LoginPage(props){
                         email: response.data.user.email,
                     };
 
-                    localStorage.setItem("userLoginInfo", JSON.stringify(
-                        {loggedEmail:loginInfos.email, beLogged: true}
-                    ))
+                    localStorage.setItem("userLoginInfo", JSON.stringify({
+                        beLogged: true, loggedEmail: userLoggedInfos.email
+                    }))
 
                     history.replace(`/admin/${
                         userLoggedInfos.id

@@ -8,7 +8,7 @@ import {
 
 import {WelcomeText} from '../HomePage/styles';
 
-export const getPathParamCredential = (credential, urlParam)=>{
+const getPathParamCredential = (credential, urlParam)=>{
     const convertedCredential = String(credential).toLowerCase()
     let credentialLeng = 0;
     let selectedCredential = '';
@@ -31,13 +31,13 @@ export const getPathParamCredential = (credential, urlParam)=>{
     }
 
     return selectedCredential
-}
+};
 
 function AdminPage(){
 
     const [localInfos, setLocalInfos] = useState(JSON.parse(
         localStorage.getItem('userLoginInfo')
-    ))
+    ));
 
     const pathParams = useParams();
     const history = useHistory();
@@ -45,7 +45,7 @@ function AdminPage(){
     const onClickLogout=()=>{
         localStorage.setItem('userLoginInfo','')
         history.replace('/login')
-    }
+    };
 
     const validedLoginSection =()=>{
         if(
@@ -60,23 +60,29 @@ function AdminPage(){
                         <AdminButton
                         onClick={()=>{history.push(`/admin/${
                             getPathParamCredential('id', pathParams.userCredentials)
-                        }/create-trip`)}}
+                        }/createTrip/${
+                            getPathParamCredential('token', pathParams.userCredentials)
+                        }`)}}
                         variant='outlined'
                         >Criar Viagem</AdminButton>
         
                         <AdminButton
                         onClick={()=>{history.push(`/admin/${
                             getPathParamCredential('id', pathParams.userCredentials)
-                        }/trips`)}}
+                        }/myTrips/${
+                            getPathParamCredential('token', pathParams.userCredentials)
+                        }`)}}
                         variant='outlined'
-                        >Ver Viagens Criadas</AdminButton>
+                        >Minhas Viagens </AdminButton>
         
                         <AdminButton
                         onClick={()=>{history.push(`/admin/${
                             getPathParamCredential('id', pathParams.userCredentials)
-                        }/applicants`)}}
+                        }/applicants/${
+                            getPathParamCredential('token', pathParams.userCredentials)
+                        }`)}}
                         variant='outlined'
-                        >Ver Candidatos</AdminButton>
+                        >Candidatos</AdminButton>
         
                         <AdminButton
                         onClick={onClickLogout}

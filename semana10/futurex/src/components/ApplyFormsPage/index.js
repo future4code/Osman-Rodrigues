@@ -82,7 +82,7 @@ function ApplyFormsPage(props){
             window.alert('No momento não estamos aceitando candidaturas. Obrigado pela preferência!')
             history.push('/')
         })
-    },[])
+    },[]);
 
     return(
         <FormsPageContainer>
@@ -177,7 +177,7 @@ function ApplyFormsPage(props){
                                 )
                             })
                         ):
-                        <h3>Carregando viagens disponíveis...</h3>   
+                        <h3>Buscando viagens disponíveis...</h3>   
                     }
                 </CheckBoxInput>
                 
