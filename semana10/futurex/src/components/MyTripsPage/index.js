@@ -5,63 +5,15 @@ import {useHistory} from 'react-router-dom';
 import {
     MyTripsPageContainer,SelectableTripsPanel,SelectedTripDetailsPanel,
     MyTripsButton,PanelActionArea,PanelContentArea,TripName,
-    TripDetail, TripDetailTitle, TripDetailSuggest
+    TripDetail, TripDetailCardTitle, TripDetailSuggest
 
 } from './styles';
 
-import {DialogText} from '../HomePage/styles'
+import {DialogText} from '../HomePage/styles';
 
-function MyTripsPage(props){
-
-    const adminKey = props.AdminKey;
-    const history = useHistory();
-
-    const [localInfos, setLocalInfos] = useState(JSON.parse(
-        localStorage.getItem('userLoginInfo')
-    ));
+export function useGetUserTrips(adminKey, localInfos){
 
     const [myTripsList, setMyTripsList] = useState([]);
-    const [selectedTrip, setSelectedTrip] = useState();
-    const [seeTripDescription, setSeeTripDescription] = useState(false);
-
-    const onClickSeeDetails =(e)=>{
-        myTripsList.forEach(trip=>{
-            if(trip.id === e.target.id){
-                setSelectedTrip(trip)
-            }
-        })
-    };
-
-    const mountTripDetailsPanel=()=>{
-        return(
-            <PanelContentArea>
-                <TripDetailTitle>Detalhes</TripDetailTitle>
-                {
-                    seeTripDescription === true?
-                    <TripDetail>
-                        {selectedTrip.description.text}
-                    </TripDetail>
-                    :
-                    <TripDetail>
-                        Nome: {selectedTrip.name}
-                        <br/>
-                        Destino: {selectedTrip.planet}
-                        <br/>
-                        Partida: {selectedTrip.date}
-                        <br/>
-                        Duração: {selectedTrip.durationInDays} dias
-                    </TripDetail>
-                }  
-                <TripDetailSuggest>
-                    {
-                        seeTripDescription === true ?
-                        '':'Clique para ver a Descrição'
-                    }
-                    
-                </TripDetailSuggest>
-            </PanelContentArea>
-        )
-    };
 
     useEffect(()=>{
 
@@ -81,6 +33,62 @@ function MyTripsPage(props){
         })
     }, []);
 
+    return myTripsList
+}
+
+function MyTripsPage(props){
+
+    const adminKey = props.AdminKey;
+    const history = useHistory();
+
+    const [localInfos, setLocalInfos] = useState(JSON.parse(
+        localStorage.getItem('userLoginInfo')
+    ));
+    const [selectedTrip, setSelectedTrip] = useState();
+    const [seeTripDescription, setSeeTripDescription] = useState(false);
+    const userTripsList = useGetUserTrips(adminKey, localInfos);
+
+    const onClickSeeDetails =(e)=>{
+        userTripsList.forEach(trip=>{
+            if(trip.id === e.target.id){
+                setSelectedTrip(trip)
+            }
+        })
+    };
+
+    const mountTripDetailsPanel=()=>{
+        return(
+            <PanelContentArea>
+                <TripDetailCardTitle>Detalhes</TripDetailCardTitle>
+                {
+                    seeTripDescription === true?
+                    <TripDetail>
+                        {selectedTrip.description.text}
+                    </TripDetail>
+                    :
+                    <TripDetail>
+                        Título: {selectedTrip.name}
+                        <br/>
+                        Destino: {selectedTrip.planet}
+                        <br/>
+                        Partida: {selectedTrip.date}
+                        <br/>
+                        Duração: {selectedTrip.durationInDays} dias
+                        <br/><br/>
+                        Id: {localInfos.loggedEmail[0]+'t'+selectedTrip.id}
+                    </TripDetail>
+                }  
+                <TripDetailSuggest>
+                    {
+                        seeTripDescription === true ?
+                        'Clique para ver outros detalhes':'Clique para ver a descrição'
+                    }
+                    
+                </TripDetailSuggest>
+            </PanelContentArea>
+        )
+    };
+
     return(
         <MyTripsPageContainer>
             <DialogText>Minhas Viagens</DialogText>
@@ -88,8 +96,8 @@ function MyTripsPage(props){
             <SelectableTripsPanel>
                 <PanelActionArea>
                     {
-                        myTripsList.length > 0 ?
-                        myTripsList.map(trip=>{
+                        userTripsList.length > 0 ?
+                        userTripsList.map(trip=>{
                             return(
                                 <TripName
                                 id={trip.id}
