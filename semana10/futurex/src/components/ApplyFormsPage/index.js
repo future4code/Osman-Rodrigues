@@ -93,8 +93,6 @@ function ApplyFormsPage(props){
         })
     },[]);
 
-    //console.log(tripsList)
-
     return(
         <FormsPageContainer>
 

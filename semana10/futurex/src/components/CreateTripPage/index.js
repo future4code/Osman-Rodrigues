@@ -9,6 +9,26 @@ import {
 
 import {DialogText} from '../HomePage/styles';
 
+export const convertDateInput =(dateInput)=>{
+    if(dateInput.includes('-')){
+        const charIndex = dateInput.indexOf('-');
+        const strLen = dateInput.length;
+        let convertedDate ;
+        
+        if(charIndex === 4){
+            convertedDate = 
+            `${
+                dateInput[strLen-2]+dateInput[strLen-1]
+            }/${
+                dateInput[strLen-5]+dateInput[strLen-4]
+            }/${
+                dateInput[strLen-strLen]+dateInput[strLen-9]+dateInput[strLen-8]+dateInput[strLen-7]
+            }`
+            return convertedDate
+        }
+    }
+}
+
 function CreateTripPage(props){
 
     const adminKey = props.AdminKey;
@@ -26,6 +46,8 @@ function CreateTripPage(props){
     const [localInfos, setLocalInfos] = useState(JSON.parse(
         localStorage.getItem('userLoginInfo')
     ));
+    
+    convertDateInput(tripInfosInputs.date)
 
     const validInfosObject = (infosObject)=>{
             let objectLeng = 0;
@@ -54,33 +76,39 @@ function CreateTripPage(props){
         if(localInfos !== null){
             if(validInfosObject(tripInfosInputs)=== true){
 
-                window.alert('Solicitação enviada! Aguarde confirmação.')
+                window.alert('Solicitação enviada! Aguarde confirmação.');
 
                 const body = {
                     name: tripInfosInputs.name,
                     planet: tripInfosInputs.planet,
-                    date: tripInfosInputs.date,
+                    date: convertDateInput(tripInfosInputs.date),
                     description: {
                         text: tripInfosInputs.description,
                         owner: localInfos.loggedEmail
                     },
                     durationInDays: tripInfosInputs.durationInDays
-                }
-    
+                };
+                
                 axios.
-                post(`htps://us-central1-labenu-apis.cloudfunctions.net/labeX/${
+                post(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/${
                     adminKey
                 }/trips`, body,{
                     headers:{
-                        'Content-Type': 'application/json',
                         'auth': pathParams.userToken
                     }
                 }).
                 then(response=>{
-                    window.alert(`Viagem "${response.data.trip.name}" criada com sucesso!`)
+                    window.alert(`Viagem "${response.data.trip.name}" criada com sucesso!`);
+
+                    setTripInfosInputs({
+                        name:'',
+                        planet:'',
+                        date:'',
+                        description:'',
+                        durationInDays:''
+                    });
                 }).
                 catch(err=>{
-                    console.log(err)
                     window.alert('Algo deu errado! Tente novamente mais tarde.')
                 })
     
@@ -93,7 +121,6 @@ function CreateTripPage(props){
         }  
     };
 
-    console.log(pathParams.userToken, adminKey, )
     return(
         <CreateTripPageContainer>
             <DialogText>Criação de Viagem</DialogText>

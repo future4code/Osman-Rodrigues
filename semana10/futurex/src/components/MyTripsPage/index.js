@@ -1,6 +1,6 @@
 import React,{ useState, useEffect } from 'react';
 import axios from 'axios';
-import {useHistory} from 'react-router-dom';
+import {useHistory, useParams} from 'react-router-dom';
 
 import {
     MyTripsPageContainer,SelectableTripsPanel,SelectedTripDetailsPanel,
@@ -33,7 +33,7 @@ export function useGetUserTrips(adminKey, localInfos){
                 }
             });
         })
-    }, []);
+    }, [myTripsList]);
 
     return myTripsList
 }
@@ -48,6 +48,7 @@ function MyTripsPage(props){
     ));
     const [selectedTrip, setSelectedTrip] = useState();
     const [seeTripDescription, setSeeTripDescription] = useState(false);
+
     const userTripsList = useGetUserTrips(adminKey, localInfos);
 
     const onClickSeeDetails =(e)=>{
@@ -76,14 +77,20 @@ function MyTripsPage(props){
                         Partida: {selectedTrip.date}
                         <br/>
                         Duração: {selectedTrip.durationInDays} dias
-                        <br/><br/>
-                        Id: {localInfos.loggedEmail[0]+'t'+selectedTrip.id}
                     </TripDetail>
-                }  
+                }
+
+                <MyTripsButton
+                variant='outlined'
+                onClick={onClickDeleteTrip}
+                >
+                Excluir
+                </MyTripsButton>
+
                 <TripDetailSuggest>
                     {
                         seeTripDescription === true ?
-                        'Clique para ver outros detalhes':'Clique para ver a descrição'
+                        'Ver outros detalhes':'Ver a descrição'
                     }
                     
                 </TripDetailSuggest>
@@ -92,7 +99,6 @@ function MyTripsPage(props){
     };
 
     const mountTripsList =()=>{
-        
         const mountedList = userTripsList.map(trip=>{
                 return(
                     <CardActionArea>
@@ -107,6 +113,24 @@ function MyTripsPage(props){
             })
 
         return mountedList
+    };
+
+    const onClickDeleteTrip=()=>{
+        window.confirm(`Confirmar exclusão de '${selectedTrip.name}?'`)?
+        axios.
+        delete(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/${
+            adminKey
+        }/trips/${
+            selectedTrip.id
+        }
+        `). 
+        then(response=>{
+            window.alert(`'${selectedTrip.name}' foi excluída!`);
+        }). 
+        catch(err=>{
+            window.alert('Algo deu errado! Exclusão cancelada.')
+        })
+        : window.alert('Exclusão cancelada.')
     };
 
     return(
