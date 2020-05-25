@@ -57,7 +57,7 @@ function ApplyFormsPage(props){
                         tripId
                     }/apply`, body,).
                     then(response=>{
-                        window.alert(`Candidatura aprovada!`);
+                        window.alert(`Candidatura registrada com sucesso!`);
 
                         setApplicantInfos({
                             name:'',

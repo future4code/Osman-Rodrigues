@@ -108,33 +108,34 @@ function ApplicantsPage(props){
                     {
                     showTripApplicants === true ?
                         <PanelContentArea>
-                            <TripNameApplicants
-                            id={selectedTrip.id}
-                            onClick={onClickShowApplicants}
-                            >
-                            {selectedTrip.name} ({selectedTrip.date})
-                            </TripNameApplicants>
-                                {
-                                allTripApplicants.candidates !== undefined ?
-                                allTripApplicants.candidates.map(applicant=>{
-                                    return (
-                                        <PanelActionArea>
-                                            <ApplicantName
-                                            id={applicant.id}
-                                            onClick={onClickSelectApplicant}
-                                            >{applicant.name} ({applicant.country})
-                                            </ApplicantName>
-                                        </PanelActionArea>
-                                    )
-                                })
-                                :<DialogText>Buscando candidatos...</DialogText>
-                                }
-                                
+                            <PanelActionArea>
+                                <TripName
+                                id={selectedTrip.id} 
+                                onClick={onClickShowApplicants}
+                                >{selectedTrip.name} ({selectedTrip.date})
+                                </TripName>
+                            </PanelActionArea>
+                            {
+                            allTripApplicants.candidates !== undefined ?
+                            allTripApplicants.candidates.map(applicant=>{
+                                return (
+                                    <PanelActionArea>
+                                        <ApplicantName
+                                        id={applicant.id}
+                                        onClick={onClickSelectApplicant}
+                                        >{applicant.name} ({applicant.country})
+                                        </ApplicantName>
+                                    </PanelActionArea>
+                                )
+                            })
+                            :<DialogText>Buscando candidatos...</DialogText>
+                            }
                         </PanelContentArea>
                     :
                         myTripsList.length !== 0 ?
-                            myTripsList.map(trip=>{
-                                return(
+                        myTripsList.map(trip=>{
+                            return(
+                                <PanelContentArea>
                                     <PanelActionArea>
                                         <TripName
                                         id={trip.id} 
@@ -142,9 +143,10 @@ function ApplicantsPage(props){
                                         >{trip.name} ({trip.date})
                                         </TripName>
                                     </PanelActionArea>
-                                ) 
-                            })
-                        :<DialogText>Buscando viagens...</DialogText>
+                                </PanelContentArea>
+                            ) 
+                        })
+                        :<DialogText>Buscando viagens...</DialogText>   
                     }                   
             </ApplicantsPanel>
 
