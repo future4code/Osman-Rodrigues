@@ -10,6 +10,7 @@ import {
 } from './styles';
 
 import {DialogText} from '../HomePage/styles';
+import { CardActionArea } from '@material-ui/core';
 
 export function useGetUserTrips(adminKey, localInfos){
 
@@ -23,10 +24,11 @@ export function useGetUserTrips(adminKey, localInfos){
         }/trips`). 
         then(response=>{
             const allTripsList = response.data.trips;
+            
             allTripsList.forEach(trip => {
                 if(typeof(trip.description) === 'object'){
                     if(trip.description.owner === localInfos.loggedEmail){
-                        setMyTripsList([... myTripsList, trip])
+                        setMyTripsList(allTripsList)
                     }
                 }
             });
@@ -89,27 +91,35 @@ function MyTripsPage(props){
         )
     };
 
+    const mountTripsList =()=>{
+        
+        const mountedList = userTripsList.map(trip=>{
+                return(
+                    <CardActionArea>
+                        <TripName
+                        id={trip.id}
+                        onClick={onClickSeeDetails}
+                        >
+                        {trip.name} ({trip.date})
+                        </TripName>
+                    </CardActionArea>
+                )
+            })
+
+        return mountedList
+    };
+
     return(
         <MyTripsPageContainer>
             <DialogText>Minhas Viagens</DialogText>
 
             <SelectableTripsPanel>
-                <PanelActionArea>
-                    {
-                        userTripsList.length > 0 ?
-                        userTripsList.map(trip=>{
-                            return(
-                                <TripName
-                                id={trip.id}
-                                onClick={onClickSeeDetails}
-                                >
-                                {trip.name} ({trip.date})
-                                </TripName>
-                            )
-                        }):
-                        <DialogText>Buscando viagens...</DialogText>
-                    }
-                </PanelActionArea>
+                {
+                    userTripsList.length > 0 ?
+                    mountTripsList()
+                    :
+                    <DialogText>Buscando viagens...</DialogText>
+                }
             </SelectableTripsPanel>
 
             <SelectedTripDetailsPanel 

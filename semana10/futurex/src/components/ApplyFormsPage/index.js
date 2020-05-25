@@ -8,7 +8,7 @@ import {
     OptionBox,CheckOptionBox
 } from './styles';
 
-import {DialogText} from '../HomePage/styles';
+import {DialogText, Logo} from '../HomePage/styles';
 
 function ApplyFormsPage(props){
     const adminKey = props.AdminKey
@@ -25,10 +25,7 @@ function ApplyFormsPage(props){
     });
 
     const onChangeInputs = (e)=>{
-        e.target.value.trim() !== '' ?(
-            setApplicantInfos({...applicantInfos,[e.target.name]: e.target.value })    
-        ):
-        window.alert('Não pode haver campos vazios no formulário!')    
+        setApplicantInfos({...applicantInfos,[e.target.name]: e.target.value })   
     };
 
     const onClickCheckBox =(e)=>{
@@ -44,7 +41,7 @@ function ApplyFormsPage(props){
     };
 
     const onClickSubmitInfos = ()=>{
-        if(applicantInfos.tripsId.length !== 0){
+        if(applicantInfos.tripsId.length !== 0 && applicantInfos.age >= 18){
             applicantInfos.tripsId.forEach(tripId=>{
                 const body = {
                     name: applicantInfos.name,
@@ -60,13 +57,25 @@ function ApplyFormsPage(props){
                         tripId
                     }/apply`, body,).
                     then(response=>{
-                        window.alert(response.data.message)
+                        window.alert(`Candidatura aprovada!`);
+
+                        setApplicantInfos({
+                            name:'',
+                            age: '',
+                            applicationText:'',
+                            profession:'',
+                            country:'',
+                            tripsId:[]
+                        })
                     }).
                     catch(err=>{
                     window.alert(err)
                     })
             })
-        }else{
+        }else if(applicantInfos.age < 18){
+            window.alert('Candidatura proibida para menores de 18 anos!')
+        }
+        else{
             window.alert('Candidatura não registrada! Verifque se há algum campo não preenchido corretamente.')
         } 
     };
@@ -84,8 +93,15 @@ function ApplyFormsPage(props){
         })
     },[]);
 
+    //console.log(tripsList)
+
     return(
         <FormsPageContainer>
+
+            <Logo
+            onClick={()=>{history.push('/')}}
+            src='https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F03b944d0-9121-4032-9d0d-be54d6f7cb84%2Ffuturex.png?table=block&id=ef125c81-424b-435c-b5f1-be8fee35cbf7&width=770&cache=v2'
+            />
 
             <DialogText>Formulário de Candidatura</DialogText>
 

@@ -72,6 +72,7 @@ function CreateTripPage(props){
                     adminKey
                 }/trips`, body,{
                     headers:{
+                        'Content-Type': 'application/json',
                         'auth': pathParams.userToken
                     }
                 }).
@@ -79,6 +80,7 @@ function CreateTripPage(props){
                     window.alert(`Viagem "${response.data.trip.name}" criada com sucesso!`)
                 }).
                 catch(err=>{
+                    console.log(err)
                     window.alert('Algo deu errado! Tente novamente mais tarde.')
                 })
     
@@ -91,6 +93,7 @@ function CreateTripPage(props){
         }  
     };
 
+    console.log(pathParams.userToken, adminKey, )
     return(
         <CreateTripPageContainer>
             <DialogText>Criação de Viagem</DialogText>

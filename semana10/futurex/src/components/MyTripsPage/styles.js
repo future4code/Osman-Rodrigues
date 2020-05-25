@@ -26,14 +26,16 @@ export const SelectedTripDetailsPanel = styled(Card)`
     
 `;
 export const PanelActionArea = styled(CardActionArea)`
-
 `;
 export const PanelContentArea = styled.div`
     margin: 0;
-    text-align: left;  
+    text-align: center;  
 `;
 export const TripName = styled.h2`
     margin: 0;
+    &:active, &:hover{
+        color: tomato;
+    }
 `;
 export const TripDetail = styled.p`
     text-align: center;
@@ -49,6 +51,9 @@ export const TripDetailSuggest = styled.h5`
     margin:0;
     margin-top: 10px;
     margin-bottom: 1%;
+    &:active{
+        color: tomato;
+    }
 `;
 export const MyTripsButton = styled(Button)`
 
