@@ -5,10 +5,10 @@ import axios from 'axios'
 import {
     FormsPageContainer, ControledForms, QuestionInput,
     SendFormsButton, CheckBoxLabel, CheckBoxInput,
-    OptionBox,CheckOptionBox
+    OptionBox,CheckOptionBox,Logo
 } from './styles';
 
-import {DialogText, Logo} from '../HomePage/styles';
+import {DialogText} from '../HomePage/styles';
 
 function ApplyFormsPage(props){
     const adminKey = props.AdminKey

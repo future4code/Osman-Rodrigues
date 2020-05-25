@@ -5,14 +5,13 @@ export const LoginPageContainer = styled.section`
     display: flex;
     flex-direction: column;
     align-items: center;
-    //justify-content: center;
+    justify-content: space-evenly;
     font-family: Roboto;
     height: 100vh;
     width: 100vw;
 `;
 
 export const ControledLogin = styled(FormControl)`
-    
 `;
 export const LoginInput = styled(TextField)`
 

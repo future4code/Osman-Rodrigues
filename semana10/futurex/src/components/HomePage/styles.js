@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Button  from '@material-ui/core/Button';
 
+
 export const HomePageContainer = styled.section`
     display: flex;
     flex-direction: column;
@@ -11,8 +12,10 @@ export const HomePageContainer = styled.section`
     width: 100vw;
 `;
 export const Logo = styled.img`
-    height: 40%;
     max-width: 500px;
+    max-height: 50%;
+    position: fixed;
+    bottom: 64%; 
 `;
 export const WelcomeText = styled.h1`
     text-align: center;

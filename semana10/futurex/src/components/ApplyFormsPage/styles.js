@@ -5,18 +5,23 @@ import {
     Checkbox
 } from '@material-ui/core';
 
+export const Logo = styled.img`
+    max-width: 406px;
+    
+`;
 export const FormsPageContainer = styled.section`
     display: flex;
     flex-direction: column;
     align-items: center;
-    //justify-content: center;
+    justify-content: space-between;
     font-family: Roboto;
     height: 100vh;
     width: 100vw;
+    overflow-x:hidden;
+    
 `;
 export const ControledForms = styled(FormControl)`
     max-width: 97%;
-    
 `;
 export const QuestionInput = styled(TextField)`
 
@@ -34,5 +39,5 @@ export const CheckOptionBox = styled(Checkbox)`
 
 `;
 export const SendFormsButton = styled(Button)`
-
+    
 `;
