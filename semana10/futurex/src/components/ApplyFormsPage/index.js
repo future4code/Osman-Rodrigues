@@ -10,6 +10,8 @@ import {
 
 import {DialogText} from '../HomePage/styles';
 
+import FuturexLogo from '../../pics/futurex-nave-icon.png';
+
 function ApplyFormsPage(props){
     const adminKey = props.AdminKey
     const history = useHistory();
@@ -98,7 +100,7 @@ function ApplyFormsPage(props){
 
             <Logo
             onClick={()=>{history.push('/')}}
-            src='https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F03b944d0-9121-4032-9d0d-be54d6f7cb84%2Ffuturex.png?table=block&id=ef125c81-424b-435c-b5f1-be8fee35cbf7&width=770&cache=v2'
+            src={FuturexLogo}
             />
 
             <DialogText>Formulário de Candidatura</DialogText>

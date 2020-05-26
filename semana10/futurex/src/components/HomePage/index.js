@@ -7,7 +7,6 @@ import {
     DialogText
 } from './styles';
 
-
 import FuturexLogo from '../../pics/futurex-logo.png';
 
 function HomePage(){
