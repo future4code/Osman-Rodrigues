@@ -20,9 +20,7 @@ function HomePage(){
     };
     
     return(
-        
         <HomePageContainer>
-            
             <Logo
             onClick={()=>{history.push('/')}}
             src={FuturexLogo}

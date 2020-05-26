@@ -13,7 +13,8 @@ import "./AppMainStyles";
 
 function App() {
 
-  const adminKey = 'osman'
+  const adminKey = 'osman';
+  const baseUrl = "https://us-central1-labenu-apis.cloudfunctions.net/labeX/osman";
 
   return (
     <BrowserRouter>
@@ -27,38 +28,42 @@ function App() {
 
         <Route exact path="/login">
           <LoginPage
-            AdminKey={adminKey}
+            BaseUrl={baseUrl}
           />
         </Route>
 
-        <Route exact path="/admin/:userCredentials">
+        <Route exact path="/admin/:userId">
           <AdminPage
-            AdminKey = {adminKey}
+            BaseUrl={baseUrl}
           />
         </Route>
 
-        <Route exact path="/admin/:userId/myTrips/:userToken">
-          <MyTripsPage
-            AdminKey={adminKey}
-          />
-        </Route>
-
-        <Route exact path="/admin/:userId/createTrip/:userToken">
+        <Route exact path="/admin/:userId/createTrip">
           <CreateTripPage
-            AdminKey = {adminKey}
+            BaseUrl={baseUrl}
           />
         </Route>
 
-        <Route exact path="/admin/:userId/applicants/:userToken">
+        <Route exact path="/admin/:userId/myTrips">
+          <MyTripsPage
+            BaseUrl={baseUrl}
+          />
+        </Route>
+
+        <Route exact path="/admin/:userId/applicants">
           <ApplicantsPage
-            AdminKey = {adminKey}
+            BaseUrl={baseUrl}
           />
         </Route>
 
         <Route exact path="/application-form">
           <ApplyFormsPage
-            AdminKey={adminKey}
+            BaseUrl={baseUrl}
           />
+        </Route>
+
+        <Route path="/">
+          <p>Erro 404</p>
         </Route>
 
       </Switch>

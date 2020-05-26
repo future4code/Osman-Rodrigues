@@ -1,6 +1,11 @@
 import React,{useState} from 'react';
-import {useHistory, useParams} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import axios from 'axios';
+
+import{
+    convertDateInput, getUserLocalInfos, validInfosObject,
+    useValidSession
+} from '../../hooks/hooks'
 
 import {
     CreateTripPageContainer, ControledCreateTripForms,
@@ -9,31 +14,12 @@ import {
 
 import {DialogText} from '../HomePage/styles';
 
-export const convertDateInput =(dateInput)=>{
-    if(dateInput.includes('-')){
-        const charIndex = dateInput.indexOf('-');
-        const strLen = dateInput.length;
-        let convertedDate ;
-        
-        if(charIndex === 4){
-            convertedDate = 
-            `${
-                dateInput[strLen-2]+dateInput[strLen-1]
-            }/${
-                dateInput[strLen-5]+dateInput[strLen-4]
-            }/${
-                dateInput[strLen-strLen]+dateInput[strLen-9]+dateInput[strLen-8]+dateInput[strLen-7]
-            }`
-            return convertedDate
-        }
-    }
-}
-
 function CreateTripPage(props){
 
-    const adminKey = props.AdminKey;
+    useValidSession();
+
+    const baseUrl = props.BaseUrl;
     const history = useHistory();
-    const pathParams = useParams();
 
     const [tripInfosInputs, setTripInfosInputs] = useState({
         name:'',
@@ -43,28 +29,7 @@ function CreateTripPage(props){
         durationInDays:''
     });
 
-    const [localInfos, setLocalInfos] = useState(JSON.parse(
-        localStorage.getItem('userLoginInfo')
-    ));
-    
-    convertDateInput(tripInfosInputs.date)
-
-    const validInfosObject = (infosObject)=>{
-            let objectLeng = 0;
-            let emptyInfos = 0;
-
-            for(let info in infosObject ){
-                if(infosObject[info].trim() === ''){
-                    emptyInfos += 1 
-                };
-                objectLeng += 1;
-            }
-            return(
-                emptyInfos > 0? 
-                (false, `${emptyInfos} de ${objectLeng} info(s) solicitada(s) vazia(s)!`):  
-                true
-            )
-    };
+    const [localInfos] = useState(getUserLocalInfos());
 
     const onChangeCreateTripInputs=(e)=>{
         setTripInfosInputs({
@@ -72,10 +37,9 @@ function CreateTripPage(props){
         })
     };
 
-    const onClickCreateTrip=()=>{
+    const onClickCreateTrip=async()=>{
         if(localInfos !== null){
             if(validInfosObject(tripInfosInputs)=== true){
-
                 window.alert('Solicitação enviada! Aguarde confirmação.');
 
                 const body = {
@@ -88,16 +52,13 @@ function CreateTripPage(props){
                     },
                     durationInDays: tripInfosInputs.durationInDays
                 };
-                
-                axios.
-                post(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/${
-                    adminKey
-                }/trips`, body,{
-                    headers:{
-                        'auth': pathParams.userToken
-                    }
-                }).
-                then(response=>{
+                try{
+                    const response = await axios.post(`${baseUrl}/trips`,body,
+                        {
+                            headers:{'auth': localInfos.userToken}
+                        }
+                    );
+                    
                     window.alert(`Viagem "${response.data.trip.name}" criada com sucesso!`);
 
                     setTripInfosInputs({
@@ -106,19 +67,14 @@ function CreateTripPage(props){
                         date:'',
                         description:'',
                         durationInDays:''
-                    });
-                }).
-                catch(err=>{
+                    });  
+                }catch(e){
                     window.alert('Algo deu errado! Tente novamente mais tarde.')
-                })
-    
+                }
             }else{
                 window.alert(validInfosObject(tripInfosInputs))
             }
-        }else{
-            window.alert('Sessão expirada! Faça login novamente.')
-            history.replace('/login')
-        }  
+        }
     };
 
     return(

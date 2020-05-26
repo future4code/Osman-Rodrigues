@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import axios from 'axios';
 
+import{setUserLocalInfos} from '../../hooks/hooks';
+
 import {
     LoginPageContainer,ControledLogin,LoginInput,
     LoginButton
@@ -9,12 +11,13 @@ import {
 
 import {Logo, WelcomeText} from '../HomePage/styles';
 
+import FuturexLogo from '../../pics/futurex-logo.png';
+
 export let userLoggedInfos;
 
 function LoginPage(props){
 
-    const adminKey = props.AdminKey;
-
+    const baseUrl = props.BaseUrl;
     const history = useHistory();
 
     const [isRegistred, setIsRegistred] = useState(true);
@@ -27,96 +30,71 @@ function LoginPage(props){
         setLoginInfos({...loginInfos,[e.target.name]: e.target.value })    
     };
 
-    const onClickSignUp = ()=>{
-        const waitingDialogue =()=>{
-            window.alert('Solicitação de registro enviada. Por favor, aguarde a confirmação antes de fazer login.');
-        };
-
+    const onClickSignUp = async()=>{
         if(
             isRegistred === false &&
             loginInfos.email.trim() !== '' &&
             loginInfos.password.trim() !== ''
         ){
-            waitingDialogue();
+            window.alert('Solicitação de registro enviada. Por favor, aguarde a confirmação antes de fazer login.')
 
-            const body ={
-                email: loginInfos.email,
-                password: loginInfos.password
-            };
+            try {
+                window.alert('Solicitando registro...');
+                const response = await axios.post(`${baseUrl}/signup`, loginInfos,);
 
-            axios.
-            post(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/${
-                adminKey
-            }/signup`, body,).
-            then(response=>{
                 if(response.data.success === true){
                     window.alert('Registro feito com sucesso!')
                     setLoginInfos({email:'', password:''})
                     setIsRegistred(! isRegistred)
                 }   
-            }).
-            catch(err=>{
+            }
+            catch(e){
                 window.alert('Não foi possível registrar. Tente mais tarde.')
                 setLoginInfos({email:'', password:''})
-            })   
+            }   
         }else{
             window.alert('Preencha todos os campos corretamente!')
         }
     };
     
-    const onClickLogin =()=>{
-        
+    const onClickLogin = async()=>{
         if(
             isRegistred === true &&
             loginInfos.email.trim() !== '' &&
             loginInfos.password.trim() !== ''
-        ){
-            const body ={
-                email: loginInfos.email,
-                password: loginInfos.password
-            };
-
-            axios.
-            post(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/${
-                adminKey
-            }/login`, body,).
-            then(response=>{
+        ){  
+            try {
+                window.alert('Validando credenciais...');
+                const response = await axios.post(`${baseUrl}/login`,loginInfos,);
                 
-                if(response.data.success === true){
-                    userLoggedInfos = {
-                        token: response.data.token,
-                        id: response.data.user.id,
-                        email: response.data.user.email,
-                    };
+               if(response.data.success === true){
+                    setUserLocalInfos({
+                        loggedIn: true,
+                        loggedEmail: response.data.user.email,
+                        userId: response.data.user.id, 
+                        userToken: response.data.token,
+                    });
 
-                    localStorage.setItem("userLoginInfo", JSON.stringify({
-                        beLogged: true, loggedEmail: userLoggedInfos.email
-                    }))
-
-                    history.replace(`/admin/${
-                        userLoggedInfos.id
-                    }_${
-                        userLoggedInfos.token
-                    }`)
+                    history.replace(`/admin/${response.data.user.id}`);
+                    window.alert(`Bem vindo(a), ${response.data.user.email}!`);
                 }
-            }).
-            catch(err=>{
-                window.alert(err.response.data.message)
-            });
+            }catch(e){
+                window.alert(e.response.data.message)
+            }
         }else{
             window.alert('Preencha todos os campos antes de fazer login!')
         }
-    }
+    };
 
     useEffect(()=>{
         setIsRegistred(true)
-    },[])
-
+    },[]);
+    
     return(
         <LoginPageContainer>
             <Logo
             onClick={()=>{history.push('/')}}
-            src='https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F03b944d0-9121-4032-9d0d-be54d6f7cb84%2Ffuturex.png?table=block&id=ef125c81-424b-435c-b5f1-be8fee35cbf7&width=770&cache=v2'
+            src={FuturexLogo}
             />
 
             <WelcomeText>Login de Administrador</WelcomeText>

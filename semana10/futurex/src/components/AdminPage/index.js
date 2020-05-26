@@ -1,5 +1,7 @@
-import React, {useState, useEffect} from 'react';
-import {useHistory, useParams} from 'react-router-dom';
+import React, {useState} from 'react';
+import {useHistory} from 'react-router-dom';
+
+import {getUserLocalInfos, useValidSession} from '../../hooks/hooks'
 
 import {
     AdminPageContainer, AdminControledPanel, AdminButton,
@@ -8,98 +10,52 @@ import {
 
 import {WelcomeText} from '../HomePage/styles';
 
-const getPathParamCredential = (credential, urlParam)=>{
-    const convertedCredential = String(credential).toLowerCase()
-    let credentialLeng = 0;
-    let selectedCredential = '';
-
-    if(convertedCredential === 'id'){
-        for(let letter of urlParam){
-            if(credentialLeng < 20){
-                selectedCredential += letter;
-                credentialLeng += 1
-            }  
-        }
-    }else if(convertedCredential === 'token'){
-        for(let letter of urlParam){
-            if(credentialLeng < 21){
-                credentialLeng += 1
-            }else{
-                selectedCredential += letter;
-            }
-        }
-    }
-
-    return selectedCredential
-};
-
 function AdminPage(){
+    useValidSession();
 
-    const [localInfos, setLocalInfos] = useState(JSON.parse(
-        localStorage.getItem('userLoginInfo')
-    ));
+    const [localInfos] = useState(getUserLocalInfos());
 
-    const pathParams = useParams();
     const history = useHistory();
 
     const onClickLogout=()=>{
-        localStorage.setItem('userLoginInfo','')
+        localStorage.clear()
         history.replace('/login')
     };
 
-    const validedLoginSection =()=>{
-        if(
-            localInfos !== null&&
-            localInfos.beLogged === true
-        ){
-            return(
-                <AdminPageContainer>
-                    <WelcomeText>Área do Administrador</WelcomeText>
-        
-                    <AdminControledPanel>
-                        <AdminButton
-                        onClick={()=>{history.push(`/admin/${
-                            getPathParamCredential('id', pathParams.userCredentials)
-                        }/createTrip/${
-                            getPathParamCredential('token', pathParams.userCredentials)
-                        }`)}}
-                        variant='outlined'
-                        >Criar Viagem</AdminButton>
-        
-                        <AdminButton
-                        onClick={()=>{history.push(`/admin/${
-                            getPathParamCredential('id', pathParams.userCredentials)
-                        }/myTrips/${
-                            getPathParamCredential('token', pathParams.userCredentials)
-                        }`)}}
-                        variant='outlined'
-                        >Minhas Viagens </AdminButton>
-        
-                        <AdminButton
-                        onClick={()=>{history.push(`/admin/${
-                            getPathParamCredential('id', pathParams.userCredentials)
-                        }/applicants/${
-                            getPathParamCredential('token', pathParams.userCredentials)
-                        }`)}}
-                        variant='outlined'
-                        >Candidatos</AdminButton>
-        
-                        <AdminButton
-                        onClick={onClickLogout}
-                        >Sair</AdminButton>
-                    </AdminControledPanel>
-
-                    <DialogText>Logado como: {localInfos.loggedEmail} </DialogText>
-                </AdminPageContainer>
-            ) 
-        }else{
-            return <h1>Página não encontrada!</h1>
-        }
-    };
-
     return(
-        validedLoginSection() 
-    )   
+        <AdminPageContainer>
+            <WelcomeText>Área do Administrador</WelcomeText>
+
+            <AdminControledPanel>
+                <AdminButton
+                onClick={()=>{history.push(`/admin/${
+                    localInfos.userId
+                }/createTrip`)}}
+                variant='outlined'
+                >Criar Viagem</AdminButton>
+
+                <AdminButton
+                onClick={()=>{history.push(`/admin/${
+                    localInfos.userId
+                }/myTrips`)}}
+                variant='outlined'
+                >Minhas Viagens </AdminButton>
+
+                <AdminButton
+                onClick={()=>{history.push(`/admin/${
+                    localInfos.userId
+                }/applicants`)}}
+                variant='outlined'
+                >Candidatos</AdminButton>
+
+                <AdminButton
+                onClick={onClickLogout}
+                >Sair</AdminButton>
+            </AdminControledPanel>
+
+            <DialogText>Logado como: {localInfos.loggedEmail}</DialogText>
+        </AdminPageContainer>
+    )    
 }
 
 export default AdminPage
