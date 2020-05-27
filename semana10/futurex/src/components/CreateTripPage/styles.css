@@ -1,0 +1,7 @@
+
+input:invalid{
+    color: tomato;
+}; 
+input:valid{
+    color: green;
+};

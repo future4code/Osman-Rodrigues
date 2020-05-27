@@ -1,3 +1,11 @@
 import styled from 'styled-components';
 
-import {}  from '@material-ui/core/Button';
+import {createMuiTheme, MuiThemeProvider}  from '@material-ui/core';
+
+const theme = createMuiTheme({
+    palette:{
+        error:{
+            main: '#ff6347',
+        }
+    }
+})

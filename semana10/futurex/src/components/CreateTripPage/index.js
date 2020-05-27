@@ -5,7 +5,11 @@ import axios from 'axios';
 import{
     convertDateInput, getUserLocalInfos, validInfosObject,
     useValidSession
-} from '../../hooks/hooks'
+} from '../../hooks/hooks';
+
+import{TextField} from '@material-ui/core'
+
+import './styles.css';
 
 import {
     CreateTripPageContainer, ControledCreateTripForms,
@@ -81,12 +85,20 @@ function CreateTripPage(props){
         <CreateTripPageContainer>
             <DialogText>Criação de Viagem</DialogText>
 
-            <ControledCreateTripForms>
-                <CreateTripInput
-                required
+            <ControledCreateTripForms component='form'>
+                <TextField
+                autoFocus={true}
+                required={true}
                 type='text'
                 InputLabelProps={{
                     shrink: true,
+                }}
+                inputProps={{
+                    pattern: "[A-Za-z ]{5,}",
+                    title: "O nome da viagem deve conter no mínimo 5 letras"
+                }}
+                style={{
+                    ':invalid':'color="tomato"'
                 }}
                 variant='outlined'
                 margin='normal'
@@ -97,7 +109,7 @@ function CreateTripPage(props){
                 />
 
                 <CreateTripInput
-                required
+                required={true}
                 type='text'
                 InputLabelProps={{
                     shrink: true,
@@ -111,7 +123,7 @@ function CreateTripPage(props){
                 />
 
                 <CreateTripInput
-                required
+                required={true}
                 type='date'
                 InputLabelProps={{
                     shrink: true,
@@ -125,10 +137,14 @@ function CreateTripPage(props){
                 />
 
                 <CreateTripInput
-                required
+                required={true}
                 type='number'
                 InputLabelProps={{
                     shrink: true,
+                }}
+                inputProps={{
+                    title: "Tempo mínimo de 50 dias",
+                    min:'50'
                 }}
                 variant='outlined'
                 margin='normal'
@@ -139,13 +155,17 @@ function CreateTripPage(props){
                 />
                 
                 <CreateTripInput
-                required
+                required={true}
                 type='text'
                 InputLabelProps={{
                     shrink: true,
                 }}
+                inputProps={{
+                    maxlength: 60,
+                    title: "A descrição deve ter no máximo 60 caracteres"
+                }}
                 multiline={true}
-                rows="5"
+                rows='3'
                 variant='outlined'
                 margin='normal'
                 label='Descrição'
@@ -160,14 +180,13 @@ function CreateTripPage(props){
                 >Criar viagem
                 </CreateTripButton>
 
-                <CreateTripButton
-                variant='text'
-                onClick={()=>{history.goBack()}}
-                >Voltar
-                </CreateTripButton>
-
             </ControledCreateTripForms>
-
+            
+            <CreateTripButton
+            variant='text'
+            onClick={()=>{history.goBack()}}
+            >Voltar
+            </CreateTripButton>
         </CreateTripPageContainer>
     )
 }
