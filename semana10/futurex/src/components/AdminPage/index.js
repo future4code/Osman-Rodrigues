@@ -53,7 +53,12 @@ function AdminPage(){
                 >Sair</AdminButton>
             </AdminControledPanel>
 
-            <DialogText>Logado como: {localInfos.loggedEmail}</DialogText>
+            {
+            ()=>{if(localInfos.loggedEmail!== null){
+                return <DialogText>Logado como: {localInfos.loggedEmail}</DialogText>
+                }
+            }   
+            }
         </AdminPageContainer>
     )    
 }

@@ -16,7 +16,7 @@ function HomePage(){
         history.push("/login");
     };
     const onClickToForms = ()=>{
-        history.push("/application-form");
+        history.push("/applicationForm");
     };
     
     return(
@@ -29,6 +29,7 @@ function HomePage(){
             <WelcomeText>
                 Bem-vindo a Futurex!
             </WelcomeText>
+            
             <DialogText>
                 Seu interesse em viagens interestelares é:
             </DialogText>

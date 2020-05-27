@@ -31,7 +31,9 @@ export const PanelContentArea = styled.div`
     margin: 0;
     text-align: center;  
 `;
-export const TripName = styled.h2`
+export const TripName = styled.li`
+    font-size: small;
+    list-style:none;
     margin: 0;
     &:active, &:hover{
         color: tomato;
@@ -46,7 +48,7 @@ export const TripDetailCardTitle = styled.h3`
     margin:0;
     margin-bottom: 1%;
 `;
-export const TripDetailSuggest = styled.h5`
+export const TripDetailSuggest = styled.h2`
     text-align: center;
     margin:0;
     margin-top: 10px;

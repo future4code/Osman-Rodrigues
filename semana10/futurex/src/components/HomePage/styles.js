@@ -14,12 +14,14 @@ export const Logo = styled.img`
     max-width: 500px;
     max-height: 50%;
     position: fixed;
-    bottom: 64%; 
+    bottom: 64%;    
 `;
 export const WelcomeText = styled.h1`
     text-align: center;
 `;
 export const DialogText = styled.h3`
+    margin: 5% 0;
+    
     text-align: center;
 `;
 export const HomeActionBar = styled.div`

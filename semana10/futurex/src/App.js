@@ -13,7 +13,6 @@ import "./AppMainStyles";
 
 function App() {
 
-  const adminKey = 'osman';
   const baseUrl = "https://us-central1-labenu-apis.cloudfunctions.net/labeX/osman";
 
   return (
@@ -56,7 +55,7 @@ function App() {
           />
         </Route>
 
-        <Route exact path="/application-form">
+        <Route exact path="/applicationForm">
           <ApplyFormsPage
             BaseUrl={baseUrl}
           />

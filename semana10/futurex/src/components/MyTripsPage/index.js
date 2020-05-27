@@ -1,6 +1,10 @@
-import React,{ useState, useEffect } from 'react';
-import axios from 'axios';
-import {useHistory, useParams} from 'react-router-dom';
+import React,{useState} from 'react';
+import {useHistory} from 'react-router-dom';
+
+import{
+    useGetUserTrips,deleteTrip ,getUserLocalInfos,
+    useValidSession
+} from '../../hooks/hooks'
 
 import {
     MyTripsPageContainer,SelectableTripsPanel,SelectedTripDetailsPanel,
@@ -10,46 +14,19 @@ import {
 } from './styles';
 
 import {DialogText} from '../HomePage/styles';
-import { CardActionArea } from '@material-ui/core';
-
-export function useGetUserTrips(adminKey, localInfos){
-
-    const [myTripsList, setMyTripsList] = useState([]);
-
-    useEffect(()=>{
-
-        axios.
-        get(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/${
-            adminKey
-        }/trips`). 
-        then(response=>{
-            const allTripsList = response.data.trips;
-            
-            allTripsList.forEach(trip => {
-                if(typeof(trip.description) === 'object'){
-                    if(trip.description.owner === localInfos.loggedEmail){
-                        setMyTripsList(allTripsList)
-                    }
-                }
-            });
-        })
-    }, [myTripsList]);
-
-    return myTripsList
-}
 
 function MyTripsPage(props){
 
-    const adminKey = props.AdminKey;
+    useValidSession();
+
+    const baseUrl = props.BaseUrl;
     const history = useHistory();
 
-    const [localInfos, setLocalInfos] = useState(JSON.parse(
-        localStorage.getItem('userLoginInfo')
-    ));
+    const [localInfos] = useState(getUserLocalInfos());
     const [selectedTrip, setSelectedTrip] = useState();
     const [seeTripDescription, setSeeTripDescription] = useState(false);
 
-    const userTripsList = useGetUserTrips(adminKey, localInfos);
+    const userTripsList = useGetUserTrips(baseUrl, localInfos);
 
     const onClickSeeDetails =(e)=>{
         userTripsList.forEach(trip=>{
@@ -57,6 +34,28 @@ function MyTripsPage(props){
                 setSelectedTrip(trip)
             }
         })
+    };
+
+    const onClickDeleteTrip=async()=>{
+        await deleteTrip(baseUrl, selectedTrip)
+        setSelectedTrip(undefined)
+        window.location.reload()
+    };
+
+    const mountTripsList =()=>{
+        const mountedList = userTripsList.map(trip=>{
+                return(
+                    <PanelActionArea>
+                        <TripName
+                        id={trip.id}
+                        onClick={onClickSeeDetails}
+                        >
+                        {trip.name} ({trip.date})
+                        </TripName>
+                    </PanelActionArea>
+                )
+            })
+        return mountedList
     };
 
     const mountTripDetailsPanel=()=>{
@@ -86,51 +85,19 @@ function MyTripsPage(props){
                 >
                 Excluir
                 </MyTripsButton>
-
-                <TripDetailSuggest>
-                    {
-                        seeTripDescription === true ?
-                        'Ver outros detalhes':'Ver a descrição'
-                    }
-                    
-                </TripDetailSuggest>
+                <PanelActionArea>
+                    <TripDetailSuggest 
+                    onClick={()=>{setSeeTripDescription(! seeTripDescription)}}
+                    >
+                        {
+                            seeTripDescription === true ?
+                            'Ver outros detalhes':'Ver a descrição'
+                        }
+                        
+                    </TripDetailSuggest>
+                </PanelActionArea>
             </PanelContentArea>
         )
-    };
-
-    const mountTripsList =()=>{
-        const mountedList = userTripsList.map(trip=>{
-                return(
-                    <CardActionArea>
-                        <TripName
-                        id={trip.id}
-                        onClick={onClickSeeDetails}
-                        >
-                        {trip.name} ({trip.date})
-                        </TripName>
-                    </CardActionArea>
-                )
-            })
-
-        return mountedList
-    };
-
-    const onClickDeleteTrip=()=>{
-        window.confirm(`Confirmar exclusão de '${selectedTrip.name}?'`)?
-        axios.
-        delete(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/${
-            adminKey
-        }/trips/${
-            selectedTrip.id
-        }
-        `). 
-        then(response=>{
-            window.alert(`'${selectedTrip.name}' foi excluída!`);
-        }). 
-        catch(err=>{
-            window.alert('Algo deu errado! Exclusão cancelada.')
-        })
-        : window.alert('Exclusão cancelada.')
     };
 
     return(
@@ -146,9 +113,7 @@ function MyTripsPage(props){
                 }
             </SelectableTripsPanel>
 
-            <SelectedTripDetailsPanel 
-            onClick={()=>{setSeeTripDescription(! seeTripDescription)}}
-            >
+            <SelectedTripDetailsPanel>
                 {
                     selectedTrip !== undefined?
                     mountTripDetailsPanel():

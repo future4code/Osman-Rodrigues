@@ -1,25 +1,26 @@
 import React,{ useState, useEffect } from 'react';
-import axios from 'axios';
-import {useHistory, useParams} from 'react-router-dom';
-import {useGetUserTrips} from '../MyTripsPage/index';
+import {useHistory} from 'react-router-dom';
+import {
+    useGetUserTrips, getUserLocalInfos, putApproveApplicant,
+    getTripApplicants, useValidSession
+} from '../../hooks/hooks';
 
 import {
     ApplicantsPageContainer,ApplicantsPanel,ApplicantDetailsPanel,
-    ApplicantsButton, TripName, ApplicantName, TripNameApplicants,
-    ApplicantDetail, ApplicantDetailCardTitle, ApplicantDetailSuggest
+    ApplicantsButton, TripName, ApplicantName, ApplicantDetail, 
+    ApplicantDetailCardTitle, ApplicantDetailSuggest
 } from './style';
 
 import {DialogText} from '../HomePage/styles';
 import {PanelActionArea, PanelContentArea} from '../MyTripsPage/styles';
 
 function ApplicantsPage(props){
-    const adminKey = props.AdminKey;
-    const history = useHistory();
-    const pathParams = useParams();
+    useValidSession();
 
-    const [localInfos, setLocalInfos] = useState(JSON.parse(
-        localStorage.getItem('userLoginInfo')
-    ));
+    const baseUrl = props.BaseUrl;
+    const history = useHistory();
+
+    const [localInfos] = useState(getUserLocalInfos());
     const [selectedTrip, setSelectedTrip] = useState({});
     const [showTripApplicants, setShowTripApplicants] = useState(false);
 
@@ -29,7 +30,7 @@ function ApplicantsPage(props){
     
     const [allTripApplicants, setAllTripApplicants] = useState({});
     
-    const myTripsList = useGetUserTrips(adminKey, localInfos);
+    const myTripsList = useGetUserTrips(baseUrl, localInfos);
 
     const onClickShowApplicants =(e)=>{
         if(myTripsList !== undefined){
@@ -56,83 +57,51 @@ function ApplicantsPage(props){
     };
 
     const onClickApproveApplicant = ()=>{
-        const body = {approve: true}
-        window.confirm(`Confirmar aprovação de ${selectedApplicant.name} em "${selectedTrip.name}"?`)?
-        (
-            axios.
-            put(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/${
-                adminKey
-            }/trips/${
-                selectedTrip.id
-            }/candidates/${
-                selectedApplicant.id
-            }/decide`, body,{
-                headers:{
-                    "auth":pathParams.userToken
-                }
-            }).
-            then(response=>{
-                window.alert(`${selectedApplicant.name} aprovado(a)`)
-            }). 
-            catch(err=>{
-                window.alert('Algo deu errado! A aprovação foi cancelada.')
-            })
-        )
-        :window.alert('Aprovação cancelada.')
-    }
-    useEffect(()=>{
-        if(showTripApplicants === true){
-            axios.
-            get(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/${
-                adminKey
-            }/trip/${selectedTrip.id}`,{
-                headers:{
-                    "auth":pathParams.userToken
-                }
-            }).
-            then(response=>{
-                setAllTripApplicants({
-                    candidates: response.data.trip.candidates,
-                    approved: response.data.trip.approved
-                })
-            })
-        }
-    },[showTripApplicants])
-    
-    return(
-        <ApplicantsPageContainer>
-            <DialogText>Candidatos</DialogText>
+        putApproveApplicant(baseUrl, localInfos, selectedApplicant, selectedTrip)
+    };
 
-            <ApplicantsPanel>
-                <DialogText>Selecione uma viagem</DialogText>
+    const mountApplicantsPanel=()=>{
+        if(showTripApplicants === true){
+            return(
+                <PanelContentArea>
+                    <PanelActionArea>
+                        <TripName
+                        id={selectedTrip.id} 
+                        onClick={onClickShowApplicants}
+                        >{selectedTrip.name} ({selectedTrip.date})
+                        </TripName>
+                    </PanelActionArea>
                     {
-                    showTripApplicants === true ?
-                        <PanelContentArea>
+                    allTripApplicants.candidates !== undefined&&
+                    allTripApplicants.candidates.length >0?
+
+                    allTripApplicants.candidates.map(applicant=>{
+                        return (
                             <PanelActionArea>
-                                <TripName
-                                id={selectedTrip.id} 
-                                onClick={onClickShowApplicants}
-                                >{selectedTrip.name} ({selectedTrip.date})
-                                </TripName>
+                                <ApplicantName
+                                id={applicant.id}
+                                onClick={onClickSelectApplicant}
+                                >{applicant.name} ({applicant.country})
+                                </ApplicantName>
                             </PanelActionArea>
-                            {
-                            allTripApplicants.candidates !== undefined ?
-                            allTripApplicants.candidates.map(applicant=>{
-                                return (
-                                    <PanelActionArea>
-                                        <ApplicantName
-                                        id={applicant.id}
-                                        onClick={onClickSelectApplicant}
-                                        >{applicant.name} ({applicant.country})
-                                        </ApplicantName>
-                                    </PanelActionArea>
-                                )
-                            })
-                            :<DialogText>Buscando candidatos...</DialogText>
-                            }
-                        </PanelContentArea>
-                    :
-                        myTripsList.length !== 0 ?
+                        )
+                    })
+                    :<ApplicantDetail>
+                       {
+                        allTripApplicants.candidates !== undefined&&
+                        allTripApplicants.candidates.length === 0?
+                        
+                       'Ainda não há candidatos para a viagem selecionada.'
+                       : 
+                       'Buscando candidatos...'
+                       }
+                    </ApplicantDetail>
+                    }
+                </PanelContentArea>
+            )
+        }else{
+            return(
+                myTripsList.length !== 0 ?
                         myTripsList.map(trip=>{
                             return(
                                 <PanelContentArea>
@@ -146,55 +115,90 @@ function ApplicantsPage(props){
                                 </PanelContentArea>
                             ) 
                         })
-                        :<DialogText>Buscando viagens...</DialogText>   
-                    }                   
+                        :<DialogText>Buscando viagens...</DialogText>
+            )
+        }
+    };
+
+    const mountDetailApplicantPanel=()=>{
+        if(showApplicantDetails === true){
+            return(
+                <PanelContentArea>
+                    <ApplicantDetailCardTitle>
+                        Detalhes do Candidato
+                    </ApplicantDetailCardTitle>
+                    {
+                    showApplicantMessage === true?
+                    <ApplicantDetail>
+                    {selectedApplicant.applicationText}
+                    </ApplicantDetail>
+                    :
+                    <ApplicantDetail>
+                        Nome: {selectedApplicant.name}
+                        <br/> 
+                        Idade: {selectedApplicant.age} anos
+                        <br/>  
+                        Profissão: {selectedApplicant.profession}
+                        <br/>   
+                        País: {selectedApplicant.country}
+                    </ApplicantDetail>
+                    }
+
+                    <ApplicantsButton
+                    variant='outlined'
+                    onClick={onClickApproveApplicant}
+                    >Aprovar
+                    </ApplicantsButton>
+                    
+                    <PanelActionArea>
+                        <ApplicantDetailSuggest
+                        onClick={()=>{setShowApplicanMessage( ! showApplicantMessage)}}
+                        >
+                            {
+                            showApplicantMessage === true?
+                            'Ver outros detalhes':
+                            'Ver mensagem do candidato'
+                            }
+                        </ApplicantDetailSuggest>
+                    </PanelActionArea>
+                </PanelContentArea>
+            )
+        }else{
+            return(
+                <ApplicantDetailCardTitle>Selecione um candidato</ApplicantDetailCardTitle>
+            )
+        }
+    };
+    
+    useEffect(()=>{
+        if(showTripApplicants === true){
+           const getTripCandidates = async()=>{
+               try{
+                    const allTripApplicants = await getTripApplicants(baseUrl, localInfos, selectedTrip);
+                    setAllTripApplicants(allTripApplicants)
+                }catch(e){
+                    
+                }
+            }
+            getTripCandidates()
+        }
+    },[showTripApplicants]);
+    
+    return(
+        <ApplicantsPageContainer>
+            <DialogText>Candidatos</DialogText>
+
+            <ApplicantsPanel>
+                <DialogText>Selecione uma viagem</DialogText>
+                
+                {mountApplicantsPanel()}
+
             </ApplicantsPanel>
 
             <ApplicantDetailsPanel >
-                {
-                showApplicantDetails === true ?
-                    <PanelContentArea>
-                        <ApplicantDetailCardTitle>
-                            Detalhes do Candidato
-                        </ApplicantDetailCardTitle>
-                        {
-                        showApplicantMessage === true?
-                        <ApplicantDetail>
-                        {selectedApplicant.applicationText}
-                        </ApplicantDetail>
-                        :
-                        <ApplicantDetail>
-                            Nome: {selectedApplicant.name}
-                            <br/> 
-                            Idade: {selectedApplicant.age} anos
-                            <br/>  
-                            Profissão: {selectedApplicant.profession}
-                            <br/>   
-                            País: {selectedApplicant.country}
-                        </ApplicantDetail>
-                        }
 
-                        <ApplicantsButton
-                        variant='outlined'
-                        onClick={onClickApproveApplicant}
-                        >Aprovar
-                        </ApplicantsButton>
-                        
-                        <PanelActionArea>
-                            <ApplicantDetailSuggest
-                            onClick={()=>{setShowApplicanMessage( ! showApplicantMessage)}}
-                            >
-                                {
-                                showApplicantMessage === true?
-                                'Ver outros detalhes':
-                                'Ver mensagem do candidato'
-                                }
-                            </ApplicantDetailSuggest>
-                        </PanelActionArea>
-                    </PanelContentArea>
-                :
-                    <ApplicantDetailCardTitle>Selecione um candidato</ApplicantDetailCardTitle>
-                }       
+                {mountDetailApplicantPanel()}
+
             </ApplicantDetailsPanel>
 
             <ApplicantsButton

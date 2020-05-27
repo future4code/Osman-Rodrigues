@@ -5,7 +5,7 @@ export const ApplicantsPageContainer = styled.section`
     display: flex;
     flex-direction: column;
     align-items: center;
-    //justify-content: center;
+    justify-content: center;
     font-family: Roboto;
     height: 100vh;
     width: 100vw;
@@ -23,28 +23,22 @@ export const ApplicantDetailsPanel = styled(Card)`
     height: 35%;
     text-align: center;
 `;
-export const TripName = styled.h2`
-    &:hover{
-        color: tomato;
-    }
-    &:active{
-        color: darkblue;
-    }
-    margin: 0;
-`;
-export const TripNameApplicants = styled.h5`
-    text-align: center;
-    margin: 0;
+export const TripName = styled.div`
+    font-weight: bold;
+    font-size: 20px;
+    list-style: none;
     &:hover{
         color: tomato;
     }
     &:active{
         color: tomato;
     }
+    margin: 0;
 `;
-export const ApplicantName = styled.p`
+export const ApplicantName = styled.li`
     font-size: small;
-    text-align: center;    
+    text-align: center;
+    list-style: none;
     margin: 0;
     &:hover{
         color: tomato;

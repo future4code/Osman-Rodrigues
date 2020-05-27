@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useHistory} from 'react-router-dom'
-import axios from 'axios'
+import axios from 'axios';
+import {postApplyToTrip} from '../../hooks/hooks'
 
 import {
     FormsPageContainer, ControledForms, QuestionInput,
@@ -13,7 +14,7 @@ import {DialogText} from '../HomePage/styles';
 import FuturexLogo from '../../pics/futurex-nave-icon.png';
 
 function ApplyFormsPage(props){
-    const adminKey = props.AdminKey
+    const baseUrl = props.BaseUrl;
     const history = useHistory();
     
     const [tripsList, setTripsList] = useState([]);
@@ -42,38 +43,19 @@ function ApplyFormsPage(props){
         }     
     };
 
-    const onClickSubmitInfos = ()=>{
+    const onClickSubmitInfos = async()=>{
         if(applicantInfos.tripsId.length !== 0 && applicantInfos.age >= 18){
-            applicantInfos.tripsId.forEach(tripId=>{
-                const body = {
-                    name: applicantInfos.name,
-                    age: applicantInfos.age,
-                    applicationText: applicantInfos.applicationText,
-                    profession: applicantInfos.profession,
-                    country: applicantInfos.country, 
-                }
-                axios.
-                    post(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/${
-                        adminKey
-                    }/trips/${
-                        tripId
-                    }/apply`, body,).
-                    then(response=>{
-                        window.alert(`Candidatura registrada com sucesso!`);
+            await postApplyToTrip(baseUrl, applicantInfos, tripsList);
 
-                        setApplicantInfos({
-                            name:'',
-                            age: '',
-                            applicationText:'',
-                            profession:'',
-                            country:'',
-                            tripsId:[]
-                        })
-                    }).
-                    catch(err=>{
-                    window.alert(err)
-                    })
-            })
+            setApplicantInfos({
+                name:'',
+                age: '',
+                applicationText:'',
+                profession:'',
+                country:'',
+                tripsId:[]
+            });
+
         }else if(applicantInfos.age < 18){
             window.alert('Candidatura proibida para menores de 18 anos!')
         }
@@ -84,15 +66,13 @@ function ApplyFormsPage(props){
 
     useEffect(()=>{
         axios.
-        get(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/${
-            adminKey
-        }/trips`).
+        get(`${baseUrl}/trips`).
         then(response=>{
             setTripsList(response.data.trips)
         }).catch(err=>{
             window.alert('No momento não estamos aceitando candidaturas. Obrigado pela preferência!')
             history.push('/')
-        })
+        });
     },[]);
 
     return(

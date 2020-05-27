@@ -1,6 +1,113 @@
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import axios from 'axios';
 import {useHistory} from 'react-router-dom';
+
+export const postApplyToTrip = async(baseUrl, applicantInfos, tripsList)=>{
+    const body = {
+        name: applicantInfos.name,
+        age: applicantInfos.age,
+        applicationText: applicantInfos.applicationText,
+        profession: applicantInfos.profession,
+        country: applicantInfos.country, 
+    };
+
+    applicantInfos.tripsId.forEach(async tripId=>{
+        let tripName
+        tripsList.forEach(trip=>{
+            if(trip.id === tripId){
+                tripName = trip.name
+            }
+        }); 
+
+        try{
+            await axios.post(`${baseUrl}/trips/${tripId}/apply`, body,);
+
+            window.alert(`Candidatura para "${
+                tripName
+            }" registrada com sucesso!`);
+        }catch(e){
+            window.alert('Algo deu errado. Candidatura não registrada!')
+        };
+    })
+};
+
+export const useGetUserTrips=(baseUrl, localInfos)=>{
+    const [myTripsList, setMyTripsList] = useState([]);
+
+    useEffect(()=>{
+        axios.
+        get(`${baseUrl}/trips`). 
+        then(response=>{
+            const allTripsList = response.data.trips;
+            
+            allTripsList.forEach(trip => {
+                if(typeof(trip.description) === 'object' && localInfos.loggedEmail !== null){
+                    if(trip.description.owner === localInfos.loggedEmail){
+                        setMyTripsList(allTripsList)
+                    }
+                }
+            });
+        })
+    }, []);
+
+    return myTripsList
+};
+
+export const deleteTrip = async(baseUrl, selectedTrip)=>{
+    const confirmDelete = window.confirm(`Confirmar exclusão de '${selectedTrip.name}?'`)
+    if(confirmDelete === true){
+        try{
+            await axios.delete(`${baseUrl}/trips/${selectedTrip.id}`); 
+            window.alert(`'${selectedTrip.name}' foi excluída!`);
+        }catch(e){
+            window.alert('Algo deu errado! Exclusão cancelada.')
+        }
+    }else{
+        window.alert('Exclusão cancelada.')
+    }
+};
+
+export const getTripApplicants= async(baseUrl,localInfos,selectedTrip)=>{
+    try{
+        const response = await axios.get(
+            `${baseUrl}/trip/${selectedTrip.id}`,{headers:{auth:localInfos.userToken}});
+        const allTripApplicants={
+            candidates: response.data.trip.candidates,
+            approved: response.data.trip.approved
+        };
+        return allTripApplicants
+    }catch(e){
+        window.alert(`Não foi possível coletar os candidatos de ${selectedTrip.name}` )
+        const allTripApplicants={
+            candidates: [],
+            approved: []
+        };
+        return allTripApplicants
+    } 
+};
+
+export const putApproveApplicant = async(baseUrl,localInfos,selectedApplicant,selectedTrip)=>{
+    const confirmApprove = window.confirm(`Confirmar aprovação de ${selectedApplicant.name} em "${selectedTrip.name}"?`)
+    if(confirmApprove===true){
+        try{
+            const body = {approve: true}
+
+            await axios.put(`${baseUrl}/trips/${
+                selectedTrip.id
+            }/candidates/${
+                selectedApplicant.id
+            }/decide`, body,{headers:{auth:localInfos.userToken}});
+
+            window.alert(`${selectedApplicant.name} aprovado(a)`)
+
+            window.location.reload()
+        }catch(e){
+            window.alert(e.response.data.message)
+        }
+    }else{
+        window.alert('Aprovação cancelada.')
+    }     
+};
 
 export const getUserLocalInfos=()=>{
     return JSON.parse(localStorage.getItem('userLoggedInfos'))
