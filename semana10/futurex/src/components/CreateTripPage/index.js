@@ -3,7 +3,7 @@ import {useHistory} from 'react-router-dom';
 import axios from 'axios';
 import{
     convertDateInput, getUserLocalInfos, validInfosObject,
-    useValidSession, useForm
+    useValidSession, useForm, getCurrentDate
 } from '../../hooks/hooks';
 
 import './styles.css';
@@ -21,41 +21,19 @@ function CreateTripPage(props){
     const baseUrl = props.BaseUrl;
     const history = useHistory();
 
-    const [tripInfosInputs, setTripInfosInputs] = useState({
+    const {form, onChange, resetForm} = useForm({
         name:'',
-        planet: null,
+        planet: '',
         date:'',
         description:'',
-        durationInDays:null
+        durationInDays:''
     });
-
     const [localInfos] = useState(getUserLocalInfos());
 
-    const onChangeCreateTripInputs=(e)=>{
-        setTripInfosInputs({
-            ...tripInfosInputs, [e.target.name]: e.target.value
-        })
-    };
+    const handleInputChange=(e)=>{
+        const {value, name} = e.target;
 
-    const getCurrentDate =()=>{
-        const d = new Date();
-        const fixedDate = ()=>{
-            let date
-            switch (d.getDate()){
-                case 30:
-                    d.setDate(31)
-                    return date = d.getDate();
-                case 31:
-                    d.setDate(32)
-                    return date = d.getDate();
-                default:
-                    return date = d.getDate()+1
-            }
-        };
-        const fixedMonth = d.getMonth()+1 < 10 ? `0${d.getMonth()+1}`:d.getMonth()+1;
-        let currentDate = `${d.getFullYear()}-${fixedMonth}-${fixedDate()}`;
-
-        return currentDate
+        onChange(name, value);
     };
 
     const mountSelectDestiny=()=>{
@@ -68,7 +46,7 @@ function CreateTripPage(props){
             required={true} 
             placeholder='Destino'
             name='planet'
-            onChange={onChangeCreateTripInputs}
+            onChange={handleInputChange}
             labelId='selectLabel'
             variant='outlined'
             >
@@ -85,22 +63,22 @@ function CreateTripPage(props){
             }
             </SelectDestiny> 
         )
-    }
+    };
 
     const createTrip=async()=>{
         if(localInfos !== null){
-            if(validInfosObject(tripInfosInputs)=== true){
+            if(validInfosObject(form)=== true){
                 window.alert('Solicitação enviada! Aguarde confirmação.');
 
                 const body = {
-                    name: tripInfosInputs.name,
-                    planet: tripInfosInputs.planet,
-                    date: convertDateInput(tripInfosInputs.date),
+                    name: form.name,
+                    planet: form.planet,
+                    date: convertDateInput(form.date),
                     description: {
-                        text: tripInfosInputs.description,
+                        text: form.description,
                         owner: localInfos.loggedEmail
                     },
-                    durationInDays: tripInfosInputs.durationInDays
+                    durationInDays: form.durationInDays
                 };
                 try{
                     const response = await axios.post(`${baseUrl}/trips`,body,
@@ -111,28 +89,25 @@ function CreateTripPage(props){
                     
                     window.alert(`Viagem "${response.data.trip.name}" criada com sucesso!`);
 
-                    setTripInfosInputs({
-                        name:'',
-                        planet:'',
-                        date:'',
-                        description:'',
-                        durationInDays:''
-                    });  
+                    resetForm();  
                 }catch(e){
                     window.alert('Algo deu errado! Tente novamente mais tarde.')
                 }
             }else{
-                window.alert(validInfosObject(tripInfosInputs))
+                window.alert(validInfosObject(form))
             }
         }
     };
 
     const handleSubmit = e =>{
         e.preventDefault();
-        
-        createTrip();
-    }
 
+        if(form.planet === '' || form.planet === undefined){
+            window.alert('O campo "Destino" está vazio!')
+        }else{
+            createTrip();
+        }
+    };
     return(
         <CreateTripPageContainer>
             <DialogText>Criação de Viagem</DialogText>
@@ -149,22 +124,19 @@ function CreateTripPage(props){
                     pattern: "[A-Za-z ]{5,}",
                     title: "O nome da viagem deve ter no mínimo 5 letras."
                 }}
-                style={{
-                    ':invalid':'color="tomato"'
-                }}
                 variant='outlined'
                 margin='normal'
                 label='Nome da viagem'
                 placeholder='Dê um nome a sua viagem'
                 name='name'
-                onChange={onChangeCreateTripInputs}
-                value={tripInfosInputs.name}
+                onChange={handleInputChange}
+                value={form.name}
                 />
 
                 <ControledCreateTripForms children required={true}>
                     <SelectLabel 
                     required={true} id='selectLabel'
-                    >Selecione o destino</SelectLabel>
+                    >Destino</SelectLabel>
 
                     {mountSelectDestiny()}
                 </ControledCreateTripForms>
@@ -183,8 +155,8 @@ function CreateTripPage(props){
                 margin='normal'
                 label='Data de partida'
                 name='date'
-                onChange={onChangeCreateTripInputs}
-                value={tripInfosInputs.date}
+                onChange={handleInputChange}
+                value={form.date}
                 />
 
                 <CreateTripInput
@@ -202,8 +174,8 @@ function CreateTripPage(props){
                 label='Duração (em dias)'
                 placeholder='Mínimo de 50 dias'
                 name='durationInDays'
-                onChange={onChangeCreateTripInputs}
-                value={tripInfosInputs.durationInDays}
+                onChange={handleInputChange}
+                value={form.durationInDays}
                 />
                 
                 <CreateTripInput
@@ -223,11 +195,11 @@ function CreateTripPage(props){
                 label='Descrição'
                 placeholder='No mínimo 30 e no máximo 60 caractéres'
                 name='description'
-                onChange={onChangeCreateTripInputs}
-                value={tripInfosInputs.description}
+                onChange={handleInputChange}
+                value={form.description}
                 />
 
-                <SubmitButton>CRIAR VIAGEM</SubmitButton>
+                <SubmitButton>Criar viagem</SubmitButton>
 
             </ControledCreateTripForms>
             

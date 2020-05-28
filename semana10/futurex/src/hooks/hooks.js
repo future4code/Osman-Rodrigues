@@ -46,6 +46,27 @@ export const postApplyToTrip = async(baseUrl, applicantInfos, tripsList)=>{
     })
 };
 
+export const getCurrentDate =()=>{
+    const d = new Date();
+    const fixedDate = ()=>{
+        let date
+        switch (d.getDate()){
+            case 30:
+                d.setDate(31)
+                return date = d.getDate();
+            case 31:
+                d.setDate(32)
+                return date = d.getDate();
+            default:
+                return date = d.getDate()+1
+        }
+    };
+    const fixedMonth = d.getMonth()+1 < 10 ? `0${d.getMonth()+1}`:d.getMonth()+1;
+    let currentDate = `${d.getFullYear()}-${fixedMonth}-${fixedDate()}`;
+
+    return currentDate
+};
+
 export const useGetUserTrips=(baseUrl, localInfos)=>{
     const [myTripsList, setMyTripsList] = useState([]);
 
@@ -164,6 +185,8 @@ export const convertDateInput =(dateInput)=>{
     }
 };
 
+//Fiz para validar os objetos do forms antes da aula de validação de forms e deixei
+//para ser analisado
 export const validInfosObject = (infosObject)=>{
     let objectLeng = 0;
     let emptyInfos = 0;

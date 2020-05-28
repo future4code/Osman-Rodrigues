@@ -9,64 +9,64 @@ import CreateTripPage from "./components/CreateTripPage";
 import MyTripsPage from "./components/MyTripsPage";
 import ApplicantsPage from "./components/ApplicantsPage";
 
-import "./AppMainStyles";
-
 function App() {
 
   const baseUrl = "https://us-central1-labenu-apis.cloudfunctions.net/labeX/osman";
 
   return (
-    <BrowserRouter>
-      
-      <Switch>
-        <Route exact path="/">
-          <HomePage
-            
-          />
-        </Route>
+    
+      <BrowserRouter>
+        
+        <Switch>
+          <Route exact path="/">
+            <HomePage
+              
+            />
+          </Route>
 
-        <Route exact path="/login">
-          <LoginPage
-            BaseUrl={baseUrl}
-          />
-        </Route>
+          <Route exact path="/login">
+            <LoginPage
+              BaseUrl={baseUrl}
+            />
+          </Route>
 
-        <Route exact path="/admin/:userId">
-          <AdminPage
-            BaseUrl={baseUrl}
-          />
-        </Route>
+          <Route exact path="/admin/:userId">
+            <AdminPage
+              BaseUrl={baseUrl}
+            />
+          </Route>
 
-        <Route exact path="/admin/:userId/createTrip">
-          <CreateTripPage
-            BaseUrl={baseUrl}
-          />
-        </Route>
+          <Route exact path="/admin/:userId/createTrip">
+            <CreateTripPage
+              BaseUrl={baseUrl}
+            />
+          </Route>
 
-        <Route exact path="/admin/:userId/myTrips">
-          <MyTripsPage
-            BaseUrl={baseUrl}
-          />
-        </Route>
+          <Route exact path="/admin/:userId/myTrips">
+            <MyTripsPage
+              BaseUrl={baseUrl}
+            />
+          </Route>
 
-        <Route exact path="/admin/:userId/applicants">
-          <ApplicantsPage
-            BaseUrl={baseUrl}
-          />
-        </Route>
+          <Route exact path="/admin/:userId/applicants">
+            <ApplicantsPage
+              BaseUrl={baseUrl}
+            />
+          </Route>
 
-        <Route exact path="/applicationForm">
-          <ApplyFormsPage
-            BaseUrl={baseUrl}
-          />
-        </Route>
+          <Route exact path="/applicationForm">
+            <ApplyFormsPage
+              BaseUrl={baseUrl}
+            />
+          </Route>
 
-        <Route path="/">
-          <p>Erro 404</p>
-        </Route>
+          <Route path="/">
+            <p>Erro 404</p>
+          </Route>
 
-      </Switch>
-    </BrowserRouter>
+        </Switch>
+      </BrowserRouter>
+    
   );
 }
 

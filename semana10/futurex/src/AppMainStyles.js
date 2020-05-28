@@ -1,11 +1,17 @@
 import styled from 'styled-components';
 
-import {createMuiTheme, MuiThemeProvider}  from '@material-ui/core';
+import {createMuiTheme}  from '@material-ui/core';
 
-const theme = createMuiTheme({
+ export const theme = createMuiTheme({
     palette:{
+        primary:{
+            main:'#ff6347',
+        },
+        secondary:{
+            main: '#00ff00'
+        },
         error:{
-            main: '#ff6347',
+            main: '#ff6347', 
         }
     }
 })

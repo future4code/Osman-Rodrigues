@@ -43,9 +43,10 @@ export const SubmitButton = styled.button`
     padding: 10px 32px;
     text-align: center;
     text-decoration: none;
+    text-transform: uppercase;
     display: inline-block;
     margin: 4px 0px;
-    //cursor: pointer;
+    cursor: pointer;
     &:hover{
         background: #eeeeee;
     };
