@@ -2,6 +2,21 @@ import {useEffect, useState} from 'react';
 import axios from 'axios';
 import {useHistory} from 'react-router-dom';
 
+export const useForm= (initialValues) =>{
+    const [form, setForm] = useState(initialValues);
+
+    const onChange = (name, value)=>{
+        const newForm = {...form, [name]: value};
+        setForm(newForm)
+    };
+
+    const resetForm =()=>{
+        setForm(initialValues)
+    };
+
+    return {form, onChange, resetForm}
+};
+
 export const postApplyToTrip = async(baseUrl, applicantInfos, tripsList)=>{
     const body = {
         name: applicantInfos.name,
