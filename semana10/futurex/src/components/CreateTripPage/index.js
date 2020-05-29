@@ -6,7 +6,6 @@ import{
     useValidSession, useForm, getCurrentDate
 } from '../../hooks/hooks';
 
-import './styles.css';
 import {
     CreateTripPageContainer, ControledCreateTripForms,
     CreateTripInput, CreateTripButton, SelectDestiny, DestinyOption,

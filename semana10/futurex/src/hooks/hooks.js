@@ -2,6 +2,14 @@ import {useEffect, useState} from 'react';
 import axios from 'axios';
 import {useHistory} from 'react-router-dom';
 
+
+export const getCountriesList =async()=>{
+    /* const response = await axios.get('http://www.ipeadata.gov.br/api/odata4/');
+    
+    console.log(response.data.value[0].url)
+    return response */
+};
+
 export const useForm= (initialValues) =>{
     const [form, setForm] = useState(initialValues);
 

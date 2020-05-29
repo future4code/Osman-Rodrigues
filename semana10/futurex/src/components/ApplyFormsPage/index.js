@@ -1,13 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import {useHistory} from 'react-router-dom'
 import axios from 'axios';
-import {postApplyToTrip} from '../../hooks/hooks'
+import {postApplyToTrip, useForm, getCountriesList} from '../../hooks/hooks'
 
 import {
     FormsPageContainer, ControledForms, QuestionInput,
     SendFormsButton, CheckBoxLabel, CheckBoxInput,
     OptionBox,CheckOptionBox,Logo
 } from './styles';
+
+import '../../AppStyles.css'
 
 import {DialogText} from '../HomePage/styles';
 
@@ -16,9 +18,11 @@ import FuturexLogo from '../../pics/futurex-nave-icon.png';
 function ApplyFormsPage(props){
     const baseUrl = props.BaseUrl;
     const history = useHistory();
+
+    getCountriesList();
     
     const [tripsList, setTripsList] = useState([]);
-    const [applicantInfos, setApplicantInfos] = useState({
+    const {form, onChange, resetForm} = useForm({
         name:'',
         age: null,
         applicationText:'',
@@ -27,36 +31,31 @@ function ApplyFormsPage(props){
         tripsId:[]  
     });
 
-    const onChangeInputs = (e)=>{
-        setApplicantInfos({...applicantInfos,[e.target.name]: e.target.value })   
+    const handleInputChange =(e)=>{
+        const {name, value} = e.target;
+
+        onChange(name, value)
     };
 
     const onClickCheckBox =(e)=>{
         const tripSelected = e.target.id;
         
-        if(applicantInfos.tripsId.includes(tripSelected)){
-            const includedTripIdIndex = applicantInfos.tripsId.indexOf(tripSelected);
-            applicantInfos.tripsId.splice(includedTripIdIndex, 1);
+        if(form.tripsId.includes(tripSelected)){
+            const includedTripIdIndex = form.tripsId.indexOf(tripSelected);
+            form.tripsId.splice(includedTripIdIndex, 1);
 
         }else{
-            applicantInfos.tripsId.push(tripSelected)
+            form.tripsId.push(tripSelected)
         }     
     };
 
     const onClickSubmitInfos = async()=>{
-        if(applicantInfos.tripsId.length !== 0 && applicantInfos.age >= 18){
-            await postApplyToTrip(baseUrl, applicantInfos, tripsList);
+        if(form.tripsId.length !== 0 && form.age >= 18){
+            await postApplyToTrip(baseUrl, form, tripsList);
 
-            setApplicantInfos({
-                name:'',
-                age: '',
-                applicationText:'',
-                profession:'',
-                country:'',
-                tripsId:[]
-            });
+            resetForm();
 
-        }else if(applicantInfos.age < 18){
+        }else if(form.age < 18){
             window.alert('Candidatura proibida para menores de 18 anos!')
         }
         else{
@@ -85,7 +84,7 @@ function ApplyFormsPage(props){
 
             <DialogText>Formulário de Candidatura</DialogText>
 
-            <ControledForms margin="normal">
+            <ControledForms component='form'>
                 <QuestionInput
                     required
                     type="text"
@@ -94,10 +93,14 @@ function ApplyFormsPage(props){
                     InputLabelProps={{
                         shrink: true,
                     }}
+                    inputProps={{
+                        pattern:'[A-Z][A-Za-a ]{2,}',
+                        title:'Nome deve começar com letra maiúscula e ter no mínimo 3 letras'
+                    }}
                     margin="normal"
                     name='name'
-                    onChange={onChangeInputs}
-                    value={applicantInfos.name}
+                    onChange={handleInputChange}
+                    value={form.name}
                 />
                 <QuestionInput
                     required
@@ -107,10 +110,14 @@ function ApplyFormsPage(props){
                     InputLabelProps={{
                         shrink: true,
                     }}
+                    inputProps={{
+                        min:18,
+                        title:'Idade mínima premitida: 18 anos'
+                    }}
                     margin="normal"
                     name='age'
-                    onChange={onChangeInputs}
-                    value={applicantInfos.age}
+                    onChange={handleInputChange}
+                    value={form.age}
                 />
                 <QuestionInput
                     required
@@ -120,10 +127,14 @@ function ApplyFormsPage(props){
                     InputLabelProps={{
                         shrink: true,
                     }}
+                    inputProps={{
+                        pattern:'[A-Z][A-Za-a ]{9,}',
+                        title:'Profissão deve ter no mínimo 10 letras'
+                    }}
                     margin="normal"
                     name='profession'
-                    onChange={onChangeInputs}
-                    value={applicantInfos.profession}
+                    onChange={handleInputChange}
+                    value={form.profession}
                 />
                 <QuestionInput
                     required
@@ -135,8 +146,8 @@ function ApplyFormsPage(props){
                     }}
                     margin="normal"
                     name='country'
-                    onChange={onChangeInputs}
-                    value={applicantInfos.country}
+                    onChange={handleInputChange}
+                    value={form.country}
                 />
                 <QuestionInput
                     required
@@ -148,10 +159,14 @@ function ApplyFormsPage(props){
                     InputLabelProps={{
                         shrink: true,
                     }}
+                    inputProps={{
+                        maxLength: 60,
+                        title:'O texto deve ter no mínimo 30 e no máximo 60 caractéres'
+                    }}
                     margin="normal"
                     name='applicationText'
-                    onChange={onChangeInputs}
-                    value={applicantInfos.applicationText}
+                    onChange={handleInputChange}
+                    value={form.applicationText}
                 />
 
                 <CheckBoxInput margin="normal">

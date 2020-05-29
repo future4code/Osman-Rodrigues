@@ -98,64 +98,64 @@ function LoginPage(props){
             />
 
             <WelcomeText>Login de Administrador</WelcomeText>
-
+            
             <ControledLogin>
-                    <LoginInput
-                    onChange={onChangeInputs}
-                    name='email'
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    margin="normal"
-                    label={
-                        isRegistred === true ?
-                         'E-mail de Administrador':
-                         'Informe um e-mail válido'
-                        }
-                    variant='outlined'
-                    type='email'
-                    value={loginInfos.email}
-                    />
-
-                    <LoginInput
-                    onChange={onChangeInputs}
-                    name='password'
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    margin="normal"
-                    label={
-                        isRegistred === true ?
-                        'Senha':
-                        'Crie uma senha'
-                      }
-                    variant='outlined'
-                    type='password'
-                    value={loginInfos.password}
-                    />
-
-                    <LoginButton
-                    onClick={
-                        isRegistred === true?
-                        onClickLogin:
-                        onClickSignUp
+                <LoginInput
+                onChange={onChangeInputs}
+                name='email'
+                InputLabelProps={{
+                    shrink: true,
+                }}
+                margin="normal"
+                label={
+                    isRegistred === true ?
+                        'E-mail de Administrador':
+                        'Informe um e-mail válido'
                     }
-                    variant='outlined'
-                    >{
-                        isRegistred === true ?
-                        'Login':
-                        'Registrar!'
-                    }</LoginButton>
+                variant='outlined'
+                type='email'
+                value={loginInfos.email}
+                />
 
-                    <LoginButton
-                    onClick={()=>{setIsRegistred(! isRegistred)}}
-                    variant='text'
-                    >{
-                        isRegistred === true ?
-                        'Não é registrado?':
-                        'Ir para login'
-                    }</LoginButton>
-                </ControledLogin>
+                <LoginInput
+                onChange={onChangeInputs}
+                name='password'
+                InputLabelProps={{
+                    shrink: true,
+                }}
+                margin="normal"
+                label={
+                    isRegistred === true ?
+                    'Senha':
+                    'Crie uma senha'
+                    }
+                variant='outlined'
+                type='password'
+                value={loginInfos.password}
+                />
+
+                <LoginButton
+                onClick={
+                    isRegistred === true?
+                    onClickLogin:
+                    onClickSignUp
+                }
+                variant='outlined'
+                >{
+                    isRegistred === true ?
+                    'Login':
+                    'Registrar!'
+                }</LoginButton>
+
+                <LoginButton
+                onClick={()=>{setIsRegistred(! isRegistred)}}
+                variant='text'
+                >{
+                    isRegistred === true ?
+                    'Não é registrado?':
+                    'Ir para login'
+                }</LoginButton>
+            </ControledLogin>
         </LoginPageContainer>
     )
 }
