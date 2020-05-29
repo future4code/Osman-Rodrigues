@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import {
     FormControl, TextField, Button,
     FormLabel, FormGroup, FormControlLabel,
-    Checkbox
+    Checkbox, Select, MenuItem, InputLabel
 } from '@material-ui/core';
 
 export const Logo = styled.img`
@@ -26,6 +26,15 @@ export const ControledForms = styled(FormControl)`
 export const QuestionInput = styled(TextField)`
 
 `;
+export const SelectCountry = styled(Select)`
+
+`;
+export const CountryOption = styled(MenuItem)`
+
+`;
+export const SelectLabel = styled(InputLabel)`
+
+`;
 export const CheckBoxLabel = styled(FormLabel)`
 
 `;
@@ -37,7 +46,4 @@ export const OptionBox = styled(FormControlLabel)`
 `;
 export const CheckOptionBox = styled(Checkbox)`
 
-`;
-export const SendFormsButton = styled(Button)`
-    
 `;

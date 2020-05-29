@@ -1,13 +1,16 @@
 import React, {useState, useEffect} from 'react';
 import {useHistory} from 'react-router-dom'
 import axios from 'axios';
-import {postApplyToTrip, useForm, getCountriesList} from '../../hooks/hooks'
+import {postApplyToTrip, useForm, } from '../../hooks/hooks'
 
 import {
     FormsPageContainer, ControledForms, QuestionInput,
-    SendFormsButton, CheckBoxLabel, CheckBoxInput,
-    OptionBox,CheckOptionBox,Logo
+    CheckBoxLabel, CheckBoxInput,
+    OptionBox,CheckOptionBox,Logo, SelectLabel, SelectCountry,
+    CountryOption
 } from './styles';
+
+import {SubmitButton} from '../CreateTripPage/styles'
 
 import '../../AppStyles.css'
 
@@ -19,8 +22,7 @@ function ApplyFormsPage(props){
     const baseUrl = props.BaseUrl;
     const history = useHistory();
 
-    getCountriesList();
-    
+    const [countriesList, setCountriesList] = useState([]);
     const [tripsList, setTripsList] = useState([]);
     const {form, onChange, resetForm} = useForm({
         name:'',
@@ -49,7 +51,7 @@ function ApplyFormsPage(props){
         }     
     };
 
-    const onClickSubmitInfos = async()=>{
+    const sendForms = async()=>{
         if(form.tripsId.length !== 0 && form.age >= 18){
             await postApplyToTrip(baseUrl, form, tripsList);
 
@@ -72,8 +74,26 @@ function ApplyFormsPage(props){
             window.alert('No momento não estamos aceitando candidaturas. Obrigado pela preferência!')
             history.push('/')
         });
+
+        axios.
+        get('https://restcountries.eu/rest/v2/all').
+        then(response=>{
+            setCountriesList(response.data)
+        });
+
+        
     },[]);
 
+    const handleSubmit = e =>{
+        e.preventDefault();
+
+        if(form.country === '' || form.country === undefined){
+            window.alert('O campo "País de origem" está vazio!')
+        }else{
+            sendForms();
+        }
+    };
+    
     return(
         <FormsPageContainer>
 
@@ -84,9 +104,10 @@ function ApplyFormsPage(props){
 
             <DialogText>Formulário de Candidatura</DialogText>
 
-            <ControledForms component='form'>
+            <ControledForms onSubmit={handleSubmit} component='form'>
                 <QuestionInput
-                    required
+                    required={true}
+                    autoFocus={true}
                     type="text"
                     label="Seu nome completo"
                     variant="outlined"
@@ -94,7 +115,7 @@ function ApplyFormsPage(props){
                         shrink: true,
                     }}
                     inputProps={{
-                        pattern:'[A-Z][A-Za-a ]{2,}',
+                        pattern:'[A-z ]{3,}',
                         title:'Nome deve começar com letra maiúscula e ter no mínimo 3 letras'
                     }}
                     margin="normal"
@@ -103,7 +124,7 @@ function ApplyFormsPage(props){
                     value={form.name}
                 />
                 <QuestionInput
-                    required
+                    required={true}
                     type="number"
                     label="Sua idade"
                     variant="outlined"
@@ -120,7 +141,7 @@ function ApplyFormsPage(props){
                     value={form.age}
                 />
                 <QuestionInput
-                    required
+                    required={true}
                     type="text"
                     label="Profissão atual"
                     variant="outlined"
@@ -128,7 +149,7 @@ function ApplyFormsPage(props){
                         shrink: true,
                     }}
                     inputProps={{
-                        pattern:'[A-Z][A-Za-a ]{9,}',
+                        pattern:'[A-z ]{10,}',
                         title:'Profissão deve ter no mínimo 10 letras'
                     }}
                     margin="normal"
@@ -136,21 +157,41 @@ function ApplyFormsPage(props){
                     onChange={handleInputChange}
                     value={form.profession}
                 />
-                <QuestionInput
-                    required
-                    type="text"
-                    label="País"
-                    variant="outlined"
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
+
+                <ControledForms>
+                    <SelectLabel
+                     shrink id='selectLabel' required={true}
+                     >País de origem</SelectLabel>
+                    
+                    <SelectCountry
+                    component='select' 
+                    required={true}
                     margin="normal"
                     name='country'
                     onChange={handleInputChange}
-                    value={form.country}
-                />
+                    labelId='selectLabel'
+                    variant='outlined'
+                    >
+
+                    {   countriesList.length > 0 ?
+                        countriesList.map(country=>{
+                            return(
+                            <CountryOption
+                            required={true}
+                            value={country.name}
+                            key={country.name}
+                            >{country.name}
+                            </CountryOption>
+                            )
+                        })
+                        :<CountryOption>Buscando países...</CountryOption>
+                    }
+
+                    </SelectCountry>
+                </ControledForms>
+
                 <QuestionInput
-                    required
+                    required={true}
                     multiline={true}
                     rows="5"
                     type="text"
@@ -160,7 +201,7 @@ function ApplyFormsPage(props){
                         shrink: true,
                     }}
                     inputProps={{
-                        maxLength: 60,
+                        maxLength: 80,
                         title:'O texto deve ter no mínimo 30 e no máximo 60 caractéres'
                     }}
                     margin="normal"
@@ -170,9 +211,9 @@ function ApplyFormsPage(props){
                 />
 
                 <CheckBoxInput margin="normal">
-                    <CheckBoxLabel required component="legend">Selecione até duas viagens que deseje ingressar</CheckBoxLabel>
+                    <CheckBoxLabel required={true} component="legend">Selecione até duas viagens que deseje ingressar</CheckBoxLabel>
                     {
-                        tripsList.length !== 0 ?(
+                        tripsList.length > 0 ?(
                             tripsList.map(trip =>{
                                 return(
                                     <OptionBox
@@ -191,15 +232,11 @@ function ApplyFormsPage(props){
                         <h3>Buscando viagens disponíveis...</h3>   
                     }
                 </CheckBoxInput>
-                
+
+                <SubmitButton>Enviar Candidatura</SubmitButton>
             </ControledForms>
 
-            <SendFormsButton
-            variant="outlined"
-            onClick={onClickSubmitInfos}
-            >
-                Enviar Candidatura
-            </SendFormsButton>
+            
         </FormsPageContainer>
     )
 }

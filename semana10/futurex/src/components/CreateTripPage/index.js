@@ -107,6 +107,7 @@ function CreateTripPage(props){
             createTrip();
         }
     };
+    
     return(
         <CreateTripPageContainer>
             <DialogText>Criação de Viagem</DialogText>
