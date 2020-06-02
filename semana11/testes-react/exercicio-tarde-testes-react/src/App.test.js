@@ -59,3 +59,57 @@ describe('Funcionalidade para apagar um post',()=>{
         fireEvent.click(deleteButton);
     });
 });
+describe('Funcionalidades extras', ()=>{
+    test('Após criar um post, o input "Novo post" deve ser limpo',()=>{
+        const {getByPlaceholderText, getByText} = render(<App/>);
+
+        const newPostInput = getByPlaceholderText(/Novo post/i);
+        fireEvent.change(newPostInput, {
+            target:{
+                value: 'Post3'
+            }
+        });
+
+        const addButton = getByText(/Adicionar/i);
+        fireEvent.click(addButton);
+
+        fireEvent.change(newPostInput, {
+            target:{
+                value: ''
+            }
+        });
+
+    });
+    test('Enquanto a lista de posts estiver vazia, a mensagem "Nenhum post" deve ser printada',()=>{
+        const {getByText} = render(<App/>);
+
+        const emptyList = getByText(/Nenhum post/i);
+
+        expect(emptyList).toHaveTextContent('Nenhum post');
+    });
+    test('Quantidade de posts deve ser mostrada',()=>{
+        const{getByTestId}=render(<App/>);
+
+        const postsCounter = getByTestId('posts-counter');
+
+        expect(postsCounter).toBeInTheDocument('posts-counter');
+    });
+    test('Se o usuário tentar criar um post com texto vazio, a mensagem "Não é permitido criar post com nome vazio"',()=>{
+        const{getByText, getByPlaceholderText} = render(<App/>);
+
+        const newPostInput = getByPlaceholderText(/Novo post/i);
+        fireEvent.change(newPostInput, {
+            target:{
+                value:''
+            }
+        });
+
+        const addButton = getByText(/Adicionar/i);
+        fireEvent.click(addButton);
+
+        const warningMsg = getByText(/Não é permitido criar post sem um nome/i);
+
+        expect(warningMsg).toHaveTextContent('Não é permitido criar post sem um nome');
+
+    });
+});
