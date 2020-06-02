@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/static/css/main.04571ebf.chunk.css",
+    "main.js": "/static/js/main.810da7c7.chunk.js",
+    "main.js.map": "/static/js/main.810da7c7.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.d0a29e9d.js",
+    "runtime-main.js.map": "/static/js/runtime-main.d0a29e9d.js.map",
+    "static/js/2.d786b101.chunk.js": "/static/js/2.d786b101.chunk.js",
+    "static/js/2.d786b101.chunk.js.map": "/static/js/2.d786b101.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.61c972268cdabdea081f759469d9601e.js": "/precache-manifest.61c972268cdabdea081f759469d9601e.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.04571ebf.chunk.css.map": "/static/css/main.04571ebf.chunk.css.map",
+    "static/js/2.d786b101.chunk.js.LICENSE.txt": "/static/js/2.d786b101.chunk.js.LICENSE.txt",
+    "static/media/futurex-logo.png": "/static/media/futurex-logo.a9a1a475.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.d0a29e9d.js",
+    "static/js/2.d786b101.chunk.js",
+    "static/css/main.04571ebf.chunk.css",
+    "static/js/main.810da7c7.chunk.js"
+  ]
+}
