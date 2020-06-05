@@ -12,7 +12,10 @@ export const HeaderContainer = styled.div`
 export const HeaderTitle = styled.h1`
 
 `;
-export const CreateTaskBar = styled.div`
+export const CreateTaskBar = styled.form`
+
+`;
+export const TaskInputLabel = styled.label`
 
 `;
 export const TaskInput = styled.input`
