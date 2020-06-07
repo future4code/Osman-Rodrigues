@@ -32,13 +32,13 @@ function Board(){
             window.alert('Alteração cancelada.')
         }else if( askText=== null || askDay === null){
             try{
-                const response = await axios
+                await axios
                 .put(`${baseUrl}/${e.target.id}`, 
                 {
                     text: askText === null || askText.trim() === '' ? dataText : askText,
                     day: askDay === null || askDay.trim() === '' ? dataDay : askDay,
                 });
-                console.log(response)
+                
                 window.alert('Tarefa alterada com sucesso!');
                 window.location.reload();
             }catch(e){
@@ -46,9 +46,9 @@ function Board(){
             };
         }else{
             try{
-                const response = await axios
+                await axios
                 .put(`${baseUrl}/${e.target.id}`,{text:askText, day:askDay});
-                console.log(response)
+                
                 window.alert('Tarefa alterada com sucesso!');
                 window.location.reload();
             }catch(e){
@@ -57,14 +57,13 @@ function Board(){
         };
     };
     const handleDeleteTask=async(e)=>{
-        console.log(e.target.id)
 
         const confirmDelete = window.confirm('Deseja excluir esta tarefa?');
 
         if(confirmDelete === true){
 
             try{
-                const response = await axios
+                await axios
                 .delete(`${baseUrl}/${e.target.id}`);
 
                 window.alert('Tarefa excluída!');
@@ -158,13 +157,13 @@ function Board(){
                 {mountTasks('sexta')}
             </DayColumn>
 
-            <DayColumn name='sábado'>
+            <DayColumn data-testid='saturday' name='sábado'>
                 <ColumnTitle>Sábado</ColumnTitle>
 
                 {mountTasks('sábado')}
             </DayColumn>
 
-            <DayColumn name='domingo'>
+            <DayColumn data-testid='sunday' name='domingo'>
                 <ColumnTitle>Domingo</ColumnTitle>
 
                 {mountTasks('domingo')}

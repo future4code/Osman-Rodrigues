@@ -20,7 +20,7 @@ function Header(){
     const handleInputChange =(e)=>{
         const { name, value} = e.target;
 
-        setCreatedTask({... createdTask, [name]: value})
+        setCreatedTask({...createdTask, [name]: value})
     };
     const handleSubmit=async(e)=>{
         e.preventDefault()
@@ -29,9 +29,10 @@ function Header(){
             window.alert('Selecione um dia para a tarefa!')
         }else{
             try{
-                const response = await axios.
-                post(`https://us-central1-labenu-apis.cloudfunctions.net/generic/planner-julian-osman`,
-                {text:createdTask.text, day: createdTask.day.toLowerCase()},
+                const response = await axios
+                .post(
+                    `https://us-central1-labenu-apis.cloudfunctions.net/generic/planner-julian-osman`,
+                    {text:createdTask.text, day: createdTask.day.toLowerCase()},
                 );
 
                 response.data === 'Created' && window.alert('Tarefa criada!');
@@ -48,7 +49,13 @@ function Header(){
 
             <CreateTaskBar onSubmit={handleSubmit}>
                 <TaskInputLabel>Crie uma tarefa</TaskInputLabel>
-                <TaskInput required onChange={handleInputChange} value={createdTask.text} name='text' type='text' />
+                <TaskInput 
+                required 
+                onChange={handleInputChange} 
+                value={createdTask.text} 
+                placeholder='Descrição da tarefa' 
+                type='text' name='text'
+                />
                 <TasksDropdown required onChange={handleInputChange} name='day' >
                     <DropdownOption>Selecione o dia</DropdownOption>
                     {
