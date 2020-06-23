@@ -1,5 +1,5 @@
 {
-  "name": "calculator",
+  "name": "tasks-manager",
   "version": "1.0.0",
   "description": "extensão do exercicio 3",
   "main": "index.js",
