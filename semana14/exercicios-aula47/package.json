@@ -5,14 +5,24 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node ./src/index.ts",
-    "create-src": "mkdir src && cd src && touch index.ts && touch services.ts && touch storage.ts && touch utils.ts"
+    "create-src": "mkdir src && cd src && mkdir exercices && touch services.ts && touch storage.ts && touch utils.ts",
+    "create-exercices": "cd src/exercices && touch 1.ts && touch 2.ts && touch 3.ts && touch 4.ts && touch 5.ts && touch 6.ts && touch 7.ts",
+    "e1": "clear & ts-node ./src/exercices/1.ts",
+    "e2": "clear & ts-node ./src/exercices/2.ts",
+    "e3": "clear & ts-node ./src/exercices/3.ts",
+    "e4": "clear & ts-node ./src/exercices/4.ts",
+    "e5": "clear & ts-node ./src/exercices/5.ts",
+    "e6": "clear & ts-node ./src/exercices/6.ts",
+    "e7": "clear & ts-node ./src/exercices/7.ts"
   },
   "author": "OsmanRodrigues",
   "license": "ISC",
   "dependencies": {
     "@types/axios": "^0.14.0",
+    "@types/moment": "^2.13.0",
     "@types/node": "^14.0.14",
     "axios": "^0.19.2",
+    "moment": "^2.27.0",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.5"
   }
