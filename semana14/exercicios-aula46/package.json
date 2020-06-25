@@ -5,9 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "tsc && node build/index.js",
-    "create-src": "mkdir src && cd src && touch index.ts",
-    "second": "tsc && node build/exercicio2.js",
-    "third": "tsc && node build/exercicio3.js"
+    "create-src": "mkdir src && cd src && touch index.ts"
   },
   "author": "OsmanRodrigues",
   "license": "ISC",
