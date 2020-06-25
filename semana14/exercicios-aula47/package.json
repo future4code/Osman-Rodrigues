@@ -1,0 +1,19 @@
+{
+  "name": "exercicios-aula47",
+  "version": "1.0.0",
+  "description": "exercicios da aula 47, semana 14",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node ./src/index.ts",
+    "create-src": "mkdir src && cd src && touch index.ts && touch services.ts && touch storage.ts && touch utils.ts"
+  },
+  "author": "OsmanRodrigues",
+  "license": "ISC",
+  "dependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/node": "^14.0.14",
+    "axios": "^0.19.2",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.5"
+  }
+}
