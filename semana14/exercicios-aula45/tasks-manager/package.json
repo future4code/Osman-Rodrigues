@@ -1,0 +1,16 @@
+{
+  "name": "tasks-manager",
+  "version": "1.0.0",
+  "description": "extensão do exercicio 3",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node ./src/index.ts"
+  },
+  "author": "OsmanRodrigues",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^14.0.13",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.5"
+  }
+}
