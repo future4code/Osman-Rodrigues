@@ -1,0 +1,20 @@
+{
+  "name": "bank-system-poc",
+  "version": "1.0.0",
+  "description": "Proof of Concept Bank System based",
+  "main": "index.js",
+  "scripts": {
+    "start": "clear && ts-node ./src/index.ts",
+    "create-src": "mkdir src && cd src && touch index.ts && touch utils.ts && touch models.ts",
+    "create-storage": "touch tsconfig.json && touch database.json"
+  },
+  "author": "OsmanRodrigues",
+  "license": "ISC",
+  "dependencies": {
+    "@types/moment": "^2.13.0",
+    "@types/node": "^14.0.14",
+    "moment": "^2.27.0",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.5"
+  }
+}
