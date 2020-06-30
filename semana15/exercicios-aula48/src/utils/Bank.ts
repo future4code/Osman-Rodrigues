@@ -4,9 +4,12 @@ import Account from './Account';
 
 const dbFile = new JSONFileMng('database.json');
 const db = dbFile.getFile();
+const getAcc = new Account;
 moment.locale('pt-br')
 
+
 class Bank{
+
   /* private name: string
   private id: number
   private birth: moment.Moment
@@ -57,9 +60,55 @@ class Bank{
       * Nascimento: ${moment(user.birth).format('DD [de] MMMM [de] YYYY')} *
       * Idade: ${moment().diff(moment(user.birth),"years")} anos *
       * Saldo inicial: R$ ${userAcc.balance.toFixed(2)} *
-      * Extrato inicial: ${userAcc.transations.length} movimentações *
+      * Extrato inicial: ${userAcc.transactions.length} movimentações *
       `
     );
-  }
-};
+  };
+  public getUserBalance = (userCpf: number) => getAcc.getBalance(userCpf);
+  public creditUserAccount = (
+    userCpf: number, value: number, description?: string
+  )=> getAcc.addBalance(userCpf, value, description);
+  public getAllAcc = () =>{
+    console.log(
+      '---------- Registro Geral de Clientes ----------'
+    );
+    for(const account in db.accounts){
+      const userAcc = db.accounts[account];
+      console.log(
+        `
+        Cliente: ${userAcc.user.name}
+        CPF: ${userAcc.user.cpf}
+        Idade: ${moment().diff(moment(userAcc.user.birth),"years")} anos
+        Saldo: R$ ${userAcc.balance.toFixed(2)}
+        Transações: ${userAcc.transactions.length}
+                  - 
+        `
+      );
+    };
+  };
+  public findByCpfOrName = (userInfo: number | string)=>{
+
+    let findCounter = 0;
+    for(const account in db.accounts){
+      const userAcc = db.accounts[account];
+      if(
+        userInfo === Number(account) || 
+        userAcc.user.name.includes(userInfo)
+        ){
+        findCounter ++
+        console.log(
+          `
+          Cliente: ${userAcc.user.name}
+          CPF: ${userAcc.user.cpf}
+          Idade: ${moment().diff(moment(userAcc.user.birth),"years")} anos
+          Saldo: R$ ${userAcc.balance.toFixed(2)}
+          Transações: ${userAcc.transactions.length}
+          `
+        );
+      }
+    }
+    findCounter === 0 ? console.log('Nenhum registro encotrado.') :
+    console.log(`${findCounter} registro(s) encontrado(s).`)
+  };
+}
 export default Bank
