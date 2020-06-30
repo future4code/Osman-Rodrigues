@@ -55,6 +55,9 @@ export class Customer extends User {
   }
 };
 export class Employee extends User{
+	static BENEFITS_VALUE: number = 400;
+
+
 	protected admissionDate: string;
 	protected baseSalary: number;
 
@@ -69,10 +72,19 @@ export class Employee extends User{
 
 	getAdmissionDate = (): string => this.admissionDate;
 	getBaseSalary = (): number => this.baseSalary; 
-	//7.
-	calculateTotalSalary = (): number => this.baseSalary += 400
+	//7. e 11.
+	calculateTotalSalary = (): number => this.baseSalary += Employee.BENEFITS_VALUE;
 };
 export class Seller extends Employee{
+	static SELLING_COMMISSION: number = 5;
+	private salesQuantity: number = 0;
 
-	
+	setSalesQuantity = (quantity: number): void =>{
+		this.salesQuantity += quantity
+		console.log(this.salesQuantity)
+	}; 
+
+	//10. e 11.
+	calculateTotalSalary =() => this.baseSalary += 400 + 
+	(Seller.SELLING_COMMISSION * this.salesQuantity);
 };
