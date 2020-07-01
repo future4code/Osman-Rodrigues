@@ -1,0 +1,16 @@
+{
+  "name": "exercicios-aula50",
+  "version": "1.0.0",
+  "description": "exercicios da aula 50, da semana 15",
+  "main": "index.js",
+  "scripts": {
+    "start": "clear && ts-node ./src/index.ts"
+  },
+  "author": "OsmanRodrigues",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^14.0.14",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.5"
+  }
+}
