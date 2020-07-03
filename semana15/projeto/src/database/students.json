@@ -1,0 +1,24 @@
+{
+  "8": {
+    "labenumber": 8,
+    "name": "Hendrix",
+    "email": "hendrix@jimmy.com",
+    "birth": "1942-11-27T03:00:00.000Z",
+    "hobbies": [
+      "tocar guitarra",
+      "fazer shows",
+      "encantar a platéia"
+    ]
+  },
+  "9": {
+    "labenumber": 9,
+    "name": "Marie",
+    "email": "maria@joana.com",
+    "birth": "1998-09-05T03:00:00.000Z",
+    "hobbies": [
+      "ter fé",
+      "ter raça",
+      "ter gana"
+    ]
+  }
+}

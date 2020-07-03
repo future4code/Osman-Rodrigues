@@ -1,0 +1,156 @@
+{
+  "10": {
+    "id": 10,
+    "name": "Curie",
+    "launch": "2020-10-30T03:00:00.000Z",
+    "arrive": "2021-04-30T03:00:00.000Z",
+    "currentModule": 0,
+    "teachers": [
+      {
+        "labenumber": 2,
+        "name": "Amanda",
+        "email": "amanda@labenu.com",
+        "birth": "1994-04-13T03:00:00.000Z",
+        "expertises": [
+          "Backend",
+          "Programação Orientada a Objetos",
+          "Typescript"
+        ]
+      },
+      {
+        "labenumber": 3,
+        "name": "Mateus",
+        "email": "mateus@labenu.com",
+        "birth": "1994-07-20T03:00:00.000Z",
+        "expertises": [
+          "Backend",
+          "Programação Orientada a Objetos",
+          "Typescript"
+        ]
+      },
+      {
+        "labenumber": 1,
+        "name": "João",
+        "email": "joao@labenu.com",
+        "birth": "1992-07-02T03:00:00.000Z",
+        "expertises": [
+          "Backend",
+          "Programação Orientada a Objetos",
+          "Typescript"
+        ]
+      },
+      {
+        "labenumber": 4,
+        "name": "Golias",
+        "email": "joaogoli@labenu.com",
+        "birth": "1990-07-07T03:00:00.000Z",
+        "expertises": [
+          "Backend",
+          "Programação Orientada a Objetos",
+          "Typescript"
+        ]
+      }
+    ],
+    "students": [
+      {
+        "labenumber": 9,
+        "name": "Marie",
+        "email": "maria@joana.com",
+        "birth": "1998-09-05T03:00:00.000Z",
+        "hobbies": [
+          "ter fé",
+          "ter raça",
+          "ter gana"
+        ]
+      },
+      {
+        "labenumber": 8,
+        "name": "Hendrix",
+        "email": "hendrix@jimmy.com",
+        "birth": "1942-11-27T03:00:00.000Z",
+        "hobbies": [
+          "tocar guitarra",
+          "fazer shows",
+          "encantar a platéia"
+        ]
+      }
+    ]
+  },
+  "11": {
+    "id": 11,
+    "name": "Tesla-na-night",
+    "launch": "2021-05-01T03:00:00.000Z",
+    "arrive": "2021-11-01T03:00:00.000Z",
+    "currentModule": 0,
+    "teachers": [
+      {
+        "labenumber": 2,
+        "name": "Amanda",
+        "email": "amanda@labenu.com",
+        "birth": "1994-04-13T03:00:00.000Z",
+        "expertises": [
+          "Backend",
+          "Programação Orientada a Objetos",
+          "Typescript"
+        ]
+      },
+      {
+        "labenumber": 3,
+        "name": "Mateus",
+        "email": "mateus@labenu.com",
+        "birth": "1994-07-20T03:00:00.000Z",
+        "expertises": [
+          "Backend",
+          "Programação Orientada a Objetos",
+          "Typescript"
+        ]
+      },
+      {
+        "labenumber": 1,
+        "name": "João",
+        "email": "joao@labenu.com",
+        "birth": "1992-07-02T03:00:00.000Z",
+        "expertises": [
+          "Backend",
+          "Programação Orientada a Objetos",
+          "Typescript"
+        ]
+      },
+      {
+        "labenumber": 4,
+        "name": "Golias",
+        "email": "joaogoli@labenu.com",
+        "birth": "1990-07-07T03:00:00.000Z",
+        "expertises": [
+          "Backend",
+          "Programação Orientada a Objetos",
+          "Typescript"
+        ]
+      }
+    ],
+    "students": [
+      {
+        "labenumber": 9,
+        "name": "Marie",
+        "email": "maria@joana.com",
+        "birth": "1998-09-05T03:00:00.000Z",
+        "hobbies": [
+          "ter fé",
+          "ter raça",
+          "ter gana"
+        ]
+      },
+      {
+        "labenumber": 8,
+        "name": "Hendrix",
+        "email": "hendrix@jimmy.com",
+        "birth": "1942-11-27T03:00:00.000Z",
+        "hobbies": [
+          "tocar guitarra",
+          "fazer shows",
+          "encantar a platéia"
+        ]
+      }
+    ]
+  }
+}

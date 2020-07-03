@@ -1,0 +1,46 @@
+{
+  "1": {
+    "labenumber": 1,
+    "name": "João",
+    "email": "joao@labenu.com",
+    "birth": "1992-07-02T03:00:00.000Z",
+    "expertises": [
+      "Backend",
+      "Programação Orientada a Objetos",
+      "Typescript"
+    ]
+  },
+  "2": {
+    "labenumber": 2,
+    "name": "Amanda",
+    "email": "amanda@labenu.com",
+    "birth": "1994-04-13T03:00:00.000Z",
+    "expertises": [
+      "Backend",
+      "Programação Orientada a Objetos",
+      "Typescript"
+    ]
+  },
+  "3": {
+    "labenumber": 3,
+    "name": "Mateus",
+    "email": "mateus@labenu.com",
+    "birth": "1994-07-20T03:00:00.000Z",
+    "expertises": [
+      "Backend",
+      "Programação Orientada a Objetos",
+      "Typescript"
+    ]
+  },
+  "4": {
+    "labenumber": 4,
+    "name": "Golias",
+    "email": "joaogoli@labenu.com",
+    "birth": "1990-07-07T03:00:00.000Z",
+    "expertises": [
+      "Backend",
+      "Programação Orientada a Objetos",
+      "Typescript"
+    ]
+  }
+}

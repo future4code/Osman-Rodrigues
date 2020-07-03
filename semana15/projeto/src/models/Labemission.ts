@@ -7,11 +7,13 @@ abstract class Labemission{
     protected id:number, 
     protected name: string, 
     protected launch: moment.Moment, 
-    protected arrival: moment.Moment,
+    protected arrive: moment.Moment,
     protected currentModule: number
   ){};
   addTeacher(teacher: Teacher): void{};
   addStudent(student: Student): void{};
+  getTeachers(): void{};
+  getStudents(): void{};
   getStudentAge(student: Student): any{};
 };
 export default Labemission;
