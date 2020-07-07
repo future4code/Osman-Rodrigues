@@ -106,4 +106,122 @@ GROUP BY gender;
 
 ### Exercicio 6
 
-a)
+a)Query:
+```
+ALTER TABLE Film 
+ADD playing_limit_date DATE NOT NULL DEFAULT (CONVERT(CURDATE(), CHAR));
+```
+b)Query:
+```
+ALTER TABLE Film
+ADD rating rating FLOAT;
+```
+c)Query:
+```
+UPDATE Film
+SET playing_limit_date = '2020-06-06'
+WHERE id = '001';
+```
+&
+```
+UPDATE Film
+SET playing_limit_date = '2020-08-06'
+WHERE id = '002';
+```
+d)O comando foi executado, mas retornou uma mensagem de que 0 linhas foram atualizadas na tabela Film.
+
+### Exercicio 7
+
+a)Query:
+```
+SELECT COUNT(*) FROM Film
+WHERE rating > 7.5;
+```
+b)Query:
+```
+SELECT AVG(rating) FROM Film;
+```
+c)Query:
+```
+SELECT COUNT(*) FROM Film
+WHERE playing_limit_date > '2020-07-07';
+```
+d)Query:
+```
+SELECT COUNT(*) FROM Film
+WHERE release_date > CURDATE(); 
+```
+e)Query:
+```
+SELECT MAX(rating) FROM Film;
+```
+f)Query:
+```
+SELECT MIN(rating) FROM Film;
+```
+
+### Exercicio 8
+
+a)Query:
+```
+SELECT * FROM Film
+ORDER BY title ASC;
+```
+b)Query:
+```
+SELECT * FROM Film
+ORDER BY title DESC
+LIMIT 5;
+```
+c)Query:
+```
+SELECT * FROM Film
+WHERE playing_limit_date >= CURDATE() 
+ORDER BY playing_limit_date DESC;
+```
+d)Query:
+```
+SELECT * FROM Film
+ORDER BY rating DESC
+LIMIT 3;
+```
+
+## Fim dos Exercícios
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
