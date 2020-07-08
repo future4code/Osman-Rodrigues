@@ -4,6 +4,7 @@
   "description": "exercicios da aula 53, da semana 16",
   "main": "index.js",
   "scripts": {
+    "start":"clear && ts-node ./src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "OsmanRodrigues",
