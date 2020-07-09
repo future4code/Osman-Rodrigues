@@ -29,15 +29,56 @@ const server = app.listen( process.env.PORT || '3000', ()=>{
   };
 });
 
-async function testEndpoint(req:express.Request, res:express.Response): Promise<void>{
-  try {
-    const result = await connection.raw(`
-      SELECT * FROM Actor
-    `)
+//1.
+//b)
+const createAppreciationTable = async (): Promise <void>=>{
+  const r = await connection.schema.createTable('Appreciation', (table)=>{
+    table.string('id').primary();
+    table.text('comment').notNullable();
+    table.float('rate').notNullable();
+    table.string('movie_id');
+    table.foreign('movie_id').references('id').inTable('Film');
+  });
 
-    res.status(200).send(result[0])
-  } catch (error) {
-    res.status(400).send(error.message)
+  console.log('Tabela criada com sucesso!');
+};
+
+const newAppreciation = async (
+  id: string, comment: string, rate: number, movie_id: string, 
+): Promise<void> =>{
+  const r = await connection('Appreciation')
+  .insert({
+    id,
+    comment,
+    rate,
+    movie_id
+  });
+  console.log(`Avaliação do filme registrada com sucesso!`)
+};
+//d)
+const deleteColumn = async (film: string, column: string): Promise<void>=>{
+  try{
+    const r = await connection.schema.alterTable(film, (t)=>{
+    t.dropColumn(column);
+    });
+    console.log(r);
+    console.log(`Coluna excluida com sucesso!`)
+  }catch(e){
+    console.log(e.message)
   }
 };
-app.get('/', testEndpoint);
+const deleteFilm = async (film: string): Promise<void> =>{
+  try{
+    const r = await connection('Film')
+    .delete('*')
+    .where('id', '=', film);
+  }catch(e){
+    console.log(e.sqlMessage);
+  }; 
+};
+
+deleteFilm('001');
+
+//deleteColumn();
+//createAppreciationTable();
+//newAppreciation();
