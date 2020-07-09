@@ -77,8 +77,36 @@ const deleteFilm = async (film: string): Promise<void> =>{
   }; 
 };
 
-deleteFilm('001');
+//2
+//b)
+const createFilmCastTable = async (): Promise <void>=>{
+  const r = await connection.schema.createTable('FilmCast', (table)=>{
+    table.string('film_id');
+    table.string('actor_id');
+    table.foreign('film_id').references('id').inTable('Film');
+    table.foreign('actor_id').references('id').inTable('Actor');
+  });
 
+  console.log('Tabela criada com sucesso!');
+};
+
+const addActorToCast = async (film_id: string, actor_id: string): Promise<void> =>{
+  try{
+    const r = await connection('FilmCast')
+    .insert({
+      film_id,
+      actor_id
+    });
+    console.log('Elenco acrescido com sucesso!');
+  }catch(e){
+    console.log(e.sqlMessage);
+  };
+};
+
+addActorToCast('011', '011');
+
+//createFilmCastTable();
+//deleteFilm('001');
 //deleteColumn();
 //createAppreciationTable();
 //newAppreciation();

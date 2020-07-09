@@ -46,4 +46,45 @@ const deleteColumn = async (film: string, column: string): Promise<void>=>{
   }
 };
 ~~~
-e) Retornou um erro informando que a restrição atrelada a referência da foreing key da linha filha correspondente ao filme em questão não permite deletar ou atualizar a mesma. 
+e) Retornou um erro informando que a restrição atrelada a referência da foreing key da linha filha correspondente ao filme em questão não permite deletar ou atualizar a mesma.
+
+### Exercicio 2
+
+a) A tabela em questão representa a entidade do Elenco dos Filmes, a qual guarda duas informações principais: identificação do filme e do ator presente em seu elenco. 
+
+b) Code:
+~~~typescript
+const createFilmCastTable = async (): Promise <void>=>{
+  const r = await connection.schema.createTable('FilmCast', (table)=>{
+    table.string('film_id');
+    table.string('actor_id');
+    table.foreign('film_id').references('id').inTable('Film');
+    table.foreign('actor_id').references('id').inTable('Actor');
+  });
+
+  console.log('Tabela criada com sucesso!');
+};
+
+const addActorToCast = async (film_id: string, actor_id: string): Promise<void> =>{
+  const r = await connection('FilmCast')
+  .insert({
+    film_id,
+    actor_id
+  });
+  console.log('Elenco acrescido com sucesso!')
+};
+
+addActorToCast('001', '003');
+addActorToCast('002', '004');
+addActorToCast('004', '006');
+addActorToCast('008', '007');
+addActorToCast('004', '006');
+addActorToCast('008', '007');
+~~~
+
+c) Não foi permitido criar o ator por conta da restrição da foreing key incompatível com a sua ligação na com o campo id da tabela Actor;
+
+d) Retornou um erro informando que a restrição atrelada a referência da foreing key da linha filha na tabela FilmCast correspondente ao ator relacionado ao filme em questão, não permite deletar ou atualizar a mesma.
+
+### Exercicio 3
+
