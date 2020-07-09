@@ -4,7 +4,7 @@
   "description": "exercicios da aula 53, da semana 16",
   "main": "index.js",
   "scripts": {
-    "start":"clear && ts-node ./src/index.ts",
+    "start": "clear && ts-node ./src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "OsmanRodrigues",
@@ -13,6 +13,7 @@
     "@types/express": "^4.17.0",
     "@types/knex": "^0.16.1",
     "@types/node": "^14.0.19",
+    "axios": "^0.19.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.0",
     "knex": "^0.21.1",
