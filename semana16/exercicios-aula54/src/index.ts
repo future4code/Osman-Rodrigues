@@ -103,10 +103,16 @@ const addActorToCast = async (film_id: string, actor_id: string): Promise<void> 
   };
 };
 
-addActorToCast('011', '011');
-
-//createFilmCastTable();
-//deleteFilm('001');
-//deleteColumn();
-//createAppreciationTable();
-//newAppreciation();
+//6
+//d)
+const setFilmOscar = async (
+  oscarId:string, filmId: string, oscarType: string
+  ): Promise<void> =>{
+    const r = await connection('Oscar')
+    .insert({
+      id: oscarId,
+      oscar_type: oscarType,
+      film_id: filmId,
+    })
+    console.log('Oscar registrado!')
+};

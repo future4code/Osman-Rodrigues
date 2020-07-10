@@ -88,3 +88,93 @@ d) Retornou um erro informando que a restrição atrelada a referência da forei
 
 ### Exercicio 3
 
+a) A query em questão busca na confluência das tabelas Movie e Rating as linhas nas quais os campos id da Movie e movie_id da Rating sejam iguais. O operador ON representa a condição que a junçõa ocorrerá, no caso a relação citada anteriormente entre id e movie_id;
+
+b) Query:
+~~~sql
+SELECT movie_id, title, rate 
+FROM Appreciation
+INNER JOIN Film ON Appreciation.movie_id = Film.id; 
+~~~
+
+### Exercicio 4
+
+a) Query:
+~~~sql
+SELECT title, movie_id, rate, comment 
+FROM Appreciation
+RIGHT JOIN Film ON Appreciation.movie_id = Film.id; 
+~~~
+b) Query:
+~~~sql
+SELECT film_id , title, actor_id 
+FROM FilmCast
+INNER JOIN Film ON FilmCast.film_id = Film.id
+ORDER BY actor_id;  
+~~~
+c) Query:
+~~~sql
+SELECT title, AVG(rate) FROM Appreciation
+RIGHT JOIN Film ON Appreciation.movie_id = Film.id
+GROUP BY Film.id;
+~~~
+
+### Exercicio 5
+
+a) Pois há a relação de muitos para muitos em duas situações: (i) dos filmes para com o elenco e (ii) dos atores para com o elenco. Cada join corresponde a uma relação destas;
+
+b) Query:
+~~~sql
+SELECT film_id, title, actor_id, name FROM Film
+LEFT JOIN FilmCast ON Film.id = FilmCast.film_id
+JOIN Actor ON Actor.id = FilmCast.actor_id
+ORDER BY name;
+~~~
+c) A query não funcionou pois não foi identificado o campo m antes de title na clausula SELECT; 
+
+d) Query:
+~~~sql
+SELECT film_id, title, name, rate, comment FROM Film
+LEFT JOIN FilmCast ON Film.id = FilmCast.film_id
+JOIN Actor ON Actor.id = FilmCast.actor_id
+LEFT JOIN Appreciation ON Appreciation.movie_id = Film.id;
+~~~
+
+### Exercicio 6
+
+a) Um para muitos;
+
+b) Criada tabela que representa a entidade Oscar, a qual armazena as informações de cada premio da academia recebido por determinado filme relacionado a tabela Film. Possui em seus campos as informações id (chave primaria), tipo do oscar e id do filme (chave estrangeira);
+
+c) Code:
+~~~typescript
+const setFilmOscar = async (
+  oscarId:string, filmId: string, oscarType: string
+  ): Promise<void> =>{
+    const r = await connection('Oscar')
+    .insert({
+      id: oscarId,
+      oscar_type: oscarType,
+      film_id: filmId,
+    })
+    console.log('Oscar registrado!')
+};
+
+setFilmOscar('001', '001', 'Pior filme de comédia')
+setFilmOscar('002', '001', 'Maior comédia forçada')
+setFilmOscar('003', '002', 'Melhor drama')
+setFilmOscar('004', '002', 'Melhor protagonista mulher')
+setFilmOscar('005', '004', 'Melhor romance')
+setFilmOscar('006', '004', 'Melhor trilha sonora')
+setFilmOscar('007', '008', 'Melhor enredo baseado em fatos reais')
+setFilmOscar('008', '008', 'Melhor protagonista homem')
+~~~
+
+d) Query:
+~~~sql
+SELECT film_id, title, oscar_type
+FROM Film
+LEFT JOIN Oscar ON Film.id  = Oscar.film_id ;
+~~~
+
+## Fim dos Exercicios
