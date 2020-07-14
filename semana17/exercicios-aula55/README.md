@@ -68,3 +68,195 @@ const useUserDb = new UsersDb();
 useUserDb.createUser(id, 'Mary Jackson', 'jackson@mary.com', 'mj1234jm')
 ~~~
 
+### Exercício 3
+
+a) Pois ela garante ao jwt que a variavel de ambiente que armazena a chave secreta como uma string, evitando quaisquer problemas relacionados a esse elemento fundamental para o processo;
+
+b) Code:
+~~~typescript
+class Authenticator{
+  private static EXPIRES_IN = '1min';
+
+  public generateToken(input: AuthenticationData): string{
+    const token = jwt.sign(
+      {id: input.id}, 
+      process.env.JWT_KEY as string,
+      {expiresIn: Authenticator.EXPIRES_IN}
+    );
+
+    return token;
+  };
+};
+~~~
+
+### Exercício 4
+
+a) Code:
+~~~typescript
+app.post('/signup', async(req: Request, res: Response)=>{
+  try{
+    const id = idGen.generate();
+    const body = req.body;
+    const token = tokenGen.generateToken({id});
+
+    await useUserDb.createUser(
+      id, body.name, body.email, body.password
+    );
+    res.send({message: `User ${body.name} successful created!`, token}).status(400);
+  }catch(e){
+    res.send({
+      message: e.message
+    })
+  };
+});
+~~~
+
+b) Code:
+~~~typescript
+app.post('/signup', async(req: Request, res: Response)=>{
+  const id = idGen.generate();
+  const body = req.body;
+  const token = tokenGen.generateToken({id});
+
+  try{
+     if(! body.email || body.email.trim() === '' || ! body.email.includes('@')){
+      throw {message: 'Incorrect or missed email.'}
+    };
+    
+    await useUserDb.createUser(
+      id, body.name, body.email, body.password
+    );
+    res.send({message: `User ${body.name} successful created!`, token}).status(400);
+  }catch(e){
+    res.send({
+      message: e.message
+    })
+  };
+});
+~~~
+
+c) Code:
+~~~typescript
+app.post('/signup', async(req: Request, res: Response)=>{
+  const id = idGen.generate();
+  const body = req.body;
+  const token = tokenGen.generateToken({id});
+
+  try{
+     if(! body.email || body.email.trim() === '' || ! body.email.includes('@')){
+      throw {message: 'Incorrect or missed email.'}
+    };
+    if(body.password.length < 6){
+      throw {message: 'Password must be more than 6 characters.'};
+    };
+    await useUserDb.createUser(
+      id, body.name, body.email, body.password
+    );
+    res.send({message: `User ${body.name} successful created!`, token}).status(400);
+  }catch(e){
+    res.send({
+      message: e.message
+    })
+  };
+});
+~~~
+
+### Exercicio 5 
+
+a) Code:
+~~~typescript
+...class UserDB{
+   public async getUserByEmail(
+    email: string
+  ): Promise<any>{
+    try{
+     const r = await this.connection(this.userTableName)
+      .select('*')
+      .where({
+        email
+      });
+      return r[0];
+    }catch(e){
+      throw {message: e.sqlMessage || e.message}
+    };
+  };
+};
+~~~
+
+b) Code: 
+~~~typescript
+const getByEmail= async(email: string) => {
+  const r = await useUserDb.getUserByEmail(email);
+  console.log(r)
+};
+getByEmail('julian@percy.com');
+~~~
+
+### Exercicio 6
+
+a), b), c) Code:
+~~~typescript
+app.post('/login', async (req: Request, res: Response): 
+  Promise<any> =>{
+  const id = idGen.generate();
+  const body = req.body;
+  const token = tokenGen.generateToken({id});
+
+  try{
+    if(! body.email || body.email.trim() === '' || ! body.email.includes('@')){
+      throw {message: 'Incorrect or missed email.'}
+    };
+    const checkUser = await useUserDb.getUserByEmail(body.email);
+    if(! checkUser){
+      throw {message: 'User not found.'}
+    };
+    res.send(checkUser && {token}).status(200);
+  }catch(e){
+    res.send({
+      message: e.message
+    })
+  };
+});
+~~~
+
+### Exercicio 7
+
+a) Garante que o payload (parte do jwt fundamental e que guarda as informações que serão coletadas) irá retornar algum tipo de dado obrigatoriamente;
+
+b) Code:
+~~~typescript
+...class Authenticator{
+
+  public getData(token: string): AuthenticationData{
+    const payload = jwt.verify(
+      token,
+      process.env.JWT_KEY as string
+    ) as any;
+    const result = {
+      id: payload.id
+    };
+    return result;
+  };
+};
+~~~
+
+### Exercicio 8
+
+a) Code: 
+~~~typescript
+app.get('/user/profile', async (req: Request, res: Response)=>{
+  try{
+    const token = req.headers.authorization as string;
+
+    const userInfos = tokenGen.getData(token);
+
+    res.send({userInfos}).status(200);
+  }catch(e){
+    res.send({
+      message: e.message
+    });
+  };
+});
+~~~ 
+
+## Fim dos Exercicios
