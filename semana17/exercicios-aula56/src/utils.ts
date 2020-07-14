@@ -2,12 +2,19 @@ import {v4} from 'uuid';
 import knex from 'knex';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 
 dotenv.config();
 
+enum ROLE{
+  NORMAL = 'NORMAL',
+  ADMIN = 'ADMIN'
+};
+
 interface AuthenticationData{
   id: string,
-  email: string
+  email: string,
+  role?: ROLE
 };
 
 class IdGenerator{
@@ -54,8 +61,7 @@ class UsersDb{
       .where({
         email
       });
-      
-      return r.length != 0;
+      return r.length != 0 && r[0];
     }catch(e){
       throw {message: e.sqlMessage || e.message}
     };
@@ -82,7 +88,7 @@ class Authenticator{
 
   public generateToken(input: AuthenticationData): string{
     const token = jwt.sign(
-      {id: input.id, email: input.email}, 
+      {id: input.id, email: input.email, role: input.role || undefined}, 
       process.env.JWT_KEY as string,
       {expiresIn: Authenticator.EXPIRES_IN}
     );
@@ -97,10 +103,22 @@ class Authenticator{
     ) as any;
     const result = {
       id: payload.id,
-      email: payload.email
+      email: payload.email,
+      role: payload.role
     };
     return result;
   };
 };
 
-export {IdGenerator, UsersDb, Authenticator}
+class HashManager{
+  public async hash(plainText: string): Promise<string>{
+    const hash = await bcrypt.hash(plainText, await bcrypt.genSalt(Number(process.env.BCRYPT_COST)));
+    return hash;
+  };
+  public async checkHash(hash: string, plainText: string): Promise<boolean>{
+    const isValid = await bcrypt.compare(plainText, hash);
+    return isValid
+  };
+};
+
+export {IdGenerator, UsersDb, Authenticator, HashManager}
