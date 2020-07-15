@@ -86,9 +86,101 @@ c) Code:
 d) Code:
 ~~~typescript
 ...app.post('/login', async (req: Request, res: Response):Promise<any> =>{
-   const token = tokenGen.generateToken({id, email: body.email, role: body.role});
+    const body = req.body;
+    const userDbInfos = await useUserDb.getUserByEmail(body.email);
+    const token = tokenGen.generateToken({
+      id: userDbInfos.id, email: body.email, role: userDbInfos.user_role
+    });
 }
 ~~~
 
+### Exercicio 4
 
+a) Code:
+~~~typescript
+...app.get('/user/profile', async (req: Request, res: Response)=>{
+  ...try{
+    if(userInfos.role !== ROLE.NORMAL){
+      throw new Error ('Unauthorized.')
+    };
+});
+~~~
+
+### Exercicio 5
+
+Code:
+~~~typescript
+app.delete('/user/:id', async (req: Request, res: Response)=>{
+  
+  try{
+    const toDeleteUserId = req.params.id;
+    const token = req.headers.authorization as string;
+    const AuthUserInfos = tokenGen.getData(token);
+
+    if(AuthUserInfos.role !== ROLE.ADMIN){
+      throw new Error ('Unauthorized.')
+    };
+    await useUserDb.deleteUser(toDeleteUserId);
+    res.send({message: 'User deleted successfully.'}).status(200);
+  }catch(e){
+    res.send({
+      message: e.message
+    });
+  };
+});
+~~~
+
+### Exercicio 6
+
+Code:
+~~~typescript
+app.get('/user/:id', async (req: Request, res: Response)=>{
+  try{
+    const token = req.headers.authorization as string;
+    if(token){
+      const toCatchInfosUserId = req.params.id;
+      const r = await useUserDb.getUserById(toCatchInfosUserId);
+
+      res.send({userInfos:{id: r.id, email: r.email}}).status(200);
+    };
+  }catch(e){
+    res.send({
+      message: e.message
+    });
+  };
+});
+~~~
+
+### Exercicio 7
+
+a) Code:
+~~~typescript
+abstract class BaseDataBase{
+  private static connection: Knex | null = null;
+
+  protected getConnection(): Knex{
+    if(!BaseDataBase.connection){
+      BaseDataBase.connection = knex({
+        client: 'mysql',
+        connection:{
+          host: process.env.DB_HOST,
+          port: 3306,
+          user: process.env.DB_USER,
+          password: process.env.DB_PASSWORD,
+          database: process.env.DB_NAME
+        },
+      });
+    };
+    return BaseDataBase.connection;
+  };
+  public static async destroyConnection(): Promise<void>{
+    if(BaseDataBase.connection){
+      await BaseDataBase.connection.destroy();
+      BaseDataBase.connection = null;
+    };
+  };
+}
+~~~
+
+## Fim dos Exercicios
 

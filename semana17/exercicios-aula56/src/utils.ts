@@ -3,6 +3,7 @@ import knex from 'knex';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import {BaseDataBase} from './models';
 
 dotenv.config();
 
@@ -14,7 +15,7 @@ enum ROLE{
 interface AuthenticationData{
   id: string,
   email: string,
-  role?: ROLE
+  role: ROLE
 };
 
 class IdGenerator{
@@ -23,21 +24,12 @@ class IdGenerator{
   }
 };
 
-class UsersDb{
+class UsersDb extends BaseDataBase{
   private userTableName = process.env.USERS_TABLE_NAME;
-  private connection = knex({
-    client: 'mysql',
-    connection:{
-      host: process.env.DB_HOST,
-      port: 3306,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME
-    },
-  });
+  private connection = this.getConnection();
 
   public async createUser(
-    id: string, name: string, email: string, password: string
+    id: string, name: string, email: string, password: string, role?: ROLE
   ): Promise<any>{
     try{
       await this.connection(this.userTableName)
@@ -45,7 +37,8 @@ class UsersDb{
         id,
         user_name: name,
         user_pwd: password,
-        email
+        email,
+        user_role: role
       });
       return 'Sucess!'
     }catch(e){
@@ -76,11 +69,25 @@ class UsersDb{
         id
       });
       
-      return r.length != 0;
+      return r.length != 0 && r[0];
     }catch(e){
       throw {message: e.sqlMessage || e.message}
     };
   };
+  public async deleteUser(
+    userId: string
+  ): Promise<any>{
+    try{
+      await this.connection(this.userTableName)
+      .delete()
+      .where('id', '=', userId);
+
+      return 'OK'
+    }catch(e){
+      throw {message: e.sqlMessage || e.message}
+    };
+  };
+  public destroyConnection = async (): Promise<void>=> this.destroyConnection();
 };
 
 class Authenticator{
@@ -88,11 +95,10 @@ class Authenticator{
 
   public generateToken(input: AuthenticationData): string{
     const token = jwt.sign(
-      {id: input.id, email: input.email, role: input.role || undefined}, 
+      {id: input.id, email: input.email, role: input.role}, 
       process.env.JWT_KEY as string,
       {expiresIn: Authenticator.EXPIRES_IN}
     );
-
     return token;
   };
 
@@ -121,4 +127,4 @@ class HashManager{
   };
 };
 
-export {IdGenerator, UsersDb, Authenticator, HashManager}
+export {IdGenerator, UsersDb, Authenticator, HashManager, ROLE}

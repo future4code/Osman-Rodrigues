@@ -1,7 +1,8 @@
 import express, {Request, Response} from 'express';
 import {AddressInfo} from 'net';
 
-import {IdGenerator, UsersDb, Authenticator, HashManager} from './utils';
+import {IdGenerator, UsersDb, Authenticator, HashManager, ROLE} from './utils';
+import {BaseDataBase} from './models'
 
 const idGen = new IdGenerator();
 const useUserDb = new UsersDb();
@@ -12,7 +13,6 @@ const hashTest = async ()=> await hashGen.hash('ahninanab');
 const hashCheck = async ()=>{
   const hash = await hashTest();
   const result = await hashGen.checkHash(hash, 'ahninanab');
-  console.log(result)
   return result
 };
 
@@ -47,9 +47,10 @@ app.post('/signup', async(req: Request, res: Response)=>{
     };
     const hashedPwd = await hashGen.hash(body.password);
     await useUserDb.createUser(
-      id, body.name, body.email, hashedPwd
+      id, body.name, body.email, hashedPwd, body.role
     );
-    res.send({message: `User ${body.name} successful created!`, token}).status(400);
+    res.send({message: `User ${body.name} created successfully!`, token}).status(400);
+    await useUserDb.destroyConnection();
   }catch(e){
     res.send({
       message: e.message
@@ -58,9 +59,11 @@ app.post('/signup', async(req: Request, res: Response)=>{
 });
 
 app.post('/login', async (req: Request, res: Response):Promise<any> =>{
-  const id = idGen.generate();
   const body = req.body;
-  const token = tokenGen.generateToken({id, email: body.email, role: body.role});
+  const userDbInfos = await useUserDb.getUserByEmail(body.email);
+  const token = tokenGen.generateToken({
+    id: userDbInfos.id, email: body.email, role: userDbInfos.user_role
+  });
 
   try{
     if(! body.email || body.email.trim() === '' || ! body.email.includes('@')){
@@ -74,7 +77,10 @@ app.post('/login', async (req: Request, res: Response):Promise<any> =>{
     if(! checkPwd){
       throw new Error('Invalid password.');
     };
+    
     res.send(checkUser && {token}).status(200);
+    await useUserDb.destroyConnection();
+    
   }catch(e){
     res.send({
       message: e.message
@@ -88,6 +94,10 @@ app.get('/user/profile', async (req: Request, res: Response)=>{
 
     const userInfos = tokenGen.getData(token);
 
+    if(userInfos.role !== ROLE.NORMAL){
+      throw new Error ('Unauthorized.')
+    };
+
     res.send({userInfos}).status(200);
   }catch(e){
     res.send({
@@ -95,3 +105,40 @@ app.get('/user/profile', async (req: Request, res: Response)=>{
     });
   };
 });
+
+app.delete('/user/:id', async (req: Request, res: Response)=>{
+  
+  try{
+    const toDeleteUserId = req.params.id;
+    const token = req.headers.authorization as string;
+    const AuthUserInfos = tokenGen.getData(token);
+
+    if(AuthUserInfos.role !== ROLE.ADMIN){
+      throw new Error ('Unauthorized.')
+    };
+    await useUserDb.deleteUser(toDeleteUserId);
+    res.send({message: 'User deleted successfully.'}).status(200);
+    await useUserDb.destroyConnection();
+  }catch(e){
+    res.send({
+      message: e.message
+    });
+  };
+});
+
+app.get('/user/:id', async (req: Request, res: Response)=>{
+  try{
+    const token = req.headers.authorization as string;
+    if(token){
+      const toCatchInfosUserId = req.params.id;
+      const r = await useUserDb.getUserById(toCatchInfosUserId);
+      res.send({userInfos:{id: r.id, email: r.email}}).status(200);
+      await useUserDb.destroyConnection();
+    };
+  }catch(e){
+    res.send({
+      message: e.message
+    });
+  };
+});
+
