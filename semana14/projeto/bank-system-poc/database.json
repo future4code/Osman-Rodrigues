@@ -1,0 +1,109 @@
+{
+  "accounts": {
+    "22222222222": {
+      "user": {
+        "name": "Jimmy Hendrix",
+        "id": 22222222222,
+        "birth": "1942-11-27T03:00:00.000Z"
+      },
+      "balance": 412.044444444,
+      "statement": [
+        {
+          "value": 100.511111111,
+          "date": "2020-06-26T21:22:39.009Z",
+          "description": "Adição de saldo"
+        },
+        {
+          "value": 100.511111111,
+          "date": "2020-06-26T21:23:36.770Z",
+          "description": "Adição de saldo"
+        },
+        {
+          "value": 100.511111111,
+          "date": "2020-06-26T21:24:29.924Z",
+          "description": "Adição de saldo"
+        },
+        {
+          "value": 100.511111111,
+          "date": "2020-06-26T21:25:37.333Z",
+          "description": "Adição de saldo"
+        },
+        {
+          "value": 10,
+          "date": "2020-06-26T22:34:55.000Z",
+          "description": "Transferência de Marie Huana"
+        },
+        {
+          "value": 10,
+          "date": "2020-06-26T22:36:38.002Z",
+          "description": "Transferência para Marie Huana"
+        },
+        {
+          "value": 200,
+          "date": "2020-06-26T22:36:59.157Z",
+          "description": "Transferência para Marie Huana"
+        },
+        {
+          "value": 50,
+          "date": "2020-06-26T22:39:32.726Z",
+          "description": "Transferência para Marie Huana"
+        }
+      ]
+    },
+    "42042042042": {
+      "user": {
+        "name": "Marie Huana",
+        "id": 42042042042,
+        "birth": "1992-04-20T03:00:00.000Z"
+      },
+      "balance": 275,
+      "statement": [
+        {
+          "value": 42,
+          "date": "2020-06-26T21:29:47.660Z",
+          "description": "Adição de saldo"
+        },
+        {
+          "value": 42,
+          "date": "2020-06-26T21:30:02.988Z",
+          "description": "Adição de saldo"
+        },
+        {
+          "value": 42,
+          "date": "2020-06-26T22:07:38.948Z",
+          "description": "Cosumo próprio"
+        },
+        {
+          "value": 12,
+          "date": "2020-06-26T22:08:31.887Z",
+          "description": "Colírio"
+        },
+        {
+          "value": 15,
+          "date": "2020-06-26T22:10:02.612Z",
+          "description": "Sandubão na esquina"
+        },
+        {
+          "value": 10,
+          "date": "2020-06-26T22:34:54.996Z",
+          "description": "Transferência para Jimmy Hendrix"
+        },
+        {
+          "value": 10,
+          "date": "2020-06-26T22:36:38.006Z",
+          "description": "Transferência de Jimmy Hendrix"
+        },
+        {
+          "value": 200,
+          "date": "2020-06-26T22:36:59.162Z",
+          "description": "Transferência de Jimmy Hendrix"
+        },
+        {
+          "value": 50,
+          "date": "2020-06-26T22:39:32.730Z",
+          "description": "Transferência de Jimmy Hendrix"
+        }
+      ]
+    }
+  }
+}
