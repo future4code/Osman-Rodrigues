@@ -4,7 +4,8 @@
   "description": "exercicios da aula 64, da semana 19",
   "main": "index.js",
   "scripts": {
-    "test": "node ./node_modules/jest/bin/jest.js --watchAll"
+    "test": "node ./node_modules/jest/bin/jest.js --watchAll",
+    "start": "clear && ts-node ./src/index.ts"
   },
   "author": "OsmanRodrigues",
   "license": "ISC",
