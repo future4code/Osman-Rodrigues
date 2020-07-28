@@ -4,7 +4,7 @@
   "description": "exercicios da aula 63, da semana 19",
   "main": "index.js",
   "scripts": {
-    "test": "node ./node_modules/jest/bin/jest.js"
+    "test": "node ./node_modules/jest/bin/jest.js --watchAll"
   },
   "author": "OsmanRodrigues",
   "license": "ISC",
