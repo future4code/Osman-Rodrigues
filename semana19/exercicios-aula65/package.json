@@ -1,10 +1,10 @@
 {
-  "name": "sagan-ordenacao",
+  "name": "semana19-aula65",
   "version": "1.0.0",
   "description": "Exercícios da aula 65, da semana 19",
   "main": "index.js",
   "scripts": {
-    "test": "node ./node_modules/jest/bin/jest.js",
+    "test": "node ./node_modules/jest/bin/jest.js --watchAll",
     "start": "tsc && node ./build/index.js",
     "start:dev": " ts-node-dev ./src/index.ts"
   },

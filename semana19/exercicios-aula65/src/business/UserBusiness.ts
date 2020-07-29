@@ -5,6 +5,7 @@ import { HashGenerator } from "../services/hashGenerator";
 import { TokenGenerator } from "../services/tokenGenerator";
 import { NotFoundError } from "../errors/NotFoundError";
 import { InvalidParameterError } from "../errors/InvalidParameterError";
+import { GenericError } from "../errors/GenericError";
 
 export class UserBusiness {
   constructor(
@@ -73,4 +74,19 @@ export class UserBusiness {
 
     return { accessToken };
   }
+
+  public async getById(id: string){
+    if (!id || id.length != 36) {
+      throw new InvalidParameterError("Missing or invalid user id.")
+    }
+
+    const userInfos = await this.userDatabase.getById(id)
+
+    if (!userInfos) {
+      throw new NotFoundError("User not found.")
+    }
+
+    return { userInfos }
+  }
 }
+
