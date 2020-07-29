@@ -1,0 +1,20 @@
+{
+  "name": "exercicios-aula64",
+  "version": "1.0.0",
+  "description": "exercicios da aula 64, da semana 19",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ./node_modules/jest/bin/jest.js --watchAll",
+    "start": "clear && ts-node ./src/index.ts"
+  },
+  "author": "OsmanRodrigues",
+  "license": "ISC",
+  "dependencies": {
+    "@types/jest": "^26.0.7",
+    "@types/node": "^14.0.26",
+    "jest": "^26.1.0",
+    "ts-jest": "^26.1.4",
+    "ts-node-dev": "^1.0.0-pre.56",
+    "typescript": "^3.9.7"
+  }
+}
