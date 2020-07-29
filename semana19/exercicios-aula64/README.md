@@ -138,3 +138,91 @@ test("Should have all valid properties", ()=>{
 });
 ~~~
 
+## 3.
+a) code:
+~~~typescript
+const performAttack = (
+  attacker: Character, defender: Character
+  ):{
+    attacker: Character, defender: Character
+  } =>{
+  const validedAttacker = validateCharacter(attacker);
+  const validedDefender = validateCharacter(defender);
+
+  if(! validedAttacker.isValid || ! validedDefender.isValid){
+    throw new Error(`Character "${
+      ! validedAttacker.isValid ? 
+      validedAttacker.character.name :
+      validedDefender.character.name
+    }" is invalid.`)
+  }else if(! validedAttacker.isValid && ! validedDefender.isValid){
+    throw new Error(`Both characters are invalid.`)
+  };
+
+  const attackCount = attacker.strength > defender.armorPoints ? 
+  attacker.strength - defender.armorPoints : 0;
+
+  defender.wasHitted(attackCount);
+
+  return {attacker, defender} 
+};
+~~~
+b) code:
+~~~typescript
+const performAttackDI = (
+  attacker: Character, defender: Character,
+  validator: (input: Character)=> ValidateCharacterOutput 
+  ):{
+    attacker: Character, defender: Character
+  } =>{
+  const validedAttacker = validator(attacker);
+  const validedDefender = validator(defender);
+  
+  ...performAttack
+}
+~~~
+c) r. Sem a inversão de depedência não é possível estar a função validadora na suíte de destes, pois ao invés de fazer parte da função (sendo passada como callback) ela só é utilizada separadamente sem fazer parte do escopo da função.
+
+## 4.
+a) r. Da performAttackDI, pois ela recebe uma função externa que justamente é a validateCharacter, então é importante simular o comportamento de ambas uma vez que são utilizadas no mesmo escopo;
+
+b) code:
+~~~typescript
+test('Should return a defender with lowered health points', ()=>{
+  const validator = jest.fn((character: Character ): ValidateCharacterOutput =>{
+    const response: ValidateCharacterOutput = {
+      isValid: true,
+      character
+    }
+    return response
+  });
+  try{
+    const attack = performAttackDI(char1, char2, validator);
+
+    expect(attack.defender.healthPoints).not.toBeGreaterThanOrEqual(1500);
+  }catch(e){
+    expect(e.message).toEqual(undefined)
+  }
+});
+~~~
+c) code:
+~~~typescript
+test('Should return a invalid attacker or defender initial status', ()=>{
+    expect.assertions(1);
+
+    const validator = jest.fn((character: Character ): ValidateCharacterOutput =>{
+      const response: ValidateCharacterOutput = {
+        isValid: true,
+        character
+      }
+      return response
+    });
+
+    try{
+      const attack = performAttackDI(char3, char2, validator);
+      expect(attack.attacker.strength).toBe(null);
+    }catch(e){
+      expect(e.message).toEqual(`Character ${char3.name} is invalid.`)
+    }
+  });
+~~~
