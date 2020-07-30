@@ -38,10 +38,29 @@ export class UserController {
   }
 
   public async getById(req: Request, res: Response) {
-    const token = req.headers.authorization as string;
     const id = req.params.id;
     try {
       const result = await UserController.UserBusiness.getById(id);
+      res.status(200).send(result);
+    } catch (err) {
+      res.status(err.errorCode || 400).send({ message: err.message });
+    }
+  }
+
+  public async getAll(req: Request, res: Response) {
+    const token = req.headers.authorization as string;
+    try {
+      const result = await UserController.UserBusiness.getAll(token);
+      res.status(200).send(result);
+    } catch (err) {
+      res.status(err.errorCode || 400).send({ message: err.message });
+    }
+  }
+
+  public async getProfile(req: Request, res: Response) {
+    const token = req.headers.authorization as string;
+    try {
+      const result = await UserController.UserBusiness.getProfile(token);
       res.status(200).send(result);
     } catch (err) {
       res.status(err.errorCode || 400).send({ message: err.message });

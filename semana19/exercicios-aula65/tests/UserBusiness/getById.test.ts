@@ -7,8 +7,6 @@ describe('getById', ()=>{
   let tokenGenerator = {};
   let idGenerator = {};
 
-  
-  
   test("User doesn't exist.", jest.fn( async()=>{
     expect.assertions(2)
 

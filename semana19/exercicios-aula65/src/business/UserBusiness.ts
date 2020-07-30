@@ -88,5 +88,35 @@ export class UserBusiness {
 
     return { userInfos }
   }
+
+  public async getAll(token: string){
+    const validedToken = this.tokenGenerator.verify(token);
+    if(! validedToken){
+      throw new InvalidParameterError('Not allowed.')
+    }
+
+    const allUsers = await this.userDatabase.getAll()
+
+    if (allUsers.length === 0) {
+      throw new NotFoundError("No registered users.")
+    }
+    
+    return { allUsers }
+  }
+
+  public async getProfile(token: string){
+    const validedToken = this.tokenGenerator.verify(token);
+    if(! validedToken){
+      throw new InvalidParameterError('Invalid token.')
+    }
+
+    const profileInfos = await this.userDatabase.getById(validedToken.id)
+
+    if ( ! profileInfos) {
+      throw new NotFoundError("User not found.")
+    }
+    
+    return { profileInfos }
+  }
 }
 

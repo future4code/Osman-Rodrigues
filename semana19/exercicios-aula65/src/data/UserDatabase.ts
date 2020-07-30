@@ -43,7 +43,7 @@ export class UserDatabase extends BaseDataBase {
     return this.toModel(result[0][0]);
   }
 
-  public async getAllUsers(): Promise<User[]> {
+  public async getAll(): Promise<User[]> {
     const result = await super.getConnection().raw(`
       SELECT * from ${this.tableName}
     `);
