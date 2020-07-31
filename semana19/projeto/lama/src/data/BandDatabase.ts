@@ -25,11 +25,12 @@ export class BandDatabase extends BaseDatabase {
     }
   }
   //TODO: implementar endpoint do getBand
-  public async getBandById(id: string): Promise<Band> {
+  public async getBandByIdOrName(input: string): Promise<Band> {
     const result = await this.getConnection()
       .select("*")
       .from(this.tableName)
-      .where({ id });
+      .where('id', '=', input)
+      .orWhere('name', '=', input);
 
     return Band.toBandModel(result[0]);
   }

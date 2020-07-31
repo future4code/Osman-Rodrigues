@@ -25,7 +25,7 @@ class Band{
   }
 
   static toBandModel(band: any): Band {
-    return new Band(band.id, band.name, band.music_genre, band.responsible);
+    return band && new Band(band.id, band.name, band.music_genre, band.responsible);
   }
 }
 
