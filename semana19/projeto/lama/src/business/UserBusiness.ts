@@ -37,7 +37,7 @@ export class UserBusiness {
         if (!hashCompare) {
             throw new Error("Invalid Password!");
         }
-
+        
         return accessToken;
     }
 }
