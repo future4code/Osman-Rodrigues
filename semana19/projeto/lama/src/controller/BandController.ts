@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { BandBusiness } from "../business/BandBusiness";
 import { CreateBandInputDTO } from "../model/Band";
+import { BaseDatabase } from "../data/BaseDatabase";
 
 class BandController{
   async createBand(req: Request, res: Response){
@@ -15,8 +16,9 @@ class BandController{
       const bandDatabase = new BandBusiness()
       await bandDatabase.createBand(input, token)
 
-      res.send({message:`Band ${input.name} successfull created!`}).status(200)
+      res.send({message:`Band ${input.name} successfully created!`}).status(200)
 
+      await BaseDatabase.destroyConnection()
     }catch(e){
       res.status(e.code || 400).send({ message: e.message })
     }
@@ -32,6 +34,8 @@ class BandController{
       const result = await bandDatabase.getBandByIdOrName(getInput, token)
 
       res.send(result).status(200)
+
+      await BaseDatabase.destroyConnection()
     }catch(e){
       res.status(e.code || 400).send({ message: e.message })
     }

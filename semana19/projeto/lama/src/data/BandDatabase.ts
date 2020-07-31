@@ -24,7 +24,7 @@ export class BandDatabase extends BaseDatabase {
       throw new Error(error.sqlMessage || error.message);
     }
   }
-  //TODO: implementar endpoint do getBand
+  
   public async getBandByIdOrName(input: string): Promise<Band> {
     const result = await this.getConnection()
       .select("*")
