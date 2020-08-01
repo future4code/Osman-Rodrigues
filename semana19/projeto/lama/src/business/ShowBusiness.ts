@@ -72,4 +72,18 @@ export class ShowBusiness{
       newShowInfos.getBandId()
     )
   }
+
+  async getAll(day:string, token: string){
+    const validedToken = new Authenticator().getData(token)
+
+    if(!validedToken.role){
+      throw new UnauthorizedError('Not allowed.')
+    }
+    
+    const showDatabase = new ShowDatabase()
+    
+    const showsOfDay = await showDatabase.getAll(Show.stringToShowWeekDay(day))
+
+    return showsOfDay
+  }
 }

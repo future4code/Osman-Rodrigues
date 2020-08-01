@@ -54,6 +54,17 @@ interface CreateShowInputDTO{
   bandId: string
 }
 
+interface ShowOutputDTO{
+  start_time: number,
+  end_time: number,
+  name: string,
+  music_genre: string
+}
+
+interface ShowsListOutputDTO{
+  showsOfDay: ShowOutputDTO[]
+}
+
 enum ShowWeekDay{
   FRIDAY = "FRIDAY",
   SATURDAY = "SATURDAY",
@@ -61,4 +72,4 @@ enum ShowWeekDay{
 }
 
 //TODO: interface para input do getallshows
-export{Show, CreateShowInputDTO, ShowWeekDay}
+export{Show, CreateShowInputDTO, ShowWeekDay, ShowsListOutputDTO}

@@ -1,5 +1,5 @@
 import { BaseDatabase } from "./BaseDatabase";
-import { Show } from "../model/Show";
+import { Show, ShowsListOutputDTO } from "../model/Show";
 
 export class ShowDatabase extends BaseDatabase{
 
@@ -35,9 +35,27 @@ export class ShowDatabase extends BaseDatabase{
       .where('week_day', '=', day)
       .andWhere('start_time', '=', start)
       .andWhere('end_time', '=', end)
-      
+
       return Show.toShowModel(result[0])
 
+    }catch(error){
+      throw new Error(error.sqlMessage || error.message);
+    }
+  }
+
+  async getAll(day: string): Promise<ShowsListOutputDTO | any>{
+    try{
+      const result = await this.getConnection()
+      .select('start_time', 'end_time', 'name', 'music_genre')
+      .from(this.tableName)
+      .join(process.env.DB_BANDS_NAME!, {
+        [`${this.tableName}.band_id`]:`${process.env.DB_BANDS_NAME}.id`
+      })
+      .where('week_day', '=', day)
+      .orderBy('start_time', 'asc')
+      
+      return result.length > 0 ? {showsOfDay:result} : {showsOfDay:'No one shows scheduled.'}
+      
     }catch(error){
       throw new Error(error.sqlMessage || error.message);
     }

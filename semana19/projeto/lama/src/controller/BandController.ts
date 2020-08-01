@@ -16,7 +16,7 @@ class BandController{
       const bandDatabase = new BandBusiness()
       await bandDatabase.createBand(input, token)
 
-      res.send({message:`Band ${input.name} successfully created!`}).status(200)
+      res.send({message:`Band ${input.name} successfully registered!`}).status(200)
 
       await BaseDatabase.destroyConnection()
     }catch(e){

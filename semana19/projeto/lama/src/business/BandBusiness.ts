@@ -18,7 +18,7 @@ class BandBusiness{
     const id = idGenerator.generate();
 
     const bandDatabase = new BandDatabase();
-    await bandDatabase.createBand(id, band.name, band.musicGenre, band.responsible)
+    await bandDatabase.createBand(id, band.name, band.musicGenre.toUpperCase(), band.responsible)
   }
 
   async getBandByIdOrName(input: string, token: string){
