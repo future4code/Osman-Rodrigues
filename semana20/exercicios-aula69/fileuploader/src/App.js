@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
-import styled from 'styled-components';
+import React, {useState} from 'react'
+import styled from 'styled-components'
+import axios from 'axios'
 
 const AppWrapper = styled.main`
   height: 100vh;
@@ -30,14 +31,19 @@ const Title = styled.h1`
 `;
 
 function App() {
-  const [img, setImg] = useState()
-
-  const handleUploadFile = (event) =>{
-    console.log(event.target.value)
-    setImg(event.target.value)
+  const [img, setImg] = useState(null)
+  const mainLogo = 'https://futurumresearch.com/wp-content/uploads/2020/01/aws-logo.png'
+  const handleUploadFile = async (event) =>{
+    try{
+      const data = new FormData()
+      data.append('file', event.target.files[0])
+      
+      const res = await axios.put('http://localhost:3002/file/upload', data)
+      setImg(res.data.link)
+    }catch(e){
+      window.alert(e.message)
+    }
   }
-
-  
 
   return (
     <AppWrapper>
@@ -46,16 +52,21 @@ function App() {
       </Title>
 
       <Img
-        src={img}
+        src={img != null ? img : mainLogo}
         alt='Img preview'
       />
 
       <InputBox>
         <Label>
           <Input onChange={handleUploadFile} type='file'/>
-          <Button>Send</Button>
         </Label>
       </InputBox>
+
+      <p>
+        <a href={img != null && img}>
+        {img != null ? 'Fazer download da imagem' : 'Insira a imagem para habilitar o download'}
+        </a>
+      </p>
     </AppWrapper>
   );
 }
