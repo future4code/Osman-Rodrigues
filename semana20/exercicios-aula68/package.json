@@ -1,0 +1,50 @@
+{
+  "name": "julian-labook2-api",
+  "version": "1.0.0",
+  "description": "api do projeto labook2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "clear && ts-node ./src/index.ts",
+    "deploy": "sls deploy",
+    "start:sls": "sls offline"
+  },
+  "repository": {
+
+  },
+  "author": "Osman Rodrigues, Wellington Cardoso e Wagner Cardoso",
+  "license": "ISC",
+  
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.0",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.21.2",
+    "moment": "^2.27.0",
+    "mysql": "^2.18.1",
+    "serverless": "^1.74.1",
+    "serverless-http": "^2.5.0",
+    "uuid": "^8.2.0",
+    "@types/cors": "^2.8.7",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "serverless-dotenv-plugin": "^3.0.0",
+    "serverless-offline": "^6.5.0",
+    "serverless-webpack": "^5.3.3",
+    "ts-loader": "^8.0.2",
+    "webpack": "^4.44.1",
+    "webpack-node-externals": "^2.5.0",
+    "@types/bcrypt": "^3.0.0",
+    "@types/bcryptjs": "^2.4.2",
+    "@types/express": "^4.17.0",
+    "@types/jsonwebtoken": "^8.5.0",
+    "@types/knex": "^0.16.1",
+    "@types/moment": "^2.13.0",
+    "@types/node": "^14.0.23",
+    "@types/uuid": "^8.0.0",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.7"
+  }
+}
