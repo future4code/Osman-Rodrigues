@@ -1,5 +1,5 @@
 function isOneEdit(target: string, reference: string){
-  if(reference.length > target.length + 1 || reference.length === target.length -2){
+  if(reference.length > target.length + 1 || reference.length <= target.length -2){
     return false
   }
   
